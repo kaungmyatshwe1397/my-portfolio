@@ -8,11 +8,20 @@ import { Contact } from "@/components/contact";
 import { Footer } from "@/components/footer";
 import { Navbar } from "@/components/navbar";
 import { LoadingScreen } from "@/components/loading-screen";
+import { Meteors } from "@/components/ui/meteors";
 
 // Main page component with all portfolio sections
 export default function Home() {
   return (
     <main className="relative min-h-screen">
+      {/* Unified page background */}
+      <div className="fixed inset-0 -z-20 bg-gradient-to-br from-primary/20 via-background to-secondary/20 animate-gradient" />
+
+      {/* Meteor effect */}
+      <div className="fixed inset-0 -z-10 overflow-hidden">
+        <Meteors number={25} />
+      </div>
+
       {/* Splash loading screen */}
       <LoadingScreen />
 

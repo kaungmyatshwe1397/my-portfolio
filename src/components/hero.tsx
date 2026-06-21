@@ -59,9 +59,6 @@ const GRADIENT_TO = "#FFA500";
 export function Hero() {
   return (
     <div className="relative w-full min-h-screen flex items-center justify-center px-4 py-24">
-      {/* Animated background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-background to-secondary/20 animate-gradient" />
-
       {/* Particles background */}
       <Particles
         className="absolute inset-0"
