@@ -8,7 +8,7 @@ export const profile: Profile = {
   name: "Kaung Myat Shwe",
   title: "Full Stack Developer",
   bio: "Passionate about building modern web applications with clean code and great user experiences. I love working with React, Next.js, and exploring new technologies.",
-  avatar: "/images/avatar/avatar.jpg",
+  avatar: "/images/profilePic.jpg",
   email: "kaungmyatshwe@example.com",
   location: "Myanmar",
   resumeUrl: "#",

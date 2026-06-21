@@ -7,11 +7,15 @@ import { GitHubStats } from "@/components/github-stats";
 import { Contact } from "@/components/contact";
 import { Footer } from "@/components/footer";
 import { Navbar } from "@/components/navbar";
+import { LoadingScreen } from "@/components/loading-screen";
 
 // Main page component with all portfolio sections
 export default function Home() {
   return (
     <main className="relative min-h-screen">
+      {/* Splash loading screen */}
+      <LoadingScreen />
+
       {/* Navigation */}
       <Navbar />
 
