@@ -1,4 +1,4 @@
-// Hero section — bento grid with particles, magic cards, shimmer CTA
+// Hero section — split screen with avatar and highlighted about info
 
 "use client";
 
@@ -6,56 +6,28 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { profile } from "@/lib/seed-data";
 import { Particles } from "@/components/ui/particles";
-import { MagicCard } from "@/components/ui/magic-card";
-import {
-  MapPin,
-  Mail,
-  GitFork,
-  Globe,
-  Link2,
-  Briefcase,
-  Code2,
-} from "lucide-react";
+import { Highlighter } from "@/components/ui/highlighter";
+import { MapPin, Briefcase } from "lucide-react";
 
-// Staggered tile animation
-const tile = {
-  hidden: { opacity: 0, y: 30, scale: 0.95 },
-  show: (i: number) => ({
+// Entrance animations
+const fadeUp = {
+  hidden: { opacity: 0, y: 30 },
+  show: (delay: number) => ({
     opacity: 1,
     y: 0,
-    scale: 1,
-    transition: { delay: 0.15 * i, duration: 0.5, ease: "easeOut" as const },
+    transition: { delay, duration: 0.6, ease: "easeOut" as const },
   }),
 };
 
-// Social link button component
-function SocialLink({
-  href,
-  label,
-  icon: Icon,
-}: {
-  href: string;
-  label: string;
-  icon: React.ElementType;
-}) {
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="p-3 rounded-xl bg-white/5 backdrop-blur-md border border-white/15 hover:bg-white/10 hover:border-amber-500/30 hover:shadow-lg hover:shadow-black/10 transition-all"
-      aria-label={label}
-    >
-      <Icon className="w-5 h-5" />
-    </a>
-  );
-}
+const scaleIn = {
+  hidden: { opacity: 0, scale: 0.8 },
+  show: {
+    opacity: 1,
+    scale: 1,
+    transition: { delay: 0.3, type: "spring" as const, stiffness: 120, damping: 15 },
+  },
+};
 
-// Gold gradient colours for MagicCard
-const GRADIENT_FROM = "#FFD700";
-const GRADIENT_TO = "#FFA500";
-
-// Bento hero section
 export function Hero() {
   return (
     <div className="relative w-full min-h-screen flex items-center justify-center px-4 py-24">
@@ -69,150 +41,88 @@ export function Hero() {
         ease={80}
       />
 
-      {/* Bento Grid */}
+      {/* Split layout */}
       <motion.div
         initial="hidden"
         animate="show"
-        className="relative z-10 w-full max-w-5xl grid grid-cols-1 md:grid-cols-3 md:grid-rows-[auto_auto_auto] gap-4"
+        className="relative z-10 w-full max-w-5xl flex flex-col md:flex-row items-center gap-12 md:gap-16"
       >
-        {/* ── Avatar Tile (spans 1 col × 2 rows on desktop) ── */}
-        <motion.div variants={tile} custom={0} className="md:row-span-2" whileHover={{ scale: 1.03, y: -4 }} transition={{ type: "spring", stiffness: 300, damping: 20 }}>
-          <MagicCard
-            className="h-full p-6 flex flex-col items-center justify-center gap-4 group"
-            gradientSize={250}
-            gradientFrom={GRADIENT_FROM}
-            gradientTo={GRADIENT_TO}
-            gradientColor="#262626"
-            gradientOpacity={0.6}
+        {/* ── Left: Avatar ── */}
+        <motion.div
+          variants={scaleIn}
+          className="flex-shrink-0"
+        >
+          <motion.div
+            className="relative w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden border-4 border-primary/40 shadow-2xl ring-4 ring-primary/10"
+            whileHover={{ scale: 1.05 }}
+            transition={{ type: "spring", stiffness: 200, damping: 15 }}
           >
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.4, type: "spring", stiffness: 180 }}
-              className="relative w-36 h-36 md:w-44 md:h-44 rounded-full overflow-hidden border-4 border-primary/40 shadow-xl ring-4 ring-primary/10 group-hover:ring-primary/30 transition-all duration-500"
-            >
-              <Image
-                src={profile.avatar}
-                alt={profile.name}
-                fill
-                className="object-cover"
-                priority
-              />
-            </motion.div>
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Code2 className="w-4 h-4 text-primary" />
-              <span>Full Stack Developer</span>
-            </div>
-          </MagicCard>
+            <Image
+              src={profile.avatar}
+              alt={profile.name}
+              fill
+              className="object-cover"
+              priority
+            />
+          </motion.div>
         </motion.div>
 
-        {/* ── Name + Title Tile ── */}
-        <motion.div variants={tile} custom={1} className="md:col-span-2" whileHover={{ scale: 1.03, y: -4 }} transition={{ type: "spring", stiffness: 300, damping: 20 }}>
-          <MagicCard
-            className="h-full p-6 flex flex-col justify-center"
-            gradientSize={300}
-            gradientFrom={GRADIENT_FROM}
-            gradientTo={GRADIENT_TO}
-            gradientColor="#262626"
-            gradientOpacity={0.5}
+        {/* ── Right: About Info ── */}
+        <div className="flex flex-col gap-6 text-center md:text-left min-w-0 overflow-hidden">
+          {/* Name */}
+          <motion.h1
+            variants={fadeUp}
+            custom={0.2}
+            className="text-4xl md:text-6xl font-bold tracking-tight"
           >
-            <h1 className="text-3xl md:text-5xl font-bold tracking-tight mb-2">
-              Hi, I&apos;m{" "}
-              <span className="text-primary">
-                {profile.name.split(" ")[0]}
-              </span>
-              <span className="text-primary">.</span>
-            </h1>
-            <p className="text-lg md:text-xl text-muted-foreground">
-              {profile.title} from{" "}
-              <span className="text-foreground font-medium">
-                {profile.location}
-              </span>
-            </p>
-          </MagicCard>
-        </motion.div>
+            Hi, I&apos;m{" "}
+            <span className="text-primary">{profile.name}</span>
+          </motion.h1>
 
-        {/* ── Location + Status Tile ── */}
-        <motion.div variants={tile} custom={2} whileHover={{ scale: 1.03, y: -4 }} transition={{ type: "spring", stiffness: 300, damping: 20 }}>
-          <MagicCard
-            className="h-full p-5 flex flex-col gap-3 justify-center"
-            gradientSize={200}
-            gradientFrom={GRADIENT_FROM}
-            gradientTo={GRADIENT_TO}
-            gradientColor="#262626"
-            gradientOpacity={0.6}
+          {/* Title */}
+          <motion.p
+            variants={fadeUp}
+            custom={0.35}
+            className="text-lg md:text-2xl text-muted-foreground relative"
           >
-            <div className="flex items-center gap-2 text-sm">
-              <MapPin className="w-4 h-4 text-primary shrink-0" />
-              <span>{profile.location}</span>
-            </div>
-            <div className="flex items-center gap-2 text-sm">
-              <Briefcase className="w-4 h-4 text-primary shrink-0" />
-              <span>Open to opportunities</span>
-            </div>
-          </MagicCard>
-        </motion.div>
+            <Highlighter action="highlight" color="#87CEFA" isView>
+              Full Stack Developer
+            </Highlighter>
+          </motion.p>
 
-        {/* ── Social Links Tile ── */}
-        <motion.div variants={tile} custom={3} whileHover={{ scale: 1.03, y: -4 }} transition={{ type: "spring", stiffness: 300, damping: 20 }}>
-          <MagicCard
-            className="h-full p-5 flex flex-col gap-3 justify-center"
-            gradientSize={200}
-            gradientFrom={GRADIENT_FROM}
-            gradientTo={GRADIENT_TO}
-            gradientColor="#262626"
-            gradientOpacity={0.6}
+          {/* Bio with targeted highlights */}
+          <motion.p
+            variants={fadeUp}
+            custom={0.5}
+            className="text-muted-foreground leading-relaxed text-base md:text-lg max-w-xl relative"
           >
-            <p className="text-xs text-muted-foreground uppercase tracking-wider font-medium mb-1">
-              Connect
-            </p>
-            <div className="flex flex-wrap gap-2">
-              <SocialLink
-                href={profile.social.github}
-                label="GitHub"
-                icon={GitFork}
-              />
-              {profile.social.linkedin && (
-                <SocialLink
-                  href={profile.social.linkedin}
-                  label="LinkedIn"
-                  icon={Link2}
-                />
-              )}
-              {profile.social.twitter && (
-                <SocialLink
-                  href={profile.social.twitter}
-                  label="Twitter"
-                  icon={Globe}
-                />
-              )}
-              <SocialLink
-                href={`mailto:${profile.email}`}
-                label="Email"
-                icon={Mail}
-              />
-            </div>
-          </MagicCard>
-        </motion.div>
+            Passionate about building modern web applications with{" "}
+            <Highlighter action="underline" color="#FF9800" isView>
+              clean code
+            </Highlighter>{" "}
+            and{" "}
+            <Highlighter action="highlight" color="#90EE90" isView>
+              great user experiences
+            </Highlighter>
+            . I love working with React, Next.js, and exploring new technologies.
+          </motion.p>
 
-        {/* ── Bio Tile (spans 2 cols on desktop) ── */}
-        <motion.div variants={tile} custom={4} className="md:col-span-2" whileHover={{ scale: 1.03, y: -4 }} transition={{ type: "spring", stiffness: 300, damping: 20 }}>
-          <MagicCard
-            className="h-full p-6 flex flex-col justify-center"
-            gradientSize={300}
-            gradientFrom={GRADIENT_FROM}
-            gradientTo={GRADIENT_TO}
-            gradientColor="#262626"
-            gradientOpacity={0.5}
+          {/* Location & Status */}
+          <motion.div
+            variants={fadeUp}
+            custom={0.65}
+            className="flex flex-wrap items-center gap-4 justify-center md:justify-start text-sm text-muted-foreground"
           >
-            <p className="text-xs text-muted-foreground uppercase tracking-wider font-medium mb-3">
-              About Me
-            </p>
-            <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
-              {profile.bio}
-            </p>
-          </MagicCard>
-        </motion.div>
+            <span className="flex items-center gap-1.5">
+              <MapPin className="w-4 h-4 text-primary" />
+              {profile.location}
+            </span>
+            <span className="flex items-center gap-1.5">
+              <Briefcase className="w-4 h-4 text-primary" />
+              Open to opportunities
+            </span>
+          </motion.div>
+        </div>
       </motion.div>
     </div>
   );
