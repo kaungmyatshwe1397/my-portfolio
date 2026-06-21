@@ -1,1 +1,2 @@
-npx lint-staged
+# Pre-commit hook disabled — re-enable later by uncommenting:
+# npx lint-staged

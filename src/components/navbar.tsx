@@ -1,12 +1,11 @@
-// Navbar with floating dock navigation and theme toggle
+// Floating glass dock navbar with entrance animation
 
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Moon, Sun, Menu, X } from "lucide-react";
-import { useTheme } from "next-themes";
+import { Menu, X } from "lucide-react";
 import { profile } from "@/lib/seed-data";
 
 // Navigation links
@@ -18,11 +17,10 @@ const navLinks = [
   { href: "#contact", label: "Contact" },
 ];
 
-// Navbar component with scroll detection and theme toggle
+// Floating glass dock navbar
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { theme, setTheme } = useTheme();
   const { scrollY } = useScroll();
 
   // Track scroll position
@@ -40,61 +38,52 @@ export function Navbar() {
   };
 
   return (
-    <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-background/80 backdrop-blur-lg border-b border-border shadow-lg"
-          : "bg-transparent"
-      }`}
-    >
-      <div className="max-w-6xl mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <a
-            href="#hero"
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection("#hero");
-            }}
-            className="text-xl font-bold hover:text-primary transition-colors"
-          >
-            {profile.name.split(" ")[0]}
-          </a>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-1">
-            {navLinks.map((link) => (
-              <Button
-                key={link.href}
-                variant="ghost"
-                size="sm"
-                onClick={() => scrollToSection(link.href)}
-                className="text-sm"
-              >
-                {link.label}
-              </Button>
-            ))}
-          </div>
-
-          {/* Theme Toggle & Mobile Menu */}
-          <div className="flex items-center gap-2">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              aria-label="Toggle theme"
+    <>
+      <motion.nav
+        initial={{ y: -80, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ type: "spring", stiffness: 200, damping: 30, delay: 0.2 }}
+        className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-4xl rounded-2xl transition-all duration-500 ${
+          isScrolled
+            ? "glass-card shadow-2xl border-white/30"
+            : "bg-background/20 backdrop-blur-md border border-white/10 shadow-lg"
+        }`}
+      >
+        <div className="px-4 md:px-6">
+          <div className="flex items-center justify-between h-18">
+            {/* Logo */}
+            <a
+              href="#hero"
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection("#hero");
+              }}
+              className="text-lg font-bold tracking-tight hover:text-primary transition-colors shrink-0"
             >
-              <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-              <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-            </Button>
+              {profile.name.split(" ")[0]}
+              <span className="text-primary">.</span>
+            </a>
 
-            {/* Mobile menu button */}
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center gap-1">
+              {navLinks.map((link) => (
+                <Button
+                  key={link.href}
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => scrollToSection(link.href)}
+                  className="text-sm glass-hover rounded-xl"
+                >
+                  {link.label}
+                </Button>
+              ))}
+            </div>
+
+            {/* Mobile Menu Toggle */}
             <Button
               variant="ghost"
               size="icon"
-              className="md:hidden"
+              className="md:hidden glass-hover rounded-xl"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label="Toggle menu"
             >
@@ -106,30 +95,31 @@ export function Navbar() {
             </Button>
           </div>
         </div>
+      </motion.nav>
 
-        {/* Mobile Navigation */}
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden py-4 border-t border-border"
-          >
-            <div className="flex flex-col gap-2">
-              {navLinks.map((link) => (
-                <Button
-                  key={link.href}
-                  variant="ghost"
-                  onClick={() => scrollToSection(link.href)}
-                  className="justify-start"
-                >
-                  {link.label}
-                </Button>
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </div>
-    </motion.nav>
+      {/* Mobile Navigation — floating dropdown */}
+      {isMobileMenuOpen && (
+        <motion.div
+          initial={{ opacity: 0, y: -10, scale: 0.95 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: -10, scale: 0.95 }}
+          transition={{ duration: 0.2 }}
+          className="fixed top-20 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-sm glass-card rounded-2xl p-4 md:hidden"
+        >
+          <div className="flex flex-col gap-1">
+            {navLinks.map((link) => (
+              <Button
+                key={link.href}
+                variant="ghost"
+                onClick={() => scrollToSection(link.href)}
+                className="justify-start glass-hover rounded-xl"
+              >
+                {link.label}
+              </Button>
+            ))}
+          </div>
+        </motion.div>
+      )}
+    </>
   );
 }
