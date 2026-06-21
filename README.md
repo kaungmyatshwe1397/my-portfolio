@@ -128,5 +128,5 @@ MIT
 ## Author
 
 **Kaung Myat Shwe**
-- GitHub: [@kaung-myat-shwe](https://github.com/kaung-myat-shwe)
+- GitHub: [@kaung-myat-shwe](https://github.com/kaungmyatshwe1397)
 - LinkedIn: [kaungmyatshwe](https://linkedin.com/in/kaungmyatshwe)
