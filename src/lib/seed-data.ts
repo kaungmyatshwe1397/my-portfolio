@@ -11,7 +11,6 @@ export const profile: Profile = {
   avatar: "/images/profilePic.jpg",
   email: "kaungmyatshwe@example.com",
   location: "Myanmar",
-  resumeUrl: "#",
   social: {
     github: "https://github.com/kaungmyatshwe1397",
     linkedin: "https://linkedin.com/in/kaungmyatshwe",

@@ -1,4 +1,4 @@
-// Floating glass dock navbar with entrance animation
+// Floating glass dock navbar
 
 "use client";
 
@@ -43,56 +43,70 @@ export function Navbar() {
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: "spring", stiffness: 200, damping: 30, delay: 0.2 }}
+        whileHover={{ scale: 1.01, y: -2 }}
         className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-4xl rounded-2xl transition-all duration-500 ${
           isScrolled
-            ? "glass-card shadow-2xl border-white/30"
-            : "bg-background/20 backdrop-blur-md border border-white/10 shadow-lg"
+            ? "bg-background/50 backdrop-blur-2xl border border-white/20 shadow-2xl shadow-black/20"
+            : "bg-background/20 backdrop-blur-xl border border-white/10 shadow-lg shadow-black/10"
         }`}
       >
-        <div className="px-4 md:px-6">
-          <div className="flex items-center justify-between h-18">
-            {/* Logo */}
+        <div className="px-5 md:px-8">
+          <div className="flex items-center h-20">
+            {/* Logo — left */}
             <a
               href="#hero"
               onClick={(e) => {
                 e.preventDefault();
                 scrollToSection("#hero");
               }}
-              className="text-lg font-bold tracking-tight hover:text-primary transition-colors shrink-0"
+              className="text-lg font-bold tracking-tight hover:text-amber-500 transition-colors shrink-0 w-20"
             >
               {profile.name.split(" ")[0]}
-              <span className="text-primary">.</span>
+              <span className="text-amber-500">.</span>
             </a>
 
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center gap-1">
+            {/* Desktop Navigation — centered, bigger buttons */}
+            <div className="hidden md:flex flex-1 items-center justify-center gap-3">
               {navLinks.map((link) => (
-                <Button
+                <motion.div
                   key={link.href}
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => scrollToSection(link.href)}
-                  className="text-sm glass-hover rounded-xl"
+                  whileHover={{ scale: 1.12 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
                 >
-                  {link.label}
-                </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => scrollToSection(link.href)}
+                    className="text-sm px-6 py-3 h-auto rounded-xl bg-white/5 backdrop-blur-md border border-white/15 hover:bg-white/10 hover:border-white/25 hover:shadow-lg hover:shadow-black/10 transition-all"
+                  >
+                    {link.label}
+                  </Button>
+                </motion.div>
               ))}
             </div>
 
-            {/* Mobile Menu Toggle */}
-            <Button
-              variant="ghost"
-              size="icon"
-              className="md:hidden glass-hover rounded-xl"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              aria-label="Toggle menu"
-            >
-              {isMobileMenuOpen ? (
-                <X className="h-5 w-5" />
-              ) : (
-                <Menu className="h-5 w-5" />
-              )}
-            </Button>
+            {/* Mobile Menu Toggle — right */}
+            <div className="flex items-center justify-end w-20">
+              <motion.div
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="md:hidden rounded-xl bg-white/5 backdrop-blur-md border border-white/15 hover:bg-white/10 hover:border-white/25"
+                  onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                  aria-label="Toggle menu"
+                >
+                  {isMobileMenuOpen ? (
+                    <X className="h-5 w-5" />
+                  ) : (
+                    <Menu className="h-5 w-5" />
+                  )}
+                </Button>
+              </motion.div>
+            </div>
           </div>
         </div>
       </motion.nav>
@@ -104,18 +118,23 @@ export function Navbar() {
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: -10, scale: 0.95 }}
           transition={{ duration: 0.2 }}
-          className="fixed top-20 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-sm glass-card rounded-2xl p-4 md:hidden"
+          className="fixed top-20 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-sm rounded-2xl bg-background/50 backdrop-blur-2xl border border-white/20 shadow-2xl shadow-black/20 p-4"
         >
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-col gap-2">
             {navLinks.map((link) => (
-              <Button
+              <motion.div
                 key={link.href}
-                variant="ghost"
-                onClick={() => scrollToSection(link.href)}
-                className="justify-start glass-hover rounded-xl"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
               >
-                {link.label}
-              </Button>
+                <Button
+                  variant="ghost"
+                  onClick={() => scrollToSection(link.href)}
+                  className="w-full justify-start rounded-xl bg-white/5 backdrop-blur-md border border-white/15 hover:bg-white/10 hover:border-white/25 py-3 h-auto"
+                >
+                  {link.label}
+                </Button>
+              </motion.div>
             ))}
           </div>
         </motion.div>

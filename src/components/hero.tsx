@@ -7,7 +7,6 @@ import Image from "next/image";
 import { profile } from "@/lib/seed-data";
 import { Particles } from "@/components/ui/particles";
 import { MagicCard } from "@/components/ui/magic-card";
-import { ShimmerButton } from "@/components/ui/shimmer-button";
 import {
   MapPin,
   Mail,
@@ -44,7 +43,7 @@ function SocialLink({
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="p-3 rounded-xl glass-hover border border-white/10 hover:border-primary/30 transition-all"
+      className="p-3 rounded-xl bg-white/5 backdrop-blur-md border border-white/15 hover:bg-white/10 hover:border-amber-500/30 hover:shadow-lg hover:shadow-black/10 transition-all"
       aria-label={label}
     >
       <Icon className="w-5 h-5" />
@@ -80,7 +79,7 @@ export function Hero() {
         className="relative z-10 w-full max-w-5xl grid grid-cols-1 md:grid-cols-3 md:grid-rows-[auto_auto_auto] gap-4"
       >
         {/* ── Avatar Tile (spans 1 col × 2 rows on desktop) ── */}
-        <motion.div variants={tile} custom={0} className="md:row-span-2">
+        <motion.div variants={tile} custom={0} className="md:row-span-2" whileHover={{ scale: 1.03, y: -4 }} transition={{ type: "spring", stiffness: 300, damping: 20 }}>
           <MagicCard
             className="h-full p-6 flex flex-col items-center justify-center gap-4 group"
             gradientSize={250}
@@ -111,7 +110,7 @@ export function Hero() {
         </motion.div>
 
         {/* ── Name + Title Tile ── */}
-        <motion.div variants={tile} custom={1} className="md:col-span-2">
+        <motion.div variants={tile} custom={1} className="md:col-span-2" whileHover={{ scale: 1.03, y: -4 }} transition={{ type: "spring", stiffness: 300, damping: 20 }}>
           <MagicCard
             className="h-full p-6 flex flex-col justify-center"
             gradientSize={300}
@@ -137,7 +136,7 @@ export function Hero() {
         </motion.div>
 
         {/* ── Location + Status Tile ── */}
-        <motion.div variants={tile} custom={2}>
+        <motion.div variants={tile} custom={2} whileHover={{ scale: 1.03, y: -4 }} transition={{ type: "spring", stiffness: 300, damping: 20 }}>
           <MagicCard
             className="h-full p-5 flex flex-col gap-3 justify-center"
             gradientSize={200}
@@ -154,19 +153,11 @@ export function Hero() {
               <Briefcase className="w-4 h-4 text-primary shrink-0" />
               <span>Open to opportunities</span>
             </div>
-            <ShimmerButton
-              className="w-fit text-xs px-4 py-2"
-              shimmerColor="#FFD700"
-              background="oklch(0.269 0 0)"
-              borderRadius="9999px"
-            >
-              Available for hire
-            </ShimmerButton>
           </MagicCard>
         </motion.div>
 
         {/* ── Social Links Tile ── */}
-        <motion.div variants={tile} custom={3}>
+        <motion.div variants={tile} custom={3} whileHover={{ scale: 1.03, y: -4 }} transition={{ type: "spring", stiffness: 300, damping: 20 }}>
           <MagicCard
             className="h-full p-5 flex flex-col gap-3 justify-center"
             gradientSize={200}
@@ -208,7 +199,7 @@ export function Hero() {
         </motion.div>
 
         {/* ── Bio Tile (spans 2 cols on desktop) ── */}
-        <motion.div variants={tile} custom={4} className="md:col-span-2">
+        <motion.div variants={tile} custom={4} className="md:col-span-2" whileHover={{ scale: 1.03, y: -4 }} transition={{ type: "spring", stiffness: 300, damping: 20 }}>
           <MagicCard
             className="h-full p-6 flex flex-col justify-center"
             gradientSize={300}
