@@ -80,8 +80,9 @@ export const technologies: Technology[] = [
   { name: "TypeScript", icon: "FileCode", category: "language", proficiency: 5 },
   { name: "JavaScript", icon: "Braces", category: "language", proficiency: 5 },
   { name: "C", icon: "Terminal", category: "language", proficiency: 3 },
-  { name: "Prisma", icon: "Database", category: "language", proficiency: 4 },
-  { name: "TypeORM", icon: "Database", category: "language", proficiency: 4 },
+  { name: "HTML", icon: "Terminal", category: "language", proficiency: 3 },
+  
+  
 
   // Frameworks
   { name: "React", icon: "Atom", category: "framework", proficiency: 5 },
@@ -99,6 +100,8 @@ export const technologies: Technology[] = [
   { name: "PostgreSQL", icon: "Database", category: "database", proficiency: 4 },
   { name: "Bettersqlite", icon: "HardDrive", category: "database", proficiency: 4 },
   { name: "Redis", icon: "Zap", category: "database", proficiency: 3 },
+  { name: "Prisma", icon: "Database", category: "database", proficiency: 4 },
+  { name: "TypeORM", icon: "Database", category: "database", proficiency: 4 },
 
   // Cloud
   { name: "AWS", icon: "Cloud", category: "cloud", proficiency: 3 },

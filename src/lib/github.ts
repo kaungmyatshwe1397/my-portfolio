@@ -1,6 +1,6 @@
 // GitHub API client with caching and fallback
 
-import type { GitHubProfile, GitHubRepo, GitHubEvent } from "./types";
+import type { GitHubProfile, GitHubRepo, GitHubEvent, ProjectRepo } from "./types";
 import { githubFallback } from "./seed-data";
 
 // GitHub API base URL
@@ -39,7 +39,7 @@ export async function fetchGitHubProfile(): Promise<GitHubProfile> {
 export async function fetchGitHubRepos(): Promise<GitHubRepo[]> {
   try {
     const response = await fetch(
-      `${GITHUB_API}/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=10`,
+      `${GITHUB_API}/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=100`,
       { headers, next: { revalidate: 3600 } }
     );
 
@@ -53,6 +53,35 @@ export async function fetchGitHubRepos(): Promise<GitHubRepo[]> {
     console.warn("Failed to fetch GitHub repos:", error);
     return [];
   }
+}
+
+// Convert GitHubRepo to display-friendly ProjectRepo
+export function repoToProject(repo: GitHubRepo): ProjectRepo {
+  // Humanize repo name: "my-portfolio" → "My Portfolio"
+  const title = repo.name
+    .split(/[-_]/)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+
+  // Build tags from language + topics
+  const tags: string[] = [];
+  if (repo.language) tags.push(repo.language);
+  if (repo.topics) tags.push(...repo.topics);
+
+  return {
+    id: String(repo.id),
+    title,
+    description: repo.description || "No description provided.",
+    tags,
+    liveUrl: repo.homepage || undefined,
+    sourceUrl: repo.html_url,
+    featured: repo.stargazers_count > 0,
+    sortOrder: new Date(repo.updated_at).getTime(),
+    stars: repo.stargazers_count,
+    forks: 0, // not available in list endpoint
+    language: repo.language || undefined,
+    updatedAt: repo.updated_at,
+  };
 }
 
 // Fetch GitHub recent events with fallback

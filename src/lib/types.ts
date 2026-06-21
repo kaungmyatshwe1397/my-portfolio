@@ -97,3 +97,19 @@ export interface GitHubData {
   loading: boolean;
   error: string | null;
 }
+
+// Enriched project repo for display (derived from GitHubRepo or seed Project)
+export interface ProjectRepo {
+  id: string;
+  title: string;
+  description: string;
+  tags: string[];
+  liveUrl?: string;
+  sourceUrl?: string;
+  featured: boolean;
+  sortOrder: number;
+  stars: number;
+  forks: number;
+  language?: string;
+  updatedAt: string;
+}
