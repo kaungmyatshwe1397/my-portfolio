@@ -40,6 +40,7 @@ export interface Technology {
   icon: string;
   category: TechCategory;
   proficiency?: number; // 1-5
+  color?: string; // Brand color hex
 }
 
 // Technology categories

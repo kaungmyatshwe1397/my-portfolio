@@ -1,140 +1,83 @@
-// Tech stack section with technology badges and category grouping
+// Tech stack section — single marquee of floating brand logos
 
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 import { technologies } from "@/lib/seed-data";
-import { Badge } from "@/components/ui/badge";
-import { Card } from "@/components/ui/card";
-import type { TechCategory } from "@/lib/types";
-import {
-  FileCode,
-  Braces,
-  Terminal,
-  Database,
-  Atom,
-  Layers,
-  Server,
-  Route,
-  Paintbrush,
-  GitBranch,
-  Container,
-  Code,
-  HardDrive,
-  Zap,
-  Cloud,
-  Triangle,
-} from "lucide-react";
+import { Marquee } from "@/components/ui/marquee";
+import { Code } from "lucide-react";
 
-// Map icon names to Lucide components
-const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
-  FileCode,
-  Braces,
-  Terminal,
-  Database,
-  Atom,
-  Layers,
-  Server,
-  Route,
-  Paintbrush,
-  GitBranch,
-  Container,
-  Code,
-  HardDrive,
-  Zap,
-  Cloud,
-  Triangle,
-};
+// Import all icon subsets from react-icons
+import * as siIcons from "react-icons/si";
+import * as faIcons from "react-icons/fa";
+import * as vscIcons from "react-icons/vsc";
 
-// Category display names
-const categoryNames: Record<TechCategory, string> = {
-  language: "Languages",
-  framework: "Frameworks & Libraries",
-  tool: "Tools",
-  database: "Databases",
-  cloud: "Cloud & Deployment",
-  design: "Design",
+// Merge all icon subsets into one lookup
+const allIcons: Record<string, React.ComponentType<{ className?: string; size?: number }>> = {
+  ...siIcons,
+  ...faIcons,
+  ...vscIcons,
 };
 
 // Get icon component by name
-function getIcon(name: string) {
-  return iconMap[name] || Code;
+function getIcon(name: string): React.ComponentType<{ className?: string; size?: number; style?: React.CSSProperties }> {
+  return (allIcons[name] || Code) as React.ComponentType<{ className?: string; size?: number; style?: React.CSSProperties }>;
 }
 
-// Group technologies by category
-function groupByCategory() {
-  const grouped: Record<string, typeof technologies> = {};
-  technologies.forEach((tech) => {
-    if (!grouped[tech.category]) {
-      grouped[tech.category] = [];
-    }
-    grouped[tech.category].push(tech);
-  });
-  return grouped;
-}
-
-// Animation variants for stagger effect
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0 },
-};
-
-// Tech stack section component
-export function TechStack() {
-  const grouped = groupByCategory();
+// Single floating logo
+function LogoItem({ tech, index }: { tech: (typeof technologies)[number]; index: number }) {
+  const Icon = getIcon(tech.icon);
+  const brandColor = tech.color || "var(--primary)";
 
   return (
     <motion.div
-      variants={containerVariants}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-100px" }}
-      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+      className="flex items-center justify-center p-4 cursor-default select-none"
+      animate={{ y: [0, -8, 0] }}
+      transition={{
+        duration: 2.5 + (index % 4) * 0.4,
+        repeat: Infinity,
+        ease: "easeInOut",
+        delay: (index % 6) * 0.2,
+      }}
+      whileHover={{
+        scale: 1.25,
+        rotate: 360,
+        transition: { type: "spring" as const, stiffness: 200, damping: 10 },
+      }}
     >
-      {Object.entries(grouped).map(([category, techs]) => (
-        <motion.div key={category} variants={itemVariants}>
-          <Card className="glass-card p-6 h-full">
-            <h3 className="text-lg font-semibold mb-4 text-primary">
-              {categoryNames[category as TechCategory] || category}
-            </h3>
-            <div className="flex flex-wrap gap-2">
-              {techs.map((tech) => {
-                const Icon = getIcon(tech.icon);
-                return (
-                  <motion.div
-                    key={tech.name}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <Badge
-                      variant="outline"
-                      className="flex items-center gap-2 px-3 py-1.5 hover:bg-primary/10 transition-colors cursor-default"
-                    >
-                      <Icon className="w-4 h-4" />
-                      <span>{tech.name}</span>
-                      {tech.proficiency && (
-                        <span className="text-xs text-muted-foreground">
-                          {"★".repeat(tech.proficiency)}
-                        </span>
-                      )}
-                    </Badge>
-                  </motion.div>
-                );
-              })}
-            </div>
-          </Card>
-        </motion.div>
-      ))}
+      <Icon className="w-10 h-10" style={{ color: brandColor }} />
+    </motion.div>
+  );
+}
+
+export function TechStack() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  // Split technologies into two rows for visual variety
+  const half = Math.ceil(technologies.length / 2);
+  const topRow = technologies.slice(0, half);
+  const bottomRow = technologies.slice(half);
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0 }}
+      animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+      transition={{ duration: 0.6 }}
+      className="space-y-4"
+    >
+      <Marquee pauseOnHover className="[--duration:25s]">
+        {topRow.map((tech, i) => (
+          <LogoItem key={tech.name} tech={tech} index={i} />
+        ))}
+      </Marquee>
+      <Marquee pauseOnHover reverse className="[--duration:30s]">
+        {bottomRow.map((tech, i) => (
+          <LogoItem key={tech.name} tech={tech} index={i + half} />
+        ))}
+      </Marquee>
     </motion.div>
   );
 }

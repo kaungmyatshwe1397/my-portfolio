@@ -76,36 +76,34 @@ export const projects: Project[] = [
 // Technology stack
 export const technologies: Technology[] = [
   // Languages
-  { name: "TypeScript", icon: "FileCode", category: "language", proficiency: 5 },
-  { name: "JavaScript", icon: "Braces", category: "language", proficiency: 5 },
-  { name: "C", icon: "Terminal", category: "language", proficiency: 3 },
-  { name: "HTML", icon: "Terminal", category: "language", proficiency: 3 },
-  
-  
+  { name: "TypeScript", icon: "SiTypescript", category: "language", proficiency: 5, color: "#3178C6" },
+  { name: "JavaScript", icon: "SiJavascript", category: "language", proficiency: 5, color: "#F7DF1E" },
+  { name: "C", icon: "SiC", category: "language", proficiency: 3, color: "#A8B9CC" },
+  { name: "HTML", icon: "SiHtml5", category: "language", proficiency: 3, color: "#E34F26" },
 
   // Frameworks
-  { name: "React", icon: "Atom", category: "framework", proficiency: 5 },
-  { name: "Next.js", icon: "Layers", category: "framework", proficiency: 5 },
-  { name: "Node.js", icon: "Server", category: "framework", proficiency: 4 },
-  { name: "Express", icon: "Route", category: "framework", proficiency: 4 },
-  { name: "Tailwind CSS", icon: "Paintbrush", category: "framework", proficiency: 5 },
+  { name: "React", icon: "SiReact", category: "framework", proficiency: 5, color: "#61DAFB" },
+  { name: "Next.js", icon: "SiNextdotjs", category: "framework", proficiency: 5, color: "#000000" },
+  { name: "Node.js", icon: "SiNodedotjs", category: "framework", proficiency: 4, color: "#339933" },
+  { name: "Express", icon: "SiExpress", category: "framework", proficiency: 4, color: "#000000" },
+  { name: "Tailwind CSS", icon: "SiTailwindcss", category: "framework", proficiency: 5, color: "#06B6D4" },
 
   // Tools
-  { name: "Git", icon: "GitBranch", category: "tool", proficiency: 5 },
-  { name: "Docker", icon: "Container", category: "tool", proficiency: 3 },
-  { name: "VS Code", icon: "Code", category: "tool", proficiency: 5 },
+  { name: "Git", icon: "SiGit", category: "tool", proficiency: 5, color: "#F05032" },
+  { name: "Docker", icon: "SiDocker", category: "tool", proficiency: 3, color: "#2496ED" },
+  { name: "VS Code", icon: "VscCode", category: "tool", proficiency: 5, color: "#007ACC" },
 
   // Databases
-  { name: "PostgreSQL", icon: "Database", category: "database", proficiency: 4 },
-  { name: "Bettersqlite", icon: "HardDrive", category: "database", proficiency: 4 },
-  { name: "Redis", icon: "Zap", category: "database", proficiency: 3 },
-  { name: "Prisma", icon: "Database", category: "database", proficiency: 4 },
-  { name: "TypeORM", icon: "Database", category: "database", proficiency: 4 },
+  { name: "PostgreSQL", icon: "SiPostgresql", category: "database", proficiency: 4, color: "#4169E1" },
+  { name: "SQLite", icon: "SiSqlite", category: "database", proficiency: 4, color: "#003B57" },
+  { name: "Redis", icon: "SiRedis", category: "database", proficiency: 3, color: "#DC382D" },
+  { name: "Prisma", icon: "SiPrisma", category: "database", proficiency: 4, color: "#2D3748" },
+  { name: "TypeORM", icon: "SiTypeorm", category: "database", proficiency: 4, color: "#FE0803" },
 
   // Cloud
-  { name: "AWS", icon: "Cloud", category: "cloud", proficiency: 3 },
-  { name: "Vercel", icon: "Triangle", category: "cloud", proficiency: 5 },
-  { name: "GoogleCloud", icon: "Cloud", category: "cloud", proficiency: 5 },
+  { name: "AWS", icon: "FaAws", category: "cloud", proficiency: 3, color: "#FF9900" },
+  { name: "Vercel", icon: "SiVercel", category: "cloud", proficiency: 5, color: "#000000" },
+  { name: "Google Cloud", icon: "SiGooglecloud", category: "cloud", proficiency: 5, color: "#4285F4" },
 ];
 
 // GitHub fallback data (used when API is unavailable)
