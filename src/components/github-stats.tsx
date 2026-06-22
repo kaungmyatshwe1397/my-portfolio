@@ -1,22 +1,21 @@
-// GitHub stats section with profile info, repos, and activity
+// GitHub stats section with profile info, contribution graph, and activity
 
 "use client";
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { ActivityCalendar } from "react-activity-calendar";
 import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Terminal, AnimatedSpan, TypingAnimation } from "@/components/ui/terminal";
-import { GitBranch, Star, GitFork, Users, ExternalLink } from "lucide-react";
+import { Star, GitFork, Users, GitCommit } from "lucide-react";
 import { githubFallback } from "@/lib/seed-data";
-import type { GitHubProfile, GitHubRepo, GitHubEvent } from "@/lib/types";
+import type { GitHubProfile, GitHubRepo, GitHubEvent, ContributionCalendar } from "@/lib/types";
 import {
   fetchGitHubProfile,
   fetchGitHubRepos,
   fetchGitHubEvents,
   calculateTotalStars,
-  getTopRepos,
   getRelativeTime,
 } from "@/lib/github";
 
@@ -40,6 +39,22 @@ function getTerminalCommand(eventType: string): string {
   }
 }
 
+// Transform GitHub API contribution data into react-activity-calendar format
+function transformContributions(data: ContributionCalendar) {
+  const levels = ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"];
+  return data.weeks.flatMap((week) =>
+    week.contributionDays.map((day) => ({
+      date: day.date,
+      count: day.contributionCount,
+      level: day.contributionCount === 0 ? 0
+        : day.contributionCount <= 3 ? 1
+        : day.contributionCount <= 6 ? 2
+        : day.contributionCount <= 9 ? 3
+        : 4,
+    }))
+  );
+}
+
 // Loading skeleton for GitHub stats
 function GitHubSkeleton() {
   return (
@@ -56,7 +71,7 @@ function GitHubSkeleton() {
 }
 
 // GitHub stats section component
-export function GitHubStats() {
+export function GitHubStats({ contributions }: { contributions: ContributionCalendar | null }) {
   const [profile, setProfile] = useState<GitHubProfile | null>(null);
   const [repos, setRepos] = useState<GitHubRepo[]>([]);
   const [events, setEvents] = useState<GitHubEvent[]>([]);
@@ -92,117 +107,78 @@ export function GitHubStats() {
   }
 
   const totalStars = calculateTotalStars(repos);
-  const topRepos = getTopRepos(repos, 5);
+  const contributionData = contributions ? transformContributions(contributions) : [];
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-10">
       {/* Stats cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.1 }}
-        >
-          <Card className="glass-card p-6 text-center">
-            <Users className="w-8 h-8 mx-auto mb-2 text-primary" />
-            <p className="text-3xl font-bold">{profile?.followers || 0}</p>
-            <p className="text-sm text-muted-foreground">Followers</p>
-          </Card>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
-        >
-          <Card className="glass-card p-6 text-center">
-            <GitFork className="w-8 h-8 mx-auto mb-2 text-primary" />
-            <p className="text-3xl font-bold">{profile?.public_repos || 0}</p>
-            <p className="text-sm text-muted-foreground">Repositories</p>
-          </Card>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.3 }}
-        >
-          <Card className="glass-card p-6 text-center">
-            <Star className="w-8 h-8 mx-auto mb-2 text-yellow-500" />
-            <p className="text-3xl font-bold">{totalStars}</p>
-            <p className="text-sm text-muted-foreground">Total Stars</p>
-          </Card>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.4 }}
-        >
-          <Card className="glass-card p-6 text-center">
-            <GitFork className="w-8 h-8 mx-auto mb-2 text-green-500" />
-            <p className="text-3xl font-bold">{topRepos.length}</p>
-            <p className="text-sm text-muted-foreground">Top Repos</p>
-          </Card>
-        </motion.div>
+        {[
+          { icon: Users, value: profile?.followers || 0, label: "Followers", color: "text-primary", delay: 0.1 },
+          { icon: GitFork, value: profile?.public_repos || 0, label: "Repositories", color: "text-primary", delay: 0.2 },
+          { icon: Star, value: totalStars, label: "Total Stars", color: "text-yellow-500", delay: 0.3 },
+          { icon: GitCommit, value: contributions?.totalContributions || 0, label: "Contributions", color: "text-green-500", delay: 0.4 },
+        ].map((stat) => (
+          <motion.div
+            key={stat.label}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: stat.delay }}
+          >
+            <Card className="glass-card p-6 text-center">
+              <stat.icon className={`w-8 h-8 mx-auto mb-2 ${stat.color}`} />
+              <p className="text-3xl font-bold">{stat.value}</p>
+              <p className="text-sm text-muted-foreground">{stat.label}</p>
+            </Card>
+          </motion.div>
+        ))}
       </div>
 
-      {/* Top Repositories */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-      >
-        <h3 className="text-xl font-semibold mb-4">Top Repositories</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {topRepos.map((repo) => (
-            <Card key={repo.id} className="glass-card p-4 hover:bg-background/80 transition-colors">
-              <div className="flex justify-between items-start mb-2">
-                <a
-                  href={repo.html_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-medium hover:text-primary transition-colors flex items-center gap-2"
-                >
-                  {repo.name}
-                  <ExternalLink className="w-4 h-4" />
-                </a>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <span className="flex items-center gap-1">
-                    <Star className="w-4 h-4" />
-                    {repo.stargazers_count}
-                  </span>
-                </div>
+      {/* Contribution Graph & Recent Activity side by side on large screens */}
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+        {/* Contribution Graph — takes more space */}
+        {contributionData.length > 0 && (
+          <motion.div
+            className="lg:col-span-3"
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <Card className="glass-card p-6 h-full">
+              <h3 className="text-xl font-semibold mb-4">Contribution Graph</h3>
+              <div className="overflow-x-auto">
+                <ActivityCalendar
+                  data={contributionData}
+                  theme={{
+                    light: ["#ebedf0", "#9be9a8", "#40c463", "#30a14e", "#216e39"],
+                    dark: ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"],
+                  }}
+                  colorScheme="dark"
+                  blockSize={13}
+                  blockMargin={3}
+                  fontSize={12}
+                  showColorLegend
+                  showMonthLabels
+                  showTotalCount={false}
+                />
               </div>
-              {repo.description && (
-                <p className="text-sm text-muted-foreground line-clamp-2">
-                  {repo.description}
-                </p>
-              )}
-              {repo.language && (
-                <Badge variant="outline" className="mt-2 text-xs">
-                  {repo.language}
-                </Badge>
-              )}
             </Card>
-          ))}
-        </div>
-      </motion.div>
+          </motion.div>
+        )}
 
-      {/* Recent Activity */}
-      {events.length > 0 && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-        >
-          <h3 className="text-xl font-semibold mb-4">Recent Activity</h3>
-          <div className="flex justify-center">
-            <Terminal className="max-w-2xl w-full" sequence>
+        {/* Recent Activity — takes less space */}
+        {events.length > 0 && (
+          <motion.div
+            className={contributionData.length > 0 ? "lg:col-span-2" : "lg:col-span-5"}
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.15 }}
+          >
+            <h3 className="text-xl font-semibold mb-4">Recent Activity</h3>
+            <Terminal className="max-w-full w-full" sequence>
               {events.slice(0, 5).flatMap((event) => {
                 const cmd = getTerminalCommand(event.type);
                 const time = getRelativeTime(event.created_at);
@@ -217,9 +193,9 @@ export function GitHubStats() {
                 ];
               })}
             </Terminal>
-          </div>
-        </motion.div>
-      )}
+          </motion.div>
+        )}
+      </div>
 
       {/* Error fallback */}
       {error && (

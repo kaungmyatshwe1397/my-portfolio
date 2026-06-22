@@ -9,13 +9,16 @@ import { Footer } from "@/components/footer";
 import { Navbar } from "@/components/navbar";
 import { LoadingScreen } from "@/components/loading-screen";
 import { Meteors } from "@/components/ui/meteors";
+import { SectionReveal } from "@/components/section-reveal";
+import { fetchGitHubContributions } from "@/lib/github";
 
 // Main page component with all portfolio sections
-export default function Home() {
+export default async function Home() {
+  const contributions = await fetchGitHubContributions();
   return (
     <main className="relative min-h-screen">
       {/* Unified page background */}
-      <div className="fixed inset-0 -z-20 bg-gradient-to-br from-primary/20 via-background to-secondary/20 animate-gradient" />
+      <div className="fixed inset-0 -z-20 bg-gradient-to-br from-primary/10 via-background to-secondary/10 animate-gradient" />
 
       {/* Meteor effect */}
       <div className="fixed inset-0 -z-10 overflow-hidden">
@@ -34,44 +37,52 @@ export default function Home() {
       </section>
 
       {/* Tech Stack Section */}
-      <section id="skills" className="py-20 px-4 md:px-8">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
-            Tech Stack
-          </h2>
-          <TechStack />
-        </div>
-      </section>
+      <SectionReveal>
+        <section id="skills" className="py-20 px-4 md:px-8">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+              Tech Stack
+            </h2>
+            <TechStack />
+          </div>
+        </section>
+      </SectionReveal>
 
       {/* Projects Section */}
-      <section id="projects" className="py-20 px-4 md:px-8">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
-            Projects
-          </h2>
-          <Projects />
-        </div>
-      </section>
+      <SectionReveal>
+        <section id="projects" className="py-20 px-4 md:px-8">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+              Projects
+            </h2>
+            <Projects />
+          </div>
+        </section>
+      </SectionReveal>
 
       {/* GitHub Stats Section */}
-      <section id="github" className="py-20 px-4 md:px-8">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
-            GitHub Activity
-          </h2>
-          <GitHubStats />
-        </div>
-      </section>
+      <SectionReveal>
+        <section id="github" className="py-20 px-4 md:px-8">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+              GitHub Activity
+            </h2>
+            <GitHubStats contributions={contributions} />
+          </div>
+        </section>
+      </SectionReveal>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 px-4 md:px-8">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
-            Get In Touch
-          </h2>
-          <Contact />
-        </div>
-      </section>
+      <SectionReveal>
+        <section id="contact" className="py-20 px-4 md:px-8">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+              Get In Touch
+            </h2>
+            <Contact />
+          </div>
+        </section>
+      </SectionReveal>
 
       {/* Footer */}
       <Footer />

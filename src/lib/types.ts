@@ -90,6 +90,23 @@ export interface GitHubEvent {
   payload: Record<string, unknown>;
 }
 
+// GitHub contribution graph data (from GraphQL API)
+export interface ContributionDay {
+  date: string;
+  contributionCount: number;
+  color: string;
+}
+
+export interface ContributionWeek {
+  firstDay: string;
+  contributionDays: ContributionDay[];
+}
+
+export interface ContributionCalendar {
+  totalContributions: number;
+  weeks: ContributionWeek[];
+}
+
 // Enriched project repo for display (derived from GitHubRepo or seed Project)
 export interface ProjectRepo {
   id: string;

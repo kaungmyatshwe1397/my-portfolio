@@ -1,6 +1,6 @@
 // GitHub API client with caching and fallback
 
-import type { GitHubProfile, GitHubRepo, GitHubEvent, ProjectRepo } from "./types";
+import type { GitHubProfile, GitHubRepo, GitHubEvent, ProjectRepo, ContributionCalendar } from "./types";
 import { githubFallback } from "./seed-data";
 
 // GitHub API base URL
@@ -145,4 +145,53 @@ export function getRelativeTime(dateString: string): string {
   if (hours < 24) return `${hours}h ago`;
   if (days < 30) return `${days}d ago`;
   return date.toLocaleDateString();
+}
+
+// Fetch GitHub contribution calendar via GraphQL API
+export async function fetchGitHubContributions(): Promise<ContributionCalendar | null> {
+  if (!GITHUB_TOKEN) {
+    console.warn("No GITHUB_TOKEN set, cannot fetch contributions");
+    return null;
+  }
+
+  try {
+    const response = await fetch("https://api.github.com/graphql", {
+      method: "POST",
+      headers: {
+        ...headers,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        query: `{
+          user(login: "${GITHUB_USERNAME}") {
+            contributionsCollection {
+              contributionCalendar {
+                totalContributions
+                weeks {
+                  firstDay
+                  contributionDays {
+                    date
+                    contributionCount
+                    color
+                  }
+                }
+              }
+            }
+          }
+        }`,
+      }),
+      next: { revalidate: 3600 },
+    });
+
+    if (!response.ok) {
+      console.warn("GitHub GraphQL API error:", response.status);
+      return null;
+    }
+
+    const data = await response.json();
+    return data?.data?.user?.contributionsCollection?.contributionCalendar ?? null;
+  } catch (error) {
+    console.warn("Failed to fetch GitHub contributions:", error);
+    return null;
+  }
 }
