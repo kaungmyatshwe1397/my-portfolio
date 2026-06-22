@@ -109,27 +109,6 @@ export function calculateTotalStars(repos: GitHubRepo[]): number {
   return repos.reduce((total, repo) => total + repo.stargazers_count, 0);
 }
 
-// Get top repositories by stars
-export function getTopRepos(repos: GitHubRepo[], count: number = 5): GitHubRepo[] {
-  return [...repos]
-    .filter((repo) => !repo.fork)
-    .sort((a, b) => b.stargazers_count - a.stargazers_count)
-    .slice(0, count);
-}
-
-// Format event type for display
-export function formatEventType(type: string): string {
-  const eventMap: Record<string, string> = {
-    PushEvent: "Pushed to",
-    CreateEvent: "Created",
-    PullRequestEvent: "PR in",
-    IssuesEvent: "Issue in",
-    ForkEvent: "Forked",
-    WatchEvent: "Starred",
-  };
-  return eventMap[type] || type;
-}
-
 // Get relative time string (e.g., "2 hours ago")
 export function getRelativeTime(dateString: string): string {
   const date = new Date(dateString);

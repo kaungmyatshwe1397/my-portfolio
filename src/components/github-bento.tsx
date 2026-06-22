@@ -2,8 +2,8 @@
 
 "use client";
 
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useState, useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import { ActivityCalendar } from "react-activity-calendar";
 import { BentoGrid } from "@/components/ui/bento-grid";
 import { AnimatedList } from "@/components/ui/animated-list";
@@ -43,6 +43,28 @@ import {
   calculateTotalStars,
   getRelativeTime,
 } from "@/lib/github";
+
+// Wrapper that force-remounts children on each re-entry into the viewport,
+// resetting all internal state so animations replay from scratch.
+function ScrollRepeat({ children }: { children: React.ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { amount: 0.2 });
+  const wasInView = useRef(false);
+  const reEntryCount = useRef(0);
+
+  if (isInView && !wasInView.current) {
+    reEntryCount.current += 1;
+  }
+  wasInView.current = isInView;
+
+  return (
+    <div ref={ref} className="contents">
+      <div key={reEntryCount.current} className="contents">
+        {children}
+      </div>
+    </div>
+  );
+}
 
 // Map GitHub event types to terminal-style git commands
 function getTerminalCommand(eventType: string): string {
@@ -298,13 +320,15 @@ export function GitHubBento({
           <h3 className="text-sm font-semibold">Pinned Projects</h3>
         </div>
         <div className="flex-1 overflow-y-auto p-3 space-y-2">
-          <AnimatedList delay={800} className="gap-2">
-            {pinnedRepos.map((repo) => (
-              <div key={repo.id}>
-                <ProjectRow project={repo} />
-              </div>
-            ))}
-          </AnimatedList>
+          <ScrollRepeat>
+            <AnimatedList delay={800} className="gap-2">
+              {pinnedRepos.map((repo) => (
+                <div key={repo.id}>
+                  <ProjectRow project={repo} />
+                </div>
+              ))}
+            </AnimatedList>
+          </ScrollRepeat>
         </div>
         <div className="pointer-events-none absolute inset-0 transform-gpu transition-all duration-300 group-hover:bg-black/3 group-hover:dark:bg-neutral-800/10" />
       </div>
@@ -343,28 +367,30 @@ export function GitHubBento({
         </div>
         <div className="flex-1 p-4 overflow-y-auto">
           {events.length > 0 ? (
-            <Terminal className="max-w-full w-full" sequence>
-              {events.slice(0, 5).flatMap((event) => {
-                const cmd = getTerminalCommand(event.type);
-                const time = getRelativeTime(event.created_at);
-                const repo =
-                  event.repo.name.split("/").pop() || event.repo.name;
-                return [
-                  <TypingAnimation
-                    key={`${event.id}-cmd`}
-                    className="text-emerald-400 font-mono"
-                  >
-                    {`$ ${cmd} ${repo}`}
-                  </TypingAnimation>,
-                  <AnimatedSpan
-                    key={`${event.id}-out`}
-                    className="text-slate-400 text-xs pl-4"
-                  >
-                    ✔ {event.repo.name} — {time}
-                  </AnimatedSpan>,
-                ];
-              })}
-            </Terminal>
+            <ScrollRepeat>
+              <Terminal className="max-w-full w-full" sequence>
+                {events.slice(0, 5).flatMap((event) => {
+                  const cmd = getTerminalCommand(event.type);
+                  const time = getRelativeTime(event.created_at);
+                  const repo =
+                    event.repo.name.split("/").pop() || event.repo.name;
+                  return [
+                    <TypingAnimation
+                      key={`${event.id}-cmd`}
+                      className="text-emerald-400 font-mono"
+                    >
+                      {`$ ${cmd} ${repo}`}
+                    </TypingAnimation>,
+                    <AnimatedSpan
+                      key={`${event.id}-out`}
+                      className="text-slate-400 text-xs pl-4"
+                    >
+                      ✔ {event.repo.name} — {time}
+                    </AnimatedSpan>,
+                  ];
+                })}
+              </Terminal>
+            </ScrollRepeat>
           ) : (
             <p className="text-sm text-muted-foreground">No recent activity</p>
           )}

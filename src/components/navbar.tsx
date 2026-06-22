@@ -7,7 +7,6 @@ import { Dock, DockIcon } from "@/components/ui/dock";
 import {
   Home,
   Code2,
-  FolderOpen,
   GitFork,
   Mail,
 } from "lucide-react";
@@ -16,7 +15,6 @@ import {
 const navLinks = [
   { href: "#hero", label: "Home", icon: Home },
   { href: "#skills", label: "Skills", icon: Code2 },
-  { href: "#projects", label: "Projects", icon: FolderOpen },
   { href: "#github", label: "GitHub", icon: GitFork },
   { href: "#contact", label: "Contact", icon: Mail },
 ];

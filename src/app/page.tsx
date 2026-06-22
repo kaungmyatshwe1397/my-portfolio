@@ -9,6 +9,7 @@ import { Navbar } from "@/components/navbar";
 import { LoadingScreen } from "@/components/loading-screen";
 import { Meteors } from "@/components/ui/meteors";
 import { SectionReveal } from "@/components/section-reveal";
+import { AnimatedShinyText } from "@/components/ui/animated-shiny-text";
 import { fetchGitHubContributions, fetchPinnedRepos } from "@/lib/github";
 
 // Main page component with all portfolio sections
@@ -44,7 +45,7 @@ export default async function Home() {
         <section id="skills" className="py-20 px-4 md:px-8">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
-              Tech Stack
+              <AnimatedShinyText className="inline-flex text-foreground">Tech Stack</AnimatedShinyText>
             </h2>
             <TechStack />
           </div>
@@ -56,7 +57,7 @@ export default async function Home() {
         <section id="github" className="py-20 px-4 md:px-8">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
-              GitHub Activity
+              <AnimatedShinyText className="inline-flex text-foreground">GitHub Activity</AnimatedShinyText>
             </h2>
             <GitHubBento
               contributions={contributions}
@@ -71,7 +72,7 @@ export default async function Home() {
         <section id="contact" className="py-20 px-4 md:px-8">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
-              Get In Touch
+              <AnimatedShinyText className="inline-flex text-foreground">Get In Touch</AnimatedShinyText>
             </h2>
             <Contact />
           </div>
