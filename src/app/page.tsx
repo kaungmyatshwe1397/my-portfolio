@@ -2,19 +2,22 @@
 
 import { Hero } from "@/components/hero";
 import { TechStack } from "@/components/tech-stack";
-import { Projects } from "@/components/projects";
-import { GitHubStats } from "@/components/github-stats";
+import { GitHubBento } from "@/components/github-bento";
 import { Contact } from "@/components/contact";
 import { Footer } from "@/components/footer";
 import { Navbar } from "@/components/navbar";
 import { LoadingScreen } from "@/components/loading-screen";
 import { Meteors } from "@/components/ui/meteors";
 import { SectionReveal } from "@/components/section-reveal";
-import { fetchGitHubContributions } from "@/lib/github";
+import { fetchGitHubContributions, fetchPinnedRepos } from "@/lib/github";
 
 // Main page component with all portfolio sections
 export default async function Home() {
-  const contributions = await fetchGitHubContributions();
+  const [contributions, pinnedRepos] = await Promise.all([
+    fetchGitHubContributions(),
+    fetchPinnedRepos(),
+  ]);
+
   return (
     <main className="relative min-h-screen">
       {/* Unified page background */}
@@ -48,26 +51,17 @@ export default async function Home() {
         </section>
       </SectionReveal>
 
-      {/* Projects Section */}
-      <SectionReveal>
-        <section id="projects" className="py-20 px-4 md:px-8">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
-              Projects
-            </h2>
-            <Projects />
-          </div>
-        </section>
-      </SectionReveal>
-
-      {/* GitHub Stats Section */}
+      {/* GitHub Bento Section — projects, stats, contributions, activity */}
       <SectionReveal>
         <section id="github" className="py-20 px-4 md:px-8">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
               GitHub Activity
             </h2>
-            <GitHubStats contributions={contributions} />
+            <GitHubBento
+              contributions={contributions}
+              pinnedRepos={pinnedRepos}
+            />
           </div>
         </section>
       </SectionReveal>

@@ -1,6 +1,6 @@
 // GitHub API client with caching and fallback
 
-import type { GitHubProfile, GitHubRepo, GitHubEvent, ProjectRepo, ContributionCalendar } from "./types";
+import type { GitHubProfile, GitHubRepo, GitHubEvent, ProjectRepo, ContributionCalendar, PinnedRepo } from "./types";
 import { githubFallback } from "./seed-data";
 
 // GitHub API base URL
@@ -145,6 +145,85 @@ export function getRelativeTime(dateString: string): string {
   if (hours < 24) return `${hours}h ago`;
   if (days < 30) return `${days}d ago`;
   return date.toLocaleDateString();
+}
+
+// Fetch pinned repositories via GraphQL API
+export async function fetchPinnedRepos(): Promise<ProjectRepo[]> {
+  if (!GITHUB_TOKEN) {
+    console.warn("No GITHUB_TOKEN set, cannot fetch pinned repos");
+    return [];
+  }
+
+  try {
+    const response = await fetch("https://api.github.com/graphql", {
+      method: "POST",
+      headers: {
+        ...headers,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        query: `{
+          user(login: "${GITHUB_USERNAME}") {
+            pinnedItems(first: 6) {
+              nodes {
+                ... on Repository {
+                  name
+                  description
+                  url
+                  homepageUrl
+                  stargazerCount
+                  forkCount
+                  primaryLanguage { name }
+                  repositoryTopics(first: 10) { nodes { topic { name } } }
+                  updatedAt
+                }
+              }
+            }
+          }
+        }`,
+      }),
+      next: { revalidate: 3600 },
+    });
+
+    if (!response.ok) {
+      console.warn("GitHub GraphQL API error for pinned repos:", response.status);
+      return [];
+    }
+
+    const data = await response.json();
+    const nodes = data?.data?.user?.pinnedItems?.nodes ?? [];
+
+    return nodes.map((repo: PinnedRepo) => {
+      const title = repo.name
+        .split(/[-_]/)
+        .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+        .join(" ");
+
+      const tags: string[] = [];
+      if (repo.primaryLanguage?.name) tags.push(repo.primaryLanguage.name);
+      if (repo.repositoryTopics?.nodes) {
+        tags.push(...repo.repositoryTopics.nodes.map((t) => t.topic.name));
+      }
+
+      return {
+        id: repo.name,
+        title,
+        description: repo.description || "No description provided.",
+        tags,
+        liveUrl: repo.homepageUrl || undefined,
+        sourceUrl: repo.url,
+        featured: repo.stargazerCount > 0,
+        sortOrder: new Date(repo.updatedAt).getTime(),
+        stars: repo.stargazerCount,
+        forks: repo.forkCount,
+        language: repo.primaryLanguage?.name || undefined,
+        updatedAt: repo.updatedAt,
+      };
+    });
+  } catch (error) {
+    console.warn("Failed to fetch pinned repos:", error);
+    return [];
+  }
 }
 
 // Fetch GitHub contribution calendar via GraphQL API

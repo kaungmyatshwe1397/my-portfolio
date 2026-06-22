@@ -90,6 +90,21 @@ export interface GitHubEvent {
   payload: Record<string, unknown>;
 }
 
+// Pinned repository from GitHub GraphQL API
+export interface PinnedRepo {
+  name: string;
+  description: string;
+  url: string;
+  homepageUrl: string | null;
+  stargazerCount: number;
+  forkCount: number;
+  primaryLanguage: { name: string } | null;
+  repositoryTopics: {
+    nodes: { topic: { name: string } }[];
+  } | null;
+  updatedAt: string;
+}
+
 // GitHub contribution graph data (from GraphQL API)
 export interface ContributionDay {
   date: string;
