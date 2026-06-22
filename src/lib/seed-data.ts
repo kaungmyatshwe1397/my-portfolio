@@ -13,9 +13,9 @@ export const profile: Profile = {
   location: "Myanmar",
   social: {
     github: "https://github.com/kaungmyatshwe1397",
-    linkedin: "https://linkedin.com/in/kaungmyatshwe",
+    linkedin: "https://linkedin.com/in/kaungmyat-shwe-017a6a363",
     twitter: "https://twitter.com/kaungmyatshwe",
-    website: "https://kaungmyatshwe.dev",
+    website: "https://kaungmyatshwe1397.vercel.app",
   },
 };
 

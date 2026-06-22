@@ -11,7 +11,11 @@ import { BorderBeam } from "@/components/ui/border-beam";
 import { GlareHover } from "@/components/ui/glare-hover";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Terminal, AnimatedSpan, TypingAnimation } from "@/components/ui/terminal";
+import {
+  Terminal,
+  AnimatedSpan,
+  TypingAnimation,
+} from "@/components/ui/terminal";
 import {
   Star,
   GitFork,
@@ -22,8 +26,9 @@ import {
   Activity,
   Clock,
   BarChart3,
+  Code2,
 } from "lucide-react";
-import { githubFallback } from "@/lib/seed-data";
+import { githubFallback, technologies } from "@/lib/seed-data";
 import type {
   GitHubProfile,
   GitHubRepo,
@@ -75,7 +80,7 @@ function transformContributions(data: ContributionCalendar) {
               : day.contributionCount <= 9
                 ? 3
                 : 4,
-    }))
+    })),
   );
 }
 
@@ -142,7 +147,12 @@ function StatCard({
   color: string;
 }) {
   return (
-    <GlareHover className="rounded-xl" duration={600} color="#ffffff" opacity={0.12}>
+    <GlareHover
+      className="rounded-xl"
+      duration={600}
+      color="#ffffff"
+      opacity={0.12}
+    >
       <Card className="glass-card p-4 text-center relative overflow-hidden h-full">
         <BorderBeam duration={5} size={50} />
         <Icon className={`w-6 h-6 mx-auto mb-1 ${color}`} />
@@ -214,20 +224,34 @@ export function GitHubBento({
 
   return (
     <BentoGrid className="lg:grid-rows-2">
-      {/* ── Projects (top-left, spans 1 col, 1 row) ── */}
+      {/* ── Contribution Graph (top-left, spans 1 col, 1 row) ── */}
       <div className="col-span-3 lg:col-span-1 row-span-1 group relative flex flex-col overflow-hidden rounded-xl bg-background dark:bg-background dark:[box-shadow:0_-20px_80px_-20px_#ffffff1f_inset] dark:[border:1px_solid_rgba(255,255,255,.1)] [box-shadow:0_0_0_1px_rgba(0,0,0,.03),0_2px_4px_rgba(0,0,0,.05),0_12px_24px_rgba(0,0,0,.05)]">
+        <BorderBeam duration={8} size={100} />
         <div className="p-4 flex items-center gap-2 border-b border-border/50">
-          <FolderOpen className="w-5 h-5 text-primary" />
-          <h3 className="text-sm font-semibold">Pinned Projects</h3>
+          <BarChart3 className="w-5 h-5 text-primary" />
+          <h3 className="text-sm font-semibold">Contribution Graph</h3>
         </div>
-        <div className="flex-1 overflow-y-auto p-3 space-y-2">
-          <AnimatedList delay={800} className="gap-2">
-            {pinnedRepos.map((repo) => (
-              <div key={repo.id}>
-                <ProjectRow project={repo} />
-              </div>
-            ))}
-          </AnimatedList>
+        <div className="flex-1 p-4 overflow-x-auto">
+          {contributionData.length > 0 ? (
+            <ActivityCalendar
+              data={contributionData}
+              theme={{
+                light: ["#ebedf0", "#9be9a8", "#40c463", "#30a14e", "#216e39"],
+                dark: ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"],
+              }}
+              colorScheme="dark"
+              blockSize={11}
+              blockMargin={2}
+              fontSize={10}
+              showColorLegend={false}
+              showMonthLabels
+              showTotalCount={false}
+            />
+          ) : (
+            <p className="text-sm text-muted-foreground">
+              No contribution data available
+            </p>
+          )}
         </div>
         <div className="pointer-events-none absolute inset-0 transform-gpu transition-all duration-300 group-hover:bg-black/3 group-hover:dark:bg-neutral-800/10" />
       </div>
@@ -267,51 +291,51 @@ export function GitHubBento({
         <div className="pointer-events-none absolute inset-0 transform-gpu transition-all duration-300 group-hover:bg-black/3 group-hover:dark:bg-neutral-800/10" />
       </div>
 
-      {/* ── Contribution Graph (top-right, spans 1 col, 2 rows) ── */}
-      <div className="col-span-3 lg:col-span-1 row-span-2 group relative flex flex-col overflow-hidden rounded-xl bg-background dark:bg-background dark:[box-shadow:0_-20px_80px_-20px_#ffffff1f_inset] dark:[border:1px_solid_rgba(255,255,255,.1)] [box-shadow:0_0_0_1px_rgba(0,0,0,.03),0_2px_4px_rgba(0,0,0,.05),0_12px_24px_rgba(0,0,0,.05)]">
-        <BorderBeam duration={8} size={100} />
+      {/* ── Projects (top-right, spans 1 col, 1 row) ── */}
+      <div className="col-span-3 lg:col-span-1 row-span-1 group relative flex flex-col overflow-hidden rounded-xl bg-background dark:bg-background dark:[box-shadow:0_-20px_80px_-20px_#ffffff1f_inset] dark:[border:1px_solid_rgba(255,255,255,.1)] [box-shadow:0_0_0_1px_rgba(0,0,0,.03),0_2px_4px_rgba(0,0,0,.05),0_12px_24px_rgba(0,0,0,.05)]">
         <div className="p-4 flex items-center gap-2 border-b border-border/50">
-          <BarChart3 className="w-5 h-5 text-primary" />
-          <h3 className="text-sm font-semibold">Contribution Graph</h3>
+          <FolderOpen className="w-5 h-5 text-primary" />
+          <h3 className="text-sm font-semibold">Pinned Projects</h3>
         </div>
-        <div className="flex-1 p-4 overflow-x-auto flex items-center">
-          {contributionData.length > 0 ? (
-            <ActivityCalendar
-              data={contributionData}
-              theme={{
-                light: [
-                  "#ebedf0",
-                  "#9be9a8",
-                  "#40c463",
-                  "#30a14e",
-                  "#216e39",
-                ],
-                dark: [
-                  "#161b22",
-                  "#0e4429",
-                  "#006d32",
-                  "#26a641",
-                  "#39d353",
-                ],
-              }}
-              colorScheme="dark"
-              blockSize={12}
-              blockMargin={3}
-              fontSize={11}
-              showColorLegend
-              showMonthLabels
-              showTotalCount={false}
-            />
-          ) : (
-            <p className="text-sm text-muted-foreground">
-              No contribution data available
-            </p>
-          )}
+        <div className="flex-1 overflow-y-auto p-3 space-y-2">
+          <AnimatedList delay={800} className="gap-2">
+            {pinnedRepos.map((repo) => (
+              <div key={repo.id}>
+                <ProjectRow project={repo} />
+              </div>
+            ))}
+          </AnimatedList>
         </div>
         <div className="pointer-events-none absolute inset-0 transform-gpu transition-all duration-300 group-hover:bg-black/3 group-hover:dark:bg-neutral-800/10" />
       </div>
 
-      {/* ── Recent Activity (bottom-left, spans 2 cols, 1 row) ── */}
+      {/* ── Tech Tags (bottom-left, spans 1 col, 1 row) ── */}
+      <div className="col-span-3 lg:col-span-1 row-span-1 group relative flex flex-col overflow-hidden rounded-xl bg-background dark:bg-background dark:[box-shadow:0_-20px_80px_-20px_#ffffff1f_inset] dark:[border:1px_solid_rgba(255,255,255,.1)] [box-shadow:0_0_0_1px_rgba(0,0,0,.03),0_2px_4px_rgba(0,0,0,.05),0_12px_24px_rgba(0,0,0,.05)]">
+        <div className="p-4 flex items-center gap-2 border-b border-border/50">
+          <Code2 className="w-5 h-5 text-primary" />
+          <h3 className="text-sm font-semibold">Tech Stack</h3>
+        </div>
+        <div className="flex-1 p-4 overflow-y-auto">
+          <div className="flex flex-wrap gap-2">
+            {technologies.map((tech) => (
+              <span
+                key={tech.name}
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border border-border/50 bg-background/50 hover:bg-background/80 transition-colors"
+                style={{ borderLeftColor: tech.color, borderLeftWidth: 3 }}
+              >
+                <span
+                  className="w-2 h-2 rounded-full shrink-0"
+                  style={{ backgroundColor: tech.color }}
+                />
+                {tech.name}
+              </span>
+            ))}
+          </div>
+        </div>
+        <div className="pointer-events-none absolute inset-0 transform-gpu transition-all duration-300 group-hover:bg-black/3 group-hover:dark:bg-neutral-800/10" />
+      </div>
+
+      {/* ── Recent Activity (bottom-right, spans 2 cols, 1 row) ── */}
       <div className="col-span-3 lg:col-span-2 row-span-1 group relative flex flex-col overflow-hidden rounded-xl bg-background dark:bg-background dark:[box-shadow:0_-20px_80px_-20px_#ffffff1f_inset] dark:[border:1px_solid_rgba(255,255,255,.1)] [box-shadow:0_0_0_1px_rgba(0,0,0,.03),0_2px_4px_rgba(0,0,0,.05),0_12px_24px_rgba(0,0,0,.05)]">
         <div className="p-4 flex items-center gap-2 border-b border-border/50">
           <Clock className="w-5 h-5 text-primary" />
@@ -342,9 +366,7 @@ export function GitHubBento({
               })}
             </Terminal>
           ) : (
-            <p className="text-sm text-muted-foreground">
-              No recent activity
-            </p>
+            <p className="text-sm text-muted-foreground">No recent activity</p>
           )}
         </div>
         <div className="pointer-events-none absolute inset-0 transform-gpu transition-all duration-300 group-hover:bg-black/3 group-hover:dark:bg-neutral-800/10" />

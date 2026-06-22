@@ -7,6 +7,7 @@ import Image from "next/image";
 import { profile } from "@/lib/seed-data";
 import { Particles } from "@/components/ui/particles";
 import { Highlighter } from "@/components/ui/highlighter";
+import { GlareHover } from "@/components/ui/glare-hover";
 import { MapPin, Briefcase } from "lucide-react";
 
 // Entrance animations
@@ -44,7 +45,8 @@ export function Hero() {
       {/* Split layout */}
       <motion.div
         initial="hidden"
-        animate="show"
+        whileInView="show"
+        viewport={{ once: false, amount: 0.3 }}
         className="relative z-10 w-full max-w-5xl flex flex-col md:flex-row items-center gap-12 md:gap-16"
       >
         {/* ── Left: Avatar ── */}
@@ -52,19 +54,27 @@ export function Hero() {
           variants={scaleIn}
           className="flex-shrink-0"
         >
-          <motion.div
-            className="relative w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden border-4 border-primary/40 shadow-2xl ring-4 ring-primary/10"
-            whileHover={{ scale: 1.05 }}
-            transition={{ type: "spring", stiffness: 200, damping: 15 }}
+          <GlareHover
+            className="rounded-full"
+            color="#ffffff"
+            opacity={0.3}
+            size={200}
+            duration={600}
           >
-            <Image
-              src={profile.avatar}
-              alt={profile.name}
-              fill
-              className="object-cover"
-              priority
-            />
-          </motion.div>
+            <motion.div
+              className="relative w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden border-4 border-primary/40 shadow-2xl ring-4 ring-primary/10"
+              whileHover={{ scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 200, damping: 15 }}
+            >
+              <Image
+                src={profile.avatar}
+                alt={profile.name}
+                fill
+                className="object-cover"
+                priority
+              />
+            </motion.div>
+          </GlareHover>
         </motion.div>
 
         {/* ── Right: About Info ── */}

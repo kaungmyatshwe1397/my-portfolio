@@ -41,7 +41,7 @@ export function Highlighter({
   const elementRef = useRef<HTMLSpanElement>(null)
 
   const isInView = useInView(elementRef, {
-    once: true,
+    once: false,
     margin: "-10%",
   })
 

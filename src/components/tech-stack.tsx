@@ -53,7 +53,7 @@ function LogoItem({ tech, index }: { tech: (typeof technologies)[number]; index:
 
 export function TechStack() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { once: false, margin: "-100px" });
 
   // Split technologies into two rows for visual variety
   const half = Math.ceil(technologies.length / 2);

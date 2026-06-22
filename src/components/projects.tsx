@@ -3,7 +3,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatedList } from "@/components/ui/animated-list";
 import { projects } from "@/lib/seed-data";
 import { ProjectCard } from "@/components/project-card";
 import { Badge } from "@/components/ui/badge";
@@ -46,18 +46,18 @@ function ProjectsSkeleton() {
           <Skeleton key={i} className="h-6 w-16 rounded-full" />
         ))}
       </div>
-      {/* Card skeletons */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* Animated list skeletons */}
+      <div className="space-y-3">
         {[...Array(6)].map((_, i) => (
-          <Card key={i} className="glass-card overflow-hidden h-[360px]">
-            <Skeleton className="h-32 w-full" />
-            <div className="p-5 space-y-3">
-              <Skeleton className="h-5 w-3/4" />
+          <Card key={i} className="glass-card p-5 flex items-start gap-4">
+            <Skeleton className="h-12 w-12 rounded-xl shrink-0" />
+            <div className="flex-1 space-y-3">
+              <Skeleton className="h-5 w-2/3" />
               <Skeleton className="h-4 w-full" />
-              <Skeleton className="h-4 w-2/3" />
-              <div className="flex gap-2 pt-2">
-                <Skeleton className="h-5 w-14 rounded-full" />
-                <Skeleton className="h-5 w-14 rounded-full" />
+              <Skeleton className="h-4 w-5/6" />
+              <div className="flex flex-wrap gap-2 pt-1">
+                <Skeleton className="h-5 w-16 rounded-full" />
+                <Skeleton className="h-5 w-20 rounded-full" />
               </div>
             </div>
           </Card>
@@ -144,17 +144,12 @@ export function Projects() {
         ))}
       </div>
 
-      {/* Project grid */}
-      <motion.div
-        layout
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-      >
-        <AnimatePresence mode="popLayout">
-          {filteredProjects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
-          ))}
-        </AnimatePresence>
-      </motion.div>
+      {/* Animated project list */}
+      <AnimatedList delay={450} className="w-full gap-4 items-stretch">
+        {filteredProjects.map((project) => (
+          <ProjectCard key={project.id} project={project} />
+        ))}
+      </AnimatedList>
     </div>
   );
 }
