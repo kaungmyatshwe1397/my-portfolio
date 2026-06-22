@@ -1,0 +1,27 @@
+name: Deploy Marp Slides to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main 
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Create build directory
+        run: mkdir build
+
+      - name: Convert Markdown to HTML Slide
+        run: npx @marp-team/marp-cli@latest pechakucha-6x20.md -o build/index.html
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: build
+          branch: gh-pages 
