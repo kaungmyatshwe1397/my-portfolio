@@ -47,9 +47,6 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) to view the portfolio.
 
-
-```
-
 ## Available Scripts
 
 ```bash
@@ -72,25 +69,40 @@ src/
 │   ├── ui/             # shadcn/ui components
 │   ├── hero.tsx        # Hero section
 │   ├── projects.tsx    # Project showcase
+│   ├── project-card.tsx # Project card component
 │   ├── github-stats.tsx # GitHub data
 │   ├── tech-stack.tsx  # Tech stack visualization
 │   ├── contact.tsx     # Contact section
 │   ├── navbar.tsx      # Navigation
-│   └── footer.tsx      # Footer
+│   ├── footer.tsx      # Footer
+│   └── loading-screen.tsx # Client-side loading splash
 ├── lib/
 │   ├── github.ts       # GitHub API client
 │   ├── seed-data.ts    # Static fallback data
 │   ├── types.ts        # TypeScript interfaces
 │   └── utils.ts        # Utility functions
-└── hooks/
-    └── use-github.ts   # GitHub data hook
+└── pitch/
+    └── slides.md       # Marp presentation slides
 ```
+
+## CI/CD Workflows
+
+### Marp Presentation Deployment
+
+A GitHub Actions workflow (`.github/workflows/marp.presentation.yaml`) automatically converts the Marp presentation slides to HTML and deploys them to GitHub Pages on every push to `main`.
+
+**How it works:**
+1. Checks out the repository
+2. Converts `pitch/slides.md` to HTML using `@marp-team/marp-cli`
+3. Deploys the output to the `gh-pages` branch
+
+The live presentation is available at: [GitHub Pages](https://kaungmyatshwe1397.github.io/my-portfolio/)
 
 ## Deployment
 
 ### Vercel (Recommended)
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/kaung-myat-shwe/portfolio)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/kaungmyatshwe1397/my-portfolio)
 
 ### Netlify
 
@@ -130,3 +142,6 @@ MIT
 **Kaung Myat Shwe**
 - GitHub: [@kaungmyatshwe1397](https://github.com/kaungmyatshwe1397)
 - LinkedIn: [kaungmyatshwe](https://linkedin.com/in/kaungmyatshwe)
+
+## 📊 Presentation Slides
+* [Chapter 3: PechaKucha Presentation (Live Slides)](https://kaungmyatshwe1397.github.io/my-portfolio/)

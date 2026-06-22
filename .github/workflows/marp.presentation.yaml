@@ -18,7 +18,7 @@ jobs:
         run: mkdir build
 
       - name: Convert Markdown to HTML Slide
-        run: npx @marp-team/marp-cli@latest pechakucha-6x20.md -o build/index.html
+        run: npx @marp-team/marp-cli@latest ./pitch/slides.md -o build/index.html
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4

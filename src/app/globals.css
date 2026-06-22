@@ -189,44 +189,8 @@
 
 /* Glassmorphism utilities */
 @layer utilities {
-  .glass {
-    @apply bg-background/50 backdrop-blur-2xl border border-white/15 shadow-2xl shadow-black/20;
-  }
-
-  .glass-dark {
-    @apply bg-black/40 backdrop-blur-2xl border border-white/15 shadow-2xl;
-  }
-
-  .glass-light {
-    @apply bg-white/50 backdrop-blur-2xl border border-black/10 shadow-2xl;
-  }
-
   .glass-card {
     @apply bg-background/40 backdrop-blur-xl border border-white/20 rounded-xl shadow-xl shadow-black/10;
-  }
-
-  .glass-hover {
-    @apply transition-all duration-300 hover:bg-background/70 hover:border-white/25 hover:shadow-2xl hover:shadow-black/20;
-  }
-}
-
-/* Noise texture overlay */
-@layer utilities {
-  .noise {
-    position: relative;
-  }
-
-  .noise::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.4'/%3E%3C/svg%3E");
-    background-repeat: repeat;
-    background-size: 256px 256px;
-    pointer-events: none;
-    z-index: 1;
-    opacity: 0.3;
-    mix-blend-mode: overlay;
   }
 }
 
@@ -262,13 +226,3 @@
   animation: shimmer 2s infinite;
 }
 
-/* Section transitions */
-@layer utilities {
-  .section-fade-in {
-    @apply opacity-0 translate-y-8 transition-all duration-700 ease-out;
-  }
-
-  .section-fade-in.visible {
-    @apply opacity-100 translate-y-0;
-  }
-}

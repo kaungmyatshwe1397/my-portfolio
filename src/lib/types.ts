@@ -90,15 +90,6 @@ export interface GitHubEvent {
   payload: Record<string, unknown>;
 }
 
-// GitHub data state for hooks
-export interface GitHubData {
-  profile: GitHubProfile | null;
-  repos: GitHubRepo[];
-  events: GitHubEvent[];
-  loading: boolean;
-  error: string | null;
-}
-
 // Enriched project repo for display (derived from GitHubRepo or seed Project)
 export interface ProjectRepo {
   id: string;

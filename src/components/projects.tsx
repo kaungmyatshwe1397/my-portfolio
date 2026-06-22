@@ -13,7 +13,7 @@ import { fetchGitHubRepos, repoToProject } from "@/lib/github";
 import type { ProjectRepo } from "@/lib/types";
 
 // Convert seed Project data to ProjectRepo shape for fallback
-function seedToProjectRepo(seed: (typeof projects)[number], index: number): ProjectRepo {
+function seedToProjectRepo(seed: (typeof projects)[number]): ProjectRepo {
   return {
     id: seed.id,
     title: seed.title,
@@ -92,8 +92,9 @@ export function Projects() {
           setRepos(projects.map(seedToProjectRepo));
           setUsingFallback(true);
         }
-      } catch {
+      } catch (err) {
         // API failed — use seed fallback
+        console.warn("GitHub API unavailable, using seed data:", err);
         setRepos(projects.map(seedToProjectRepo));
         setUsingFallback(true);
       } finally {
