@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Terminal, AnimatedSpan, TypingAnimation } from "@/components/ui/terminal";
 import { GitBranch, Star, GitFork, Users, ExternalLink } from "lucide-react";
 import { githubFallback } from "@/lib/seed-data";
 import type { GitHubProfile, GitHubRepo, GitHubEvent } from "@/lib/types";
@@ -16,9 +17,28 @@ import {
   fetchGitHubEvents,
   calculateTotalStars,
   getTopRepos,
-  formatEventType,
   getRelativeTime,
 } from "@/lib/github";
+
+// Map GitHub event types to terminal-style git commands
+function getTerminalCommand(eventType: string): string {
+  switch (eventType) {
+    case "PushEvent":
+      return "git push";
+    case "CreateEvent":
+      return "git init";
+    case "PullRequestEvent":
+      return "gh pr create";
+    case "IssuesEvent":
+      return "gh issue open";
+    case "ForkEvent":
+      return "gh repo fork";
+    case "WatchEvent":
+      return "gh repo star";
+    default:
+      return "git activity";
+  }
+}
 
 // Loading skeleton for GitHub stats
 function GitHubSkeleton() {
@@ -181,18 +201,22 @@ export function GitHubStats() {
           viewport={{ once: true }}
         >
           <h3 className="text-xl font-semibold mb-4">Recent Activity</h3>
-          <div className="space-y-2">
-            {events.slice(0, 5).map((event) => (
-              <Card key={event.id} className="glass-card p-3 flex items-center gap-3">
-                <Badge variant="secondary" className="shrink-0">
-                  {formatEventType(event.type)}
-                </Badge>
-                <span className="text-sm truncate">{event.repo.name}</span>
-                <span className="text-xs text-muted-foreground ml-auto shrink-0">
-                  {getRelativeTime(event.created_at)}
-                </span>
-              </Card>
-            ))}
+          <div className="flex justify-center">
+            <Terminal className="max-w-2xl w-full" sequence>
+              {events.slice(0, 5).flatMap((event) => {
+                const cmd = getTerminalCommand(event.type);
+                const time = getRelativeTime(event.created_at);
+                const repo = event.repo.name.split("/").pop() || event.repo.name;
+                return [
+                  <TypingAnimation key={`${event.id}-cmd`} className="text-emerald-400 font-mono">
+                    {`$ ${cmd} ${repo}`}
+                  </TypingAnimation>,
+                  <AnimatedSpan key={`${event.id}-out`} className="text-slate-400 text-xs pl-4">
+                    ✔ {event.repo.name} — {time}
+                  </AnimatedSpan>,
+                ];
+              })}
+            </Terminal>
           </div>
         </motion.div>
       )}

@@ -106,20 +106,11 @@ The live presentation is available at: [GitHub Pages](https://kaungmyatshwe1397.
 
 ### Netlify
 
-```bash
-npm run build
-# Deploy .next folder
 ```
-
-### Cloudflare Pages
-
-```bash
-npm run build
-# Deploy with Cloudflare adapter
 ```
-
 ## Customization
-
+```
+```
 ### Profile Data
 
 Edit `src/lib/seed-data.ts` to update:

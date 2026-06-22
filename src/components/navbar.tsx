@@ -1,11 +1,9 @@
-// Dock-style navbar with glassmorphism and profile avatar
+// Dock-style navbar with glassmorphism
 
 "use client";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
 import { Dock, DockIcon } from "@/components/ui/dock";
-import { profile } from "@/lib/seed-data";
 import {
   Home,
   Code2,
@@ -45,24 +43,6 @@ export function Navbar() {
         iconMagnification={56}
         className="bg-background/40 backdrop-blur-2xl border-white/20 shadow-2xl shadow-black/20 rounded-2xl"
       >
-        {/* Profile avatar */}
-        <DockIcon
-          className="overflow-hidden"
-          onClick={() => scrollToSection("#hero")}
-        >
-          <Image
-            src={profile.avatar}
-            alt={profile.name}
-            width={32}
-            height={32}
-            className="rounded-full object-cover"
-          />
-        </DockIcon>
-
-        {/* Divider */}
-        <div className="h-8 w-px bg-white/20 mx-1" />
-
-        {/* Nav links */}
         {navLinks.map((link) => (
           <DockIcon
             key={link.href}
