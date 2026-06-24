@@ -1,4 +1,4 @@
-// GitHub section — contribution graph as centerpiece, stats as ambient data
+// GitHub section — polished motion: staggered reveals, spring hovers, animated stats
 
 "use client";
 
@@ -23,8 +23,18 @@ import {
   getRelativeTime,
 } from "@/lib/github";
 
-// ── Animated number that counts up on scroll ──
-function CountUp({ end, suffix = "" }: { end: number; suffix?: string }) {
+// ── Staggered count-up stat ──
+function StatBadge({
+  icon: Icon,
+  value,
+  label,
+  delay,
+}: {
+  icon: React.ComponentType<{ className?: string }>;
+  value: number;
+  label: string;
+  delay: number;
+}) {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: "-40px" });
 
@@ -32,21 +42,29 @@ function CountUp({ end, suffix = "" }: { end: number; suffix?: string }) {
     if (!inView) return;
     const el = ref.current;
     if (!el) return;
-
-    const controls = animate(0, end, {
-      duration: 1.2,
-      ease: [0.22, 1, 0.36, 1],
+    const ctl = animate(0, value, {
+      duration: 1.4,
+      delay,
+      ease: [0.22, 0.8, 0.36, 1],
       onUpdate(v) {
-        if (el) el.textContent = `${Math.round(v).toLocaleString()}${suffix}`;
+        if (el) el.textContent = Math.round(v).toLocaleString();
       },
     });
-    return () => controls.stop();
-  }, [inView, end, suffix]);
+    return () => ctl.stop();
+  }, [inView, value, delay]);
 
   return (
-    <span ref={ref} className="tabular-nums">
-      0{suffix}
-    </span>
+    <motion.span
+      initial={{ opacity: 0, y: 12, scale: 0.95 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true }}
+      transition={{ delay, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+      className="flex items-center gap-2 text-sm text-muted-foreground"
+    >
+      <Icon className="w-3.5 h-3.5 shrink-0" />
+      <span ref={ref} className="font-semibold text-foreground tabular-nums">0</span>
+      <span>{label}</span>
+    </motion.span>
   );
 }
 
@@ -83,7 +101,12 @@ function transformContributions(data: ContributionCalendar) {
     week.contributionDays.map((day) => ({
       date: day.date,
       count: day.contributionCount,
-      level: day.contributionCount === 0 ? 0 : day.contributionCount <= 3 ? 1 : day.contributionCount <= 6 ? 2 : day.contributionCount <= 9 ? 3 : 4,
+      level:
+        day.contributionCount === 0 ? 0
+        : day.contributionCount <= 3 ? 1
+        : day.contributionCount <= 6 ? 2
+        : day.contributionCount <= 9 ? 3
+        : 4,
     })),
   );
 }
@@ -98,17 +121,17 @@ function timeDisplay(dateString: string): string {
   return `${Math.floor(days / 365)}y ago`;
 }
 
-// ── Decorative graph background glow ──
+// ── Glow backdrop for graph card ──
 function GraphGlow() {
   return (
     <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-2xl" aria-hidden="true">
-      <div className="absolute -top-12 -left-12 w-64 h-64 rounded-full bg-emerald-500/[0.03] blur-3xl" />
-      <div className="absolute -bottom-12 -right-12 w-64 h-64 rounded-full bg-brand/[0.03] blur-3xl" />
+      <div className="absolute -top-12 -left-12 w-64 h-64 rounded-full bg-emerald-500/[0.04] blur-3xl" />
+      <div className="absolute -bottom-12 -right-12 w-64 h-64 rounded-full bg-brand/[0.04] blur-3xl" />
     </div>
   );
 }
 
-// ── Loading skeleton ──
+// ── Skeleton ──
 function Skeleton() {
   return (
     <div className="space-y-6">
@@ -117,6 +140,28 @@ function Skeleton() {
         <div className="rounded-2xl border border-border/20 bg-background/50 h-64 animate-pulse" />
         <div className="rounded-2xl border border-border/20 bg-background/50 h-64 animate-pulse" />
       </div>
+    </div>
+  );
+}
+
+// ── Card wrapper — hover lift + border glow ──
+function CardFrame({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return (
+    <motion.div
+      className={`rounded-2xl border border-border/20 bg-background/40 backdrop-blur-sm overflow-hidden ${className}`}
+      whileHover={{ y: -2, borderColor: "oklch(1 0 0 / 0.15)" }}
+      transition={{ type: "spring", stiffness: 300, damping: 22 }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+// ── Section header ──
+function SectionHeader({ text }: { text: string }) {
+  return (
+    <div className="px-6 py-4 border-b border-border/30">
+      <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">{text}</p>
     </div>
   );
 }
@@ -169,13 +214,13 @@ export function GitHubBento({
   ];
 
   return (
-    <div ref={sectionRef} className="space-y-4">
-      {/* ── Contribution Graph — the centerpiece ── */}
+    <div ref={sectionRef} className="space-y-5">
+      {/* ── Contribution Graph — scale + opacity entrance ── */}
       <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0, scale: 0.97 }}
+        whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         className="relative rounded-2xl border border-border/20 bg-background/40 backdrop-blur-sm overflow-hidden"
       >
         <GraphGlow />
@@ -206,92 +251,123 @@ export function GitHubBento({
         </div>
       </motion.div>
 
-      {/* ── Ambient stat row ── */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.2, duration: 0.5 }}
-        className="flex flex-wrap items-center justify-center gap-x-8 gap-y-2 text-sm text-muted-foreground"
-      >
-        {stats.map((stat) => (
-          <span key={stat.label} className="flex items-center gap-2">
-            <stat.icon className="w-3.5 h-3.5" />
-            <span className="font-semibold text-foreground">
-              <CountUp end={stat.value} />
-            </span>
-            <span>{stat.label}</span>
-          </span>
+      {/* ── Stat row — each badge staggers in with spring ── */}
+      <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+        {stats.map((stat, i) => (
+          <StatBadge
+            key={stat.label}
+            icon={stat.icon}
+            value={stat.value}
+            label={stat.label}
+            delay={0.2 + i * 0.08}
+          />
         ))}
-      </motion.div>
+      </div>
 
       {/* ── Projects + Activity ── */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        {/* Projects — card with left accent stripe */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.25, duration: 0.5, ease: "easeOut" }}
-          className="rounded-2xl border border-border/20 bg-background/40 backdrop-blur-sm overflow-hidden"
-        >
-          <div className="px-6 py-4 border-b border-border/30">
-            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
-              Pinned Projects
-            </p>
-          </div>
-          <div className="divide-y divide-border/20">
-            {pinnedRepos.length > 0 ? (
-              pinnedRepos.map((repo, i) => (
+        {/* Projects — animated row entries, spring hover, accent bar reveal */}
+        <CardFrame>
+          <SectionHeader text="Pinned Projects" />
+          {pinnedRepos.length > 0 ? (
+            <div className="divide-y divide-border/10">
+              {pinnedRepos.map((repo, i) => (
                 <motion.a
                   key={repo.id}
                   href={repo.sourceUrl || repo.liveUrl || "#"}
                   target="_blank"
                   rel="noopener noreferrer"
-                  initial={{ opacity: 0, x: -8 }}
+                  initial={{ opacity: 0, x: -12 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: 0.35 + i * 0.07, duration: 0.35, ease: "easeOut" }}
-                  className="group flex items-center gap-4 px-6 py-4 hover:bg-background/50 transition-colors relative"
+                  transition={{ delay: 0.35 + i * 0.06, duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                  whileHover={{
+                    backgroundColor: "oklch(1 0 0 / 0.04)",
+                    transition: { duration: 0.15, ease: "easeOut" },
+                  }}
+                  className="group flex items-center gap-4 px-6 py-4 relative"
                 >
-                  {/* Left accent bar — brand color on hover */}
-                  <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-transparent group-hover:bg-brand transition-colors rounded-r" />
+                  {/* Left accent — springs in on hover */}
+                  <motion.div
+                    className="absolute left-0 top-0 bottom-0 w-[3px] rounded-r bg-transparent"
+                    whileHover={{ backgroundColor: "var(--brand)" }}
+                    transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                    style={{ originX: 0 }}
+                  />
+
                   <div className="min-w-0 flex-1">
-                    <p className="text-sm font-medium truncate">{repo.title}</p>
-                    <p className="text-xs text-muted-foreground truncate mt-0.5">{repo.description}</p>
+                    <motion.p
+                      className="text-sm font-medium truncate"
+                      whileHover={{ color: "var(--foreground)" }}
+                    >
+                      {repo.title}
+                    </motion.p>
+                    <p className="text-xs text-muted-foreground truncate mt-0.5">
+                      {repo.description}
+                    </p>
                   </div>
-                  <div className="flex items-center gap-3 shrink-0 text-xs text-muted-foreground">
+
+                  <motion.div
+                    className="flex items-center gap-3 shrink-0 text-xs text-muted-foreground"
+                    whileHover={{ x: -4 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                  >
                     {repo.stars > 0 && (
                       <span className="flex items-center gap-1">
-                        <Star className="w-3 h-3" />{repo.stars}
+                        <Star className="w-3 h-3" />
+                        {repo.stars}
                       </span>
                     )}
                     {repo.language && (
-                      <span className="font-medium">{repo.language}</span>
+                      <motion.span
+                        className="px-1.5 py-0.5 rounded font-medium border border-border/40"
+                        whileHover={{ borderColor: "oklch(1 0 0 / 0.2)", color: "var(--foreground)" }}
+                      >
+                        {repo.language}
+                      </motion.span>
                     )}
-                    <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </div>
+                    <motion.span
+                      initial={{ opacity: 0, x: -4 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      className="group-hover:opacity-100 opacity-0 transition-opacity"
+                    >
+                      <ExternalLink className="w-3 h-3" />
+                    </motion.span>
+                  </motion.div>
                 </motion.a>
-              ))
-            ) : (
-              <p className="px-6 py-12 text-sm text-muted-foreground text-center">No pinned projects</p>
-            )}
-          </div>
-        </motion.div>
+              ))}
+            </div>
+          ) : (
+            <div className="px-6 py-12 flex flex-col items-center gap-3">
+              <motion.div
+                animate={{ rotate: [0, -5, 5, -3, 0] }}
+                transition={{ duration: 1.2, delay: 0.5, ease: "easeInOut" }}
+              >
+                <GitFork className="w-8 h-8 text-muted-foreground/30" />
+              </motion.div>
+              <p className="text-sm text-muted-foreground">No pinned projects yet</p>
+            </div>
+          )}
+        </CardFrame>
 
-        {/* Activity — terminal readout */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.3, duration: 0.5, ease: "easeOut" }}
-          className="rounded-2xl border border-border/20 bg-background/40 backdrop-blur-sm overflow-hidden"
-        >
+        {/* Activity — terminal panel */}
+        <CardFrame>
           <div className="px-6 py-4 border-b border-border/30 flex items-center gap-2">
-            <Clock className="w-3.5 h-3.5 text-muted-foreground" />
+            <motion.div
+              animate={{ opacity: [1, 0.4, 1] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <Clock className="w-3.5 h-3.5 text-muted-foreground" />
+            </motion.div>
             <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
               Recent Activity
             </p>
+            {/* Live dot */}
+            <motion.span
+              className="ml-auto w-2 h-2 rounded-full bg-emerald-500"
+              animate={{ opacity: [0.5, 1, 0.5] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+            />
           </div>
           <div className="p-4">
             {events.length > 0 ? (
@@ -302,10 +378,16 @@ export function GitHubBento({
                     const time = timeDisplay(event.created_at);
                     const repo = event.repo.name.split("/").pop() || event.repo.name;
                     return [
-                      <TypingAnimation key={`${event.id}-cmd`} className="text-emerald-400 font-mono text-sm">
+                      <TypingAnimation
+                        key={`${event.id}-cmd`}
+                        className="text-emerald-400 font-mono text-sm"
+                      >
                         {`$ ${cmd} ${repo}`}
                       </TypingAnimation>,
-                      <AnimatedSpan key={`${event.id}-out`} className="text-muted-foreground text-xs pl-4">
+                      <AnimatedSpan
+                        key={`${event.id}-out`}
+                        className="text-muted-foreground text-xs pl-4"
+                      >
                         ✔ {event.repo.name} — {time}
                       </AnimatedSpan>,
                     ];
@@ -313,10 +395,12 @@ export function GitHubBento({
                 </Terminal>
               </ScrollRepeat>
             ) : (
-              <p className="text-sm text-muted-foreground py-12 text-center">No recent activity</p>
+              <p className="text-sm text-muted-foreground py-12 text-center">
+                No recent activity
+              </p>
             )}
           </div>
-        </motion.div>
+        </CardFrame>
       </div>
     </div>
   );
