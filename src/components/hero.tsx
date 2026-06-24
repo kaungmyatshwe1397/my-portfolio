@@ -62,7 +62,7 @@ export function Hero() {
             duration={600}
           >
             <motion.div
-              className="relative w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden border-4 border-primary/40 shadow-2xl ring-4 ring-primary/10"
+              className="relative w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden border-4 border-brand/40 shadow-2xl ring-4 ring-brand/10"
               whileHover={{ scale: 1.05 }}
               transition={{ type: "spring", stiffness: 200, damping: 15 }}
             >
@@ -86,7 +86,7 @@ export function Hero() {
             className="text-4xl md:text-6xl font-bold tracking-tight"
           >
             Hi, I&apos;m{" "}
-            <span className="text-primary">{profile.name}</span>
+            <span className="text-brand">{profile.name}</span>
           </motion.h1>
 
           {/* Title */}
@@ -124,11 +124,11 @@ export function Hero() {
             className="flex flex-wrap items-center gap-4 justify-center md:justify-start text-sm text-muted-foreground"
           >
             <span className="flex items-center gap-1.5">
-              <MapPin className="w-4 h-4 text-primary" />
+              <MapPin className="w-4 h-4 text-brand" />
               {profile.location}
             </span>
             <span className="flex items-center gap-1.5">
-              <Briefcase className="w-4 h-4 text-primary" />
+              <Briefcase className="w-4 h-4 text-brand" />
               Open to opportunities
             </span>
           </motion.div>
