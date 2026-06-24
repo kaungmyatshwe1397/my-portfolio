@@ -64,7 +64,7 @@ export default async function Home() {
         {/* Contact Section — intimate fade, brand-tinted break */}
         <SectionReveal character="intimate">
           <section id="contact" className="pt-24 pb-32 px-4 md:px-8 bg-brand/[0.03] border-t border-brand/10">
-            <div className="max-w-4xl mx-auto">
+            <div className="max-w-5xl mx-auto">
               <h2 className="text-center mb-12">
                 Get In Touch
               </h2>
