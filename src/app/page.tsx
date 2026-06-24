@@ -34,7 +34,7 @@ export default async function Home() {
       <SectionReveal>
         <section id="skills" className="py-20 px-4 md:px-8">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+            <h2 className="text-center mb-12">
               Tech Stack
             </h2>
             <TechStack />
@@ -46,7 +46,7 @@ export default async function Home() {
       <SectionReveal>
         <section id="github" className="py-20 px-4 md:px-8">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+            <h2 className="text-center mb-12">
               GitHub Activity
             </h2>
             <GitHubBento
@@ -61,7 +61,7 @@ export default async function Home() {
       <SectionReveal>
         <section id="contact" className="py-20 px-4 md:px-8">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+            <h2 className="text-center mb-12">
               Get In Touch
             </h2>
             <Contact />
