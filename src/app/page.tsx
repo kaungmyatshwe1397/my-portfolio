@@ -40,8 +40,8 @@ export default async function Home() {
         </section>
       </SectionReveal>
 
-      {/* GitHub Bento Section — projects, stats, contributions, activity */}
-      <SectionReveal>
+      {/* GitHub Bento Section — confident entrance */}
+      <SectionReveal character="confident">
         <section id="github" className="py-28 px-4 md:px-8">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-center mb-12">
@@ -55,9 +55,9 @@ export default async function Home() {
         </section>
       </SectionReveal>
 
-      {/* Contact Section */}
-      <SectionReveal>
-        <section id="contact" className="pt-24 pb-32 px-4 md:px-8">
+      {/* Contact Section — intimate fade, brand-tinted break */}
+      <SectionReveal character="intimate">
+        <section id="contact" className="pt-24 pb-32 px-4 md:px-8 bg-brand/[0.03] border-t border-brand/10">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-center mb-12">
               Get In Touch

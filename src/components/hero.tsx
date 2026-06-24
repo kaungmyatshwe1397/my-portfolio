@@ -39,7 +39,11 @@ export function Hero() {
       className="relative h-[130vh] min-h-[800px]"
     >
       {/* Sticky container — stays in view while user scrolls through the section */}
-      <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.6, duration: 0.6, ease: "easeOut" }}
+        className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
         {/* Particles — fade as you scroll */}
         <motion.div className="absolute inset-0" style={{ opacity: particlesOpacity }}>
           <Particles
@@ -132,7 +136,7 @@ export function Hero() {
           className="absolute bottom-0 left-0 right-0 h-[2px] bg-brand origin-left rounded-full"
           aria-hidden="true"
         />
-      </div>
+      </motion.div>
     </section>
   );
 }
