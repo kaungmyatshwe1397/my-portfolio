@@ -7,7 +7,6 @@ import { motion, useInView } from "framer-motion";
 import { ActivityCalendar } from "react-activity-calendar";
 import { BentoGrid } from "@/components/ui/bento-grid";
 import { AnimatedList } from "@/components/ui/animated-list";
-import { BorderBeam } from "@/components/ui/border-beam";
 import { GlareHover } from "@/components/ui/glare-hover";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -176,7 +175,6 @@ function StatCard({
       opacity={0.12}
     >
       <Card className="glass-card p-4 text-center relative overflow-hidden h-full">
-        <BorderBeam duration={5} size={50} />
         <Icon className={`w-6 h-6 mx-auto mb-1 ${color}`} />
         <p className="text-2xl font-bold">{value}</p>
         <p className="text-xs text-muted-foreground">{label}</p>
@@ -248,7 +246,6 @@ export function GitHubBento({
     <BentoGrid className="lg:grid-rows-2">
       {/* ── Contribution Graph (top-left, spans 1 col, 1 row) ── */}
       <div className="col-span-3 lg:col-span-1 row-span-1 group relative flex flex-col overflow-hidden rounded-xl bg-background dark:bg-background dark:[box-shadow:0_-20px_80px_-20px_#ffffff1f_inset] dark:[border:1px_solid_rgba(255,255,255,.1)] [box-shadow:0_0_0_1px_rgba(0,0,0,.03),0_2px_4px_rgba(0,0,0,.05),0_12px_24px_rgba(0,0,0,.05)]">
-        <BorderBeam duration={8} size={100} />
         <div className="p-4 flex items-center gap-2 border-b border-border/50">
           <BarChart3 className="w-5 h-5 text-primary" />
           <h3 className="text-sm font-semibold">Contribution Graph</h3>
