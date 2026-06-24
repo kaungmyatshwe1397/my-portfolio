@@ -64,7 +64,7 @@ export function LoadingScreen() {
               className="text-center"
             >
               <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
-                K<span className="text-brand">.</span>
+                K<span className="text-primary">.</span>
               </h1>
               <p className="text-sm text-muted-foreground mt-2 tracking-widest uppercase">
                 Loading Portfolio
@@ -79,7 +79,7 @@ export function LoadingScreen() {
               className="w-48 h-1 bg-muted rounded-full overflow-hidden"
             >
               <motion.div
-                className="h-full bg-brand rounded-full"
+                className="h-full bg-gradient-to-r from-primary to-primary/60 rounded-full"
                 initial={{ width: "0%" }}
                 animate={{ width: `${progress}%` }}
                 transition={{ duration: 0.4, ease: "easeOut" }}
@@ -91,7 +91,7 @@ export function LoadingScreen() {
               {[0, 1, 2].map((i) => (
                 <motion.div
                   key={i}
-                  className="w-1.5 h-1.5 rounded-full bg-brand"
+                  className="w-1.5 h-1.5 rounded-full bg-primary"
                   animate={{ opacity: [0.3, 1, 0.3] }}
                   transition={{
                     duration: 1.2,

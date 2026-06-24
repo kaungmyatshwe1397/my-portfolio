@@ -44,7 +44,7 @@ export function Navbar() {
         {navLinks.map((link) => (
           <DockIcon
             key={link.href}
-            className="text-muted-foreground hover:text-brand transition-colors"
+            className="text-muted-foreground hover:text-foreground transition-colors"
             onClick={() => scrollToSection(link.href)}
             aria-label={link.label}
           >
