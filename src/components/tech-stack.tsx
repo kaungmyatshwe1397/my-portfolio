@@ -40,11 +40,6 @@ function LogoItem({ tech, index }: { tech: (typeof technologies)[number]; index:
         ease: "easeInOut",
         delay: (index % 6) * 0.2,
       }}
-      whileHover={{
-        scale: 1.25,
-        rotate: 360,
-        transition: { type: "spring" as const, stiffness: 200, damping: 10 },
-      }}
     >
       <Icon className="w-10 h-10" style={{ color: brandColor }} />
     </motion.div>
