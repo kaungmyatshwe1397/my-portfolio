@@ -28,7 +28,7 @@ function SocialLink({
       className="flex items-center gap-3 p-4 rounded-lg glass-card hover:bg-background/80 transition-colors"
       aria-label={label}
     >
-      <Icon className="w-5 h-5 text-primary" />
+      <Icon className="w-5 h-5 text-brand" />
       <span className="font-medium">{label}</span>
     </motion.a>
   );
@@ -46,7 +46,7 @@ export function Contact() {
     >
       {/* Email CTA */}
       <Card className="glass-card p-8 text-center">
-        <Mail className="w-12 h-12 mx-auto mb-4 text-primary" />
+        <Mail className="w-12 h-12 mx-auto mb-4 text-brand" />
         <h3 className="text-2xl font-semibold mb-2">Let&apos;s Work Together</h3>
         <p className="text-muted-foreground mb-6 max-w-md mx-auto">
           I&apos;m always open to new opportunities and interesting projects.

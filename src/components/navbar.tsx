@@ -39,13 +39,14 @@ export function Navbar() {
         direction="middle"
         iconSize={40}
         iconMagnification={56}
-        className="bg-background/40 backdrop-blur-2xl border-white/20 shadow-2xl shadow-black/20 rounded-2xl"
+        className="bg-background/40 backdrop-blur-2xl border-white/10 shadow-lg shadow-black/10 rounded-2xl"
       >
         {navLinks.map((link) => (
           <DockIcon
             key={link.href}
-            className="text-muted-foreground hover:text-foreground transition-colors"
+            className="text-muted-foreground hover:text-brand transition-colors"
             onClick={() => scrollToSection(link.href)}
+            aria-label={link.label}
           >
             <link.icon className="w-5 h-5" />
           </DockIcon>
