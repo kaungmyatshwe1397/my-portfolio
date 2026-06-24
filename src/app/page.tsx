@@ -25,10 +25,8 @@ export default async function Home() {
       {/* Navigation */}
       <Navbar />
 
-      {/* Hero Section - Profile & Introduction */}
-      <section id="hero" className="relative min-h-screen flex items-center">
-        <Hero />
-      </section>
+      {/* Hero Section — handles its own layout and scroll morphing */}
+      <Hero />
 
       {/* Tech Stack Section */}
       <SectionReveal>
