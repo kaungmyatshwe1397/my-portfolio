@@ -36,7 +36,7 @@ export function Hero() {
     <section
       ref={sectionRef}
       id="hero"
-      className="relative h-[130vh]"
+      className="relative h-[130vh] min-h-[800px]"
     >
       {/* Sticky container — stays in view while user scrolls through the section */}
       <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
