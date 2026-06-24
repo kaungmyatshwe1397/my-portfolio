@@ -7,7 +7,6 @@ import { Contact } from "@/components/contact";
 import { Footer } from "@/components/footer";
 import { Navbar } from "@/components/navbar";
 import { LoadingScreen } from "@/components/loading-screen";
-import { Meteors } from "@/components/ui/meteors";
 import { SectionReveal } from "@/components/section-reveal";
 import { AnimatedShinyText } from "@/components/ui/animated-shiny-text";
 import { fetchGitHubContributions, fetchPinnedRepos } from "@/lib/github";
@@ -23,11 +22,6 @@ export default async function Home() {
     <main className="relative min-h-screen">
       {/* Unified page background */}
       <div className="fixed inset-0 -z-20 bg-gradient-to-br from-primary/10 via-background to-secondary/10 animate-gradient" />
-
-      {/* Meteor effect */}
-      <div className="fixed inset-0 -z-10 overflow-hidden">
-        <Meteors number={25} />
-      </div>
 
       {/* Splash loading screen */}
       <LoadingScreen />

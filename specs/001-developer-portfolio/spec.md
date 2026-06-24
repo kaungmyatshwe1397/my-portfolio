@@ -4,9 +4,13 @@
 
 **Created**: 2026-06-22
 
-**Status**: Draft
+**Updated**: 2026-06-25 — Design Elevation: Cinematic Scroll Narrative
+
+**Status**: In Progress
 
 **Input**: User description: "Create a modern portfolio website for a developer, that can show real time data from GitHub, cool project showcase and tech stack and profile section, sleek like appearance with glassmorphism and spatial animation. Mobile first and deployment ready state. No database. Include wow factor."
+
+**Update**: Portfolio is built and deployed. User wants to elevate the design from "generic Magic UI template" to "premium cinematic scroll narrative" — minimal but not minimalist, Apple-like quality, with scroll-driven storytelling as the primary differentiator.
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -166,3 +170,70 @@ As a visitor, I want to easily find ways to contact the developer or connect on 
 - Dark mode is the primary theme (glassmorphism effects are most impactful on dark backgrounds), with light mode as a supported alternate theme via manual toggle
 - Images and assets will be optimized for web delivery (WebP format preferred, appropriate compression)
 - The developer's GitHub username will be configured as an environment variable or constant, not hardcoded in components
+
+---
+
+## Design Elevation: Cinematic Scroll Narrative
+
+### Design Direction
+
+The portfolio transforms from a technically solid but visually generic site into a premium, cinematic scroll experience. The approach combines:
+
+1. **Monolith Hero** — One massive, confident opening with a signature scroll-driven reveal
+2. **Story Pacing** — Content unfolds through narrative rhythm with varied tempo (fast dense moments, slow cinematic pauses, breathing room)
+3. **Curated Effects** — One signature interaction per section instead of seven layered effects
+
+### Design Principles
+
+- **Minimal but not minimalist** — Every element earns its place, nothing is stripped down for the sake of it
+- **Restraint over accumulation** — Remove effects that add noise, keep effects that add signal
+- **Typography as the primary visual language** — Type hierarchy, spacing, and scale do the heavy lifting
+- **One accent color** — Monochrome base with one intentional accent used sparingly
+- **Scroll-driven narrative** — The scroll experience has *tempo*; transitions are bridges, not dividers
+- **Details feel inevitable** — Micro-interactions, hover states, spacing all feel considered, not added
+
+### What Changes
+
+| Current | Target |
+|---------|--------|
+| Meteors + particles + gradient + shiny text + border beam + glare hover (stacked) | One signature effect per section (curated) |
+| Uniform `py-20` spacing | Varied spacing that creates rhythm and breathing room |
+| Standard `fadeUp`, `scaleIn` animations | Scroll-driven reveals with narrative pacing |
+| Fully achromatic (no accent color) | Monochrome + one accent color used intentionally |
+| `AnimatedShinyText` on all headings | Typography-driven headings (no template effects) |
+| Generic whileHover scale on everything | Save hover states for moments that matter |
+
+### What Stays
+
+- Loading screen (great first impression)
+- Interaction-driven hover/cursor effects (already working)
+- Ambient effects like particles (already working)
+- Next.js + shadcn + Framer Motion stack
+- Single-page architecture with anchor navigation
+- GitHub API integration and data structure
+- Section structure (hero, skills, github, contact, footer)
+
+### What Gets Removed
+
+| Component | Reason |
+|-----------|--------|
+| `<Meteors>` | Generic, competes with particles for attention |
+| `AnimatedShinyText` on headings | Template feel, typography should stand on its own |
+| `BorderBeam` | Adds noise, not signal |
+| Generic whileHover scale on every element | Save hover states for moments that matter |
+| Animated gradient background | Too busy, competes with content |
+
+### New Design Tokens
+
+- **Accent color**: One intentional color (to be chosen — derived from profile photo or personal preference)
+- **Spacing rhythm**: Non-uniform section spacing that creates narrative pacing
+- **Typography scale**: Refined type hierarchy with clear heading/body distinction
+
+### Success Criteria for Design Elevation
+
+- **SC-D01**: User opens their own site and feels *proud* — not "it works" but "this is mine"
+- **SC-D02**: Visitors notice specific design moments, not just the projects
+- **SC-D03**: The hero section has one scroll-driven interaction that makes visitors pause
+- **SC-D04**: The site feels premium and considered at every level — no section feels template-driven
+- **SC-D05**: The design scales gracefully as content grows — no empty sections, no "coming soon"
+- **SC-D06**: Limited content feels curated, not empty

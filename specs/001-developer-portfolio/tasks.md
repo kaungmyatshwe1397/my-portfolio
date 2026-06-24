@@ -16,6 +16,114 @@
 
 ---
 
+# Design Elevation: Cinematic Scroll Narrative
+
+**Status**: Not Started
+**Goal**: Transform from generic Magic UI template to premium cinematic scroll narrative
+**Spec**: See "Design Elevation: Cinematic Scroll Narrative" section in spec.md
+
+---
+
+## Phase 9: Foundation — Remove Visual Noise
+
+**Purpose**: Strip generic effects that make the site look like a template. Each removal should be verified — the site must still feel alive after each change.
+
+- [ ] T066 Remove `<Meteors>` component from `src/app/page.tsx` — delete the meteor effect div and import
+- [ ] T067 Remove `AnimatedShinyText` from all section headings in `src/app/page.tsx` — replace with standard typography
+- [ ] T068 Remove animated gradient background from `src/app/page.tsx` — replace with solid or subtle static background
+- [ ] T069 Remove `BorderBeam` usage from any component (check `src/components/github-bento.tsx` and others)
+- [ ] T070 Remove generic `whileHover={{ scale }}` from elements where it doesn't serve a purpose — save hover states for moments that matter
+- [ ] T071 Verify site still feels alive after all removals — check that particles, section-reveal, and cursor interactions still work
+
+**Checkpoint**: Site is cleaner, less noisy. Effects that remain are intentional, not decorative.
+
+---
+
+## Phase 10: Design System — Accent Color & Typography
+
+**Purpose**: Add one accent color to the monochrome design system. Refine typography hierarchy for premium feel.
+
+- [ ] T072 Choose an accent color — consider deriving from profile photo or a personal preference. Add to CSS custom properties in `src/app/globals.css` (both light and dark modes)
+- [ ] T073 Apply accent color intentionally — one place per section max. Examples: a link, a heading accent, a button, a hover state
+- [ ] T074 Refine typography scale in `src/app/globals.css` — ensure clear heading/body distinction with proper font sizes, weights, and line heights
+- [ ] T075 Refine section spacing — replace uniform `py-20` with varied spacing that creates rhythm (larger gaps between major sections, tighter within)
+- [ ] T076 Verify the design feels premium, not flat — the accent color should draw the eye, not decorate
+
+**Checkpoint**: Design system is refined. Monochrome + accent feels intentional and premium.
+
+---
+
+## Phase 11: Hero — Scroll-Driven Signature Interaction
+
+**Purpose**: Build the scroll-driven hero interaction — the missing piece that makes the portfolio memorable.
+
+- [ ] T077 Prototype 2-3 scroll-driven hero concepts using Framer Motion's `useScroll` and `useTransform` in `src/components/hero.tsx`. Options: text reveal on scroll, avatar morph, parallax depth layers
+- [ ] T078 Implement the chosen scroll-driven hero interaction — must feel cinematic, not gimmicky. The scroll should *be* the animation
+- [ ] T079 Add scroll progress indicator or visual cue that there's more below — subtle, not a "scroll down" arrow
+- [ ] T080 Ensure the hero interaction works on mobile (touch scroll) and doesn't cause performance issues
+- [ ] T081 Verify the hero makes visitors pause — show to someone and ask "does this make you want to keep scrolling?"
+
+**Checkpoint**: Hero has one signature scroll-driven interaction that feels premium and memorable.
+
+---
+
+## Phase 12: Section Transitions — Narrative Pacing
+
+**Purpose**: Make transitions between sections feel like narrative bridges, not dividers. Create rhythm in the scroll experience.
+
+- [ ] T082 Redesign `SectionReveal` component — replace generic fade-up with a transition that matches the section's character. Skills section might reveal differently than GitHub section
+- [ ] T083 Add breathing room between sections — vary the spacing to create tempo (fast dense moments, slow cinematic pauses)
+- [ ] T084 Refine the loading screen → hero transition — should feel like a cinematic handoff, not a hard cut
+- [ ] T085 Add one "surprise" moment in the scroll — a section that breaks the pattern slightly (e.g., a different layout treatment, a moment of stillness)
+- [ ] T086 Verify the scroll has *pacing* — it should feel like a story, not a document
+
+**Checkpoint**: The scroll experience has narrative rhythm. Transitions feel considered, not template-driven.
+
+---
+
+## Phase 13: Polish — Micro-Interactions & Details
+
+**Purpose**: Refine the details that make a site feel premium. Every interaction should feel inevitable.
+
+- [ ] T087 Audit all remaining hover states — each one should feel intentional, not default. Remove unnecessary ones, enhance the ones that matter
+- [ ] T088 Refine the navbar — ensure it feels like part of the narrative, not an overlay. Consider making it less prominent or context-aware
+- [ ] T089 Polish the contact section — it's the last impression. Make it feel like a natural ending, not an afterthought
+- [ ] T090 Verify mobile experience — all scroll interactions, spacing, and typography must work on mobile
+- [ ] T091 Final review — open the site and feel *proud*. If any section feels template-driven, refine it
+
+**Checkpoint**: Portfolio feels premium, personal, and memorable. Every detail is considered.
+
+---
+
+## Dependencies & Execution Order
+
+### Phase Dependencies
+
+- **Phase 9 (Remove Noise)**: No dependencies — start immediately. This is the foundation.
+- **Phase 10 (Design System)**: Depends on Phase 9 — need clean slate before adding accent color
+- **Phase 11 (Hero)**: Can start after Phase 9 — independent of design system work
+- **Phase 12 (Transitions)**: Depends on Phase 9 — need clean sections before refining transitions
+- **Phase 13 (Polish)**: Depends on all previous phases — final pass
+
+### Parallel Opportunities
+
+- T066, T067, T068, T069, T070 (Phase 9) can run in parallel — all are removals in different files
+- T072, T074 (Phase 10) can run in parallel — accent color and typography are independent
+- T077 (Phase 11) is sequential — prototype first, then implement
+- T082, T083 (Phase 12) can run in parallel — different aspects of transitions
+
+### Risk Mitigation
+
+| Risk | Impact | Mitigation |
+|------|--------|------------|
+| Site feels empty after removing effects | High | Remove one at a time, verify after each. Keep particles. |
+| Scroll-driven hero doesn't feel premium | High | Prototype 2-3 options, get feedback before committing |
+| Accent color feels arbitrary | Medium | Derive from profile photo or meaningful choice, test with 2-3 options |
+| Mobile scroll interaction is janky | Medium | Test on real devices early, use `useScroll` with proper throttling |
+| Limited content feels stretched | Low | Narrative pacing handles this — curated, not empty
+
+---
+
 ## Phase 1: Setup (Project Initialization)
 
 **Purpose**: Create Next.js project, install dependencies, configure tooling

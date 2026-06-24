@@ -1,12 +1,41 @@
 # Implementation Plan: Developer Portfolio Website
 
-**Branch**: `001-developer-portfolio` | **Date**: 2026-06-22 | **Spec**: [spec.md](./spec.md)
+**Branch**: `001-developer-portfolio` | **Date**: 2026-06-22 | **Updated**: 2026-06-25 | **Spec**: [spec.md](./spec.md)
 
 **Input**: Feature specification from `/specs/001-developer-portfolio/spec.md`
 
 ## Summary
 
 Build a modern, mobile-first developer portfolio website using Next.js 16 (App Router), shadcn/ui + Magic UI components, Tailwind CSS, Framer Motion, and GitHub API integration. The site features glassmorphism design, spatial animations, real-time GitHub data, and a "wow factor" interactive element. All content is served statically or fetched from public APIs—no database required. Seed data is used for projects and profile information.
+
+## Design Elevation Plan (2026-06-25)
+
+Portfolio is built and deployed. Current state: technically solid but visually generic — looks like every other shadcn + Magic UI site. User wants to elevate to a **Cinematic Scroll Narrative** design.
+
+### Approach
+
+**Monolith + Story**: A cinematic scroll narrative portfolio. One cohesive experience with strong pacing, one signature hero moment, and story-driven content reveals.
+
+**Key changes:**
+1. Remove visual noise (meteors, shiny text, border beam, animated gradient)
+2. Add accent color to design system
+3. Build scroll-driven hero interaction (the missing piece)
+4. Refine section transitions for narrative pacing
+5. Curate hover states — save them for moments that matter
+6. Refine typography and spacing for premium feel
+
+**What stays:**
+- Loading screen, particles, interaction-driven effects
+- Next.js + shadcn + Framer Motion stack
+- Single-page architecture, GitHub integration
+- Section structure (hero, skills, github, contact, footer)
+
+### Architecture Decisions
+
+- **No new dependencies** — Everything achievable with existing Framer Motion + CSS + current stack
+- **Hero first** — The scroll-driven hero interaction is the riskiest piece; prototype early
+- **Incremental removal** — Remove effects one at a time, verify the site still feels alive after each removal
+- **Accent color late** — Choose the accent color after the layout and spacing feel right; color is easier to tune
 
 ## Technical Context
 
