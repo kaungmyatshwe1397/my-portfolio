@@ -19,9 +19,6 @@ export default async function Home() {
 
   return (
     <main className="relative min-h-screen">
-      {/* Unified page background */}
-      <div className="fixed inset-0 -z-20 bg-gradient-to-br from-primary/10 via-background to-secondary/10 animate-gradient" />
-
       {/* Splash loading screen */}
       <LoadingScreen />
 
