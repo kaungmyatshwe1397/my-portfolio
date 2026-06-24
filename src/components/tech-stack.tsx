@@ -1,4 +1,4 @@
-// Tech stack section — single marquee of floating brand logos
+// Tech stack section — dual marquee of branded tech pills with glow hover
 
 "use client";
 
@@ -25,23 +25,49 @@ function getIcon(name: string): React.ComponentType<{ className?: string; size?:
   return (allIcons[name] || Code) as React.ComponentType<{ className?: string; size?: number; style?: React.CSSProperties }>;
 }
 
-// Single floating logo
-function LogoItem({ tech, index }: { tech: (typeof technologies)[number]; index: number }) {
+// Single tech pill — icon + name with brand glow on hover
+function TechPill({ tech, index }: { tech: (typeof technologies)[number]; index: number }) {
   const Icon = getIcon(tech.icon);
   const brandColor = tech.color || "var(--primary)";
 
   return (
     <motion.div
-      className="flex items-center justify-center p-4 cursor-default select-none"
-      animate={{ y: [0, -8, 0] }}
+      className="group relative flex items-center gap-2.5 px-4 py-2.5 rounded-full border border-border/60 bg-card/40 backdrop-blur-sm cursor-default select-none overflow-hidden"
+      animate={{ y: [0, -6, 0] }}
       transition={{
-        duration: 2.5 + (index % 4) * 0.4,
+        duration: 2.8 + (index % 4) * 0.3,
         repeat: Infinity,
         ease: "easeInOut",
-        delay: (index % 6) * 0.2,
+        delay: (index % 6) * 0.15,
       }}
+      style={{ "--brand": brandColor } as React.CSSProperties}
     >
-      <Icon className="w-10 h-10" style={{ color: brandColor }} />
+      {/* Glow backdrop — appears on hover */}
+      <span
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-full"
+        style={{
+          background: `radial-gradient(circle at 50% 50%, ${brandColor}15, transparent 70%)`,
+        }}
+        aria-hidden="true"
+      />
+
+      {/* Top edge shimmer — brand tinted */}
+      <span
+        className="absolute top-0 left-0 right-0 h-px opacity-0 group-hover:opacity-60 transition-opacity duration-500"
+        style={{ background: `linear-gradient(90deg, transparent, ${brandColor}60, transparent)` }}
+        aria-hidden="true"
+      />
+
+      {/* Icon */}
+      <Icon
+        className="relative w-4.5 h-4.5 transition-transform duration-300 group-hover:scale-110"
+        style={{ color: brandColor }}
+      />
+
+      {/* Name */}
+      <span className="relative text-sm font-medium text-foreground/70 group-hover:text-foreground transition-colors duration-300 whitespace-nowrap">
+        {tech.name}
+      </span>
     </motion.div>
   );
 }
@@ -63,14 +89,14 @@ export function TechStack() {
       transition={{ duration: 0.6 }}
       className="space-y-4"
     >
-      <Marquee pauseOnHover className="[--duration:25s]">
+      <Marquee pauseOnHover className="[--duration:35s] [--gap:0.75rem]">
         {topRow.map((tech, i) => (
-          <LogoItem key={tech.name} tech={tech} index={i} />
+          <TechPill key={tech.name} tech={tech} index={i} />
         ))}
       </Marquee>
-      <Marquee pauseOnHover reverse className="[--duration:30s]">
+      <Marquee pauseOnHover reverse className="[--duration:40s] [--gap:0.75rem]">
         {bottomRow.map((tech, i) => (
-          <LogoItem key={tech.name} tech={tech} index={i + half} />
+          <TechPill key={tech.name} tech={tech} index={i + half} />
         ))}
       </Marquee>
     </motion.div>

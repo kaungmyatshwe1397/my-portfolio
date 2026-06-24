@@ -28,12 +28,12 @@
 
 **Purpose**: Strip generic effects that make the site look like a template. Each removal should be verified — the site must still feel alive after each change.
 
-- [ ] T066 Remove `<Meteors>` component from `src/app/page.tsx` — delete the meteor effect div and import
-- [ ] T067 Remove `AnimatedShinyText` from all section headings in `src/app/page.tsx` — replace with standard typography
-- [ ] T068 Remove animated gradient background from `src/app/page.tsx` — replace with solid or subtle static background
-- [ ] T069 Remove `BorderBeam` usage from any component (check `src/components/github-bento.tsx` and others)
-- [ ] T070 Remove generic `whileHover={{ scale }}` from elements where it doesn't serve a purpose — save hover states for moments that matter
-- [ ] T071 Verify site still feels alive after all removals — check that particles, section-reveal, and cursor interactions still work
+- [x] T066 Remove `<Meteors>` component from `src/app/page.tsx` — delete the meteor effect div and import
+- [x] T067 Remove `AnimatedShinyText` from all section headings in `src/app/page.tsx` — replace with standard typography
+- [x] T068 Remove animated gradient background from `src/app/page.tsx` — replace with solid or subtle static background
+- [x] T069 Remove `BorderBeam` usage from any component (check `src/components/github-bento.tsx` and others)
+- [x] T070 Remove generic `whileHover={{ scale }}` from elements where it doesn't serve a purpose — save hover states for moments that matter
+- [x] T071 Verify site still feels alive after all removals — check that particles, section-reveal, and cursor interactions still work
 
 **Checkpoint**: Site is cleaner, less noisy. Effects that remain are intentional, not decorative.
 
@@ -43,11 +43,11 @@
 
 **Purpose**: Add one accent color to the monochrome design system. Refine typography hierarchy for premium feel.
 
-- [ ] T072 Choose an accent color — consider deriving from profile photo or a personal preference. Add to CSS custom properties in `src/app/globals.css` (both light and dark modes)
-- [ ] T073 Apply accent color intentionally — one place per section max. Examples: a link, a heading accent, a button, a hover state
-- [ ] T074 Refine typography scale in `src/app/globals.css` — ensure clear heading/body distinction with proper font sizes, weights, and line heights
-- [ ] T075 Refine section spacing — replace uniform `py-20` with varied spacing that creates rhythm (larger gaps between major sections, tighter within)
-- [ ] T076 Verify the design feels premium, not flat — the accent color should draw the eye, not decorate
+- [x] T072 Choose an accent color — consider deriving from profile photo or a personal preference. Add to CSS custom properties in `src/app/globals.css` (both light and dark modes)
+- [x] T073 Apply accent color intentionally — one place per section max. Examples: a link, a heading accent, a button, a hover state
+- [x] T074 Refine typography scale in `src/app/globals.css` — ensure clear heading/body distinction with proper font sizes, weights, and line heights
+- [x] T075 Refine section spacing — replace uniform `py-20` with varied spacing that creates rhythm (larger gaps between major sections, tighter within)
+- [x] T076 Verify the design feels premium, not flat — the accent color should draw the eye, not decorate
 
 **Checkpoint**: Design system is refined. Monochrome + accent feels intentional and premium.
 
@@ -57,10 +57,10 @@
 
 **Purpose**: Build the scroll-driven hero interaction — the missing piece that makes the portfolio memorable.
 
-- [ ] T077 Prototype 2-3 scroll-driven hero concepts using Framer Motion's `useScroll` and `useTransform` in `src/components/hero.tsx`. Options: text reveal on scroll, avatar morph, parallax depth layers
-- [ ] T078 Implement the chosen scroll-driven hero interaction — must feel cinematic, not gimmicky. The scroll should *be* the animation
-- [ ] T079 Add scroll progress indicator or visual cue that there's more below — subtle, not a "scroll down" arrow
-- [ ] T080 Ensure the hero interaction works on mobile (touch scroll) and doesn't cause performance issues
+- [x] T077 Prototype 2-3 scroll-driven hero concepts using Framer Motion's `useScroll` and `useTransform` in `src/components/hero.tsx`. Options: text reveal on scroll, avatar morph, parallax depth layers
+- [x] T078 Implement the chosen scroll-driven hero interaction — must feel cinematic, not gimmicky. The scroll should *be* the animation
+- [x] T079 Add scroll progress indicator or visual cue that there's more below — subtle, not a "scroll down" arrow
+- [x] T080 Ensure the hero interaction works on mobile (touch scroll) and doesn't cause performance issues
 - [ ] T081 Verify the hero makes visitors pause — show to someone and ask "does this make you want to keep scrolling?"
 
 **Checkpoint**: Hero has one signature scroll-driven interaction that feels premium and memorable.
@@ -71,10 +71,10 @@
 
 **Purpose**: Make transitions between sections feel like narrative bridges, not dividers. Create rhythm in the scroll experience.
 
-- [ ] T082 Redesign `SectionReveal` component — replace generic fade-up with a transition that matches the section's character. Skills section might reveal differently than GitHub section
-- [ ] T083 Add breathing room between sections — vary the spacing to create tempo (fast dense moments, slow cinematic pauses)
-- [ ] T084 Refine the loading screen → hero transition — should feel like a cinematic handoff, not a hard cut
-- [ ] T085 Add one "surprise" moment in the scroll — a section that breaks the pattern slightly (e.g., a different layout treatment, a moment of stillness)
+- [x] T082 Redesign `SectionReveal` component — replace generic fade-up with a transition that matches the section's character. Skills section might reveal differently than GitHub section
+- [x] T083 Add breathing room between sections — vary the spacing to create tempo (fast dense moments, slow cinematic pauses)
+- [x] T084 Refine the loading screen → hero transition — should feel like a cinematic handoff, not a hard cut
+- [x] T085 Add one "surprise" moment in the scroll — a section that breaks the pattern slightly (e.g., a different layout treatment, a moment of stillness)
 - [ ] T086 Verify the scroll has *pacing* — it should feel like a story, not a document
 
 **Checkpoint**: The scroll experience has narrative rhythm. Transitions feel considered, not template-driven.
@@ -85,10 +85,10 @@
 
 **Purpose**: Refine the details that make a site feel premium. Every interaction should feel inevitable.
 
-- [ ] T087 Audit all remaining hover states — each one should feel intentional, not default. Remove unnecessary ones, enhance the ones that matter
-- [ ] T088 Refine the navbar — ensure it feels like part of the narrative, not an overlay. Consider making it less prominent or context-aware
-- [ ] T089 Polish the contact section — it's the last impression. Make it feel like a natural ending, not an afterthought
-- [ ] T090 Verify mobile experience — all scroll interactions, spacing, and typography must work on mobile
+- [x] T087 Audit all remaining hover states — each one should feel intentional, not default. Remove unnecessary ones, enhance the ones that matter
+- [x] T088 Refine the navbar — ensure it feels like part of the narrative, not an overlay. Consider making it less prominent or context-aware
+- [x] T089 Polish the contact section — it's the last impression. Make it feel like a natural ending, not an afterthought
+- [x] T090 Verify mobile experience — all scroll interactions, spacing, and typography must work on mobile
 - [ ] T091 Final review — open the site and feel *proud*. If any section feels template-driven, refine it
 
 **Checkpoint**: Portfolio feels premium, personal, and memorable. Every detail is considered.
