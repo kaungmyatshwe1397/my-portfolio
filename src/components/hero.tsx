@@ -28,6 +28,10 @@ export function Hero() {
   const particlesOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0.2]);
   const contentY = useTransform(scrollYProgress, [0, 0.5], [0, -30]);
 
+  // Scroll indicator — thin progress bar, fades out as hero morphs
+  const barScaleX = useTransform(scrollYProgress, [0, 0.45], [0, 1]);
+  const barOpacity = useTransform(scrollYProgress, [0.35, 0.5], [1, 0]);
+
   return (
     <section
       ref={sectionRef}
@@ -121,6 +125,13 @@ export function Hero() {
             </div>
           </motion.div>
         </motion.div>
+
+        {/* Scroll progress indicator — thin brand bar, bottom edge */}
+        <motion.div
+          style={{ scaleX: barScaleX, opacity: barOpacity }}
+          className="absolute bottom-0 left-0 right-0 h-[2px] bg-brand origin-left rounded-full"
+          aria-hidden="true"
+        />
       </div>
     </section>
   );
