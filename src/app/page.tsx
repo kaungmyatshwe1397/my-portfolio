@@ -32,7 +32,7 @@ export default async function Home() {
 
       {/* Tech Stack Section */}
       <SectionReveal>
-        <section id="skills" className="py-20 px-4 md:px-8">
+        <section id="skills" className="pt-16 pb-24 px-4 md:px-8">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-center mb-12">
               Tech Stack
@@ -44,7 +44,7 @@ export default async function Home() {
 
       {/* GitHub Bento Section — projects, stats, contributions, activity */}
       <SectionReveal>
-        <section id="github" className="py-20 px-4 md:px-8">
+        <section id="github" className="py-28 px-4 md:px-8">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-center mb-12">
               GitHub Activity
@@ -59,7 +59,7 @@ export default async function Home() {
 
       {/* Contact Section */}
       <SectionReveal>
-        <section id="contact" className="py-20 px-4 md:px-8">
+        <section id="contact" className="pt-24 pb-32 px-4 md:px-8">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-center mb-12">
               Get In Touch
