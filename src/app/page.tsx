@@ -1,6 +1,7 @@
 // Main portfolio page - single page application with all sections
 
 import { Hero } from "@/components/hero";
+import { About } from "@/components/about";
 import { TechStack } from "@/components/tech-stack";
 import { GitHubBento } from "@/components/github-bento";
 import { Contact } from "@/components/contact";
@@ -44,6 +45,9 @@ export default async function Home() {
 
         {/* Hero Section — handles its own layout and scroll morphing */}
         <Hero />
+
+        {/* About Section — text effects and scroll-driven reveal */}
+        <About />
 
         {/* Tech Stack Section */}
         <SectionReveal>
