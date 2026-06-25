@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { ThemeProvider } from "next-themes";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -17,7 +16,7 @@ export const metadata: Metadata = {
   title: "Kaung Myat Shwe | Full Stack Developer",
   description:
     "Full Stack Developer specializing in web development with AI augementation , spec-driven-development and cloud infrastructure",
-  keywords: ["developer", "portfolio", "full stack", "react", "next.js","JavaScript"],
+  keywords: ["developer", "portfolio", "full stack", "react", "next.js", "JavaScript"],
   authors: [{ name: "Kaung Myat Shwe" }],
   openGraph: {
     type: "website",
@@ -28,7 +27,7 @@ export const metadata: Metadata = {
   },
 };
 
-// Root layout with theme provider and tooltip provider
+// Root layout — light mode only, Apple-style
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -38,17 +37,9 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-      suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
+      <body className="min-h-full flex flex-col bg-background text-foreground">
+        {children}
       </body>
     </html>
   );

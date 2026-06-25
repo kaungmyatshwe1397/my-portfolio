@@ -1,34 +1,91 @@
-// Hero section — morphing reveal driven by scroll
+// Hero section — single glass container: photo + about me side by side
 
 "use client";
 
-import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef, useCallback } from "react";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useMotionValue,
+  useSpring,
+} from "framer-motion";
 import Image from "next/image";
 import { profile } from "@/lib/seed-data";
 import { Particles } from "@/components/ui/particles";
-import { Highlighter } from "@/components/ui/highlighter";
-import { GlareHover } from "@/components/ui/glare-hover";
 import { MapPin, Briefcase } from "lucide-react";
+
+// Staggered text entrance
+const textContainer = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.3,
+    },
+  },
+};
+
+const textItem = {
+  hidden: { opacity: 0, y: 20 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] as const },
+  },
+};
 
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
 
+  // 3D tilt on the whole card
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const springConfig = { stiffness: 150, damping: 25, mass: 0.4 };
+  const rotateX = useSpring(
+    useTransform(mouseY, [-0.5, 0.5], [4, -4]),
+    springConfig
+  );
+  const rotateY = useSpring(
+    useTransform(mouseX, [-0.5, 0.5], [-4, 4]),
+    springConfig
+  );
+
+  const handleMouseMove = useCallback(
+    (e: React.MouseEvent) => {
+      const rect = cardRef.current?.getBoundingClientRect();
+      if (!rect) return;
+      mouseX.set((e.clientX - rect.left) / rect.width - 0.5);
+      mouseY.set((e.clientY - rect.top) / rect.height - 0.5);
+    },
+    [mouseX, mouseY]
+  );
+
+  const handleMouseLeave = useCallback(() => {
+    mouseX.set(0);
+    mouseY.set(0);
+  }, [mouseX, mouseY]);
+
+  // Scroll transforms
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end start"],
   });
 
-  // Morphing transforms — scroll 0→1 maps across the section
-  // 0–0.35: full hero | 0.35–0.55: morph | 0.55–1: settled compact
-  const avatarScale = useTransform(scrollYProgress, [0, 0.5], [1, 0.35]);
-  const avatarY = useTransform(scrollYProgress, [0, 0.5], [0, -60]);
-  const textOpacity = useTransform(scrollYProgress, [0, 0.35, 0.5], [1, 0.8, 0]);
-  const textY = useTransform(scrollYProgress, [0, 0.5], [0, 80]);
-  const particlesOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0.2]);
-  const contentY = useTransform(scrollYProgress, [0, 0.5], [0, -30]);
+  const cardScale = useTransform(scrollYProgress, [0, 0.5], [1, 0.6]);
+  const cardY = useTransform(scrollYProgress, [0, 0.5], [0, -40]);
+  const textOpacity = useTransform(
+    scrollYProgress,
+    [0, 0.35, 0.5],
+    [1, 0.8, 0]
+  );
+  const textY = useTransform(scrollYProgress, [0, 0.5], [0, 60]);
+  const particlesOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0.15]);
+  const contentY = useTransform(scrollYProgress, [0, 0.5], [0, -20]);
 
-  // Scroll indicator — thin progress bar, fades out as hero morphs
+  // Scroll progress bar
   const barScaleX = useTransform(scrollYProgress, [0, 0.45], [0, 1]);
   const barOpacity = useTransform(scrollYProgress, [0.35, 0.5], [1, 0]);
 
@@ -38,99 +95,141 @@ export function Hero() {
       id="hero"
       className="relative h-[130vh] min-h-[800px]"
     >
-      {/* Sticky container — stays in view while user scrolls through the section */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.6, duration: 0.6, ease: "easeOut" }}
-        className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
-        {/* Particles — fade as you scroll */}
-        <motion.div className="absolute inset-0" style={{ opacity: particlesOpacity }}>
+        className="sticky top-0 h-screen flex items-center justify-center overflow-hidden"
+      >
+        {/* Particles */}
+        <motion.div
+          className="absolute inset-0"
+          style={{ opacity: particlesOpacity }}
+        >
           <Particles
             className="absolute inset-0"
-            quantity={80}
-            color="oklch(0.7 0 0)"
-            size={0.6}
-            staticity={30}
+            quantity={60}
+            color="oklch(0.75 0.02 260)"
+            size={0.5}
+            staticity={40}
             ease={80}
           />
         </motion.div>
 
-        {/* Morphing content */}
+        {/* Single container with photo + text */}
         <motion.div
-          style={{ y: contentY }}
-          className="relative z-10 w-full max-w-5xl flex flex-col md:flex-row items-center gap-12 md:gap-16 px-4"
+          ref={cardRef}
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
+          style={{
+            y: contentY,
+            rotateX,
+            rotateY,
+            transformPerspective: 1200,
+          }}
+          className="relative z-10 w-full max-w-5xl px-6 md:px-10"
         >
-          {/* Avatar — shrinks and lifts */}
           <motion.div
-            style={{ scale: avatarScale, y: avatarY }}
-            className="flex-shrink-0 origin-center"
+            style={{ scale: cardScale, y: cardY }}
+            className="origin-center"
           >
-            <GlareHover
-              className="rounded-full"
-              color="#ffffff"
-              opacity={0.3}
-              size={200}
-              duration={600}
+            {/* Glass container — one card for everything */}
+            <motion.div
+              className="relative rounded-3xl overflow-hidden cursor-default"
+              style={{
+                background: "rgba(255, 255, 255, 0.55)",
+                border: "1px solid rgba(0, 0, 0, 0.06)",
+                boxShadow:
+                  "0 1px 3px rgba(0,0,0,0.04), 0 8px 32px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.8)",
+                backdropFilter: "blur(12px)",
+              }}
+              whileHover={{
+                boxShadow:
+                  "0 2px 8px rgba(0,0,0,0.06), 0 16px 48px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.9)",
+              }}
+              transition={{ duration: 0.3 }}
             >
-              <motion.div
-                className="relative w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden border-4 border-brand/40 shadow-2xl ring-4 ring-brand/10"
-                whileHover={{ scale: 1.05 }}
-                transition={{ type: "spring", stiffness: 200, damping: 15 }}
-              >
-                <Image
-                  src={profile.avatar}
-                  alt={profile.name}
-                  fill
-                  className="object-cover"
-                  priority
-                />
-              </motion.div>
-            </GlareHover>
-          </motion.div>
+              <div className="flex flex-col md:flex-row">
+                {/* LEFT: Photo */}
+                <div className="relative w-full md:w-[42%] flex-shrink-0">
+                  <div className="relative w-full aspect-[4/5] md:aspect-auto md:h-full">
+                    <Image
+                      src={profile.avatar}
+                      alt={profile.name}
+                      fill
+                      className="object-cover"
+                      priority
+                    />
+                  </div>
+                  {/* Subtle gradient edge where photo meets text */}
+                  <div
+                    className="hidden md:block absolute top-0 right-0 w-16 h-full pointer-events-none"
+                    style={{
+                      background:
+                        "linear-gradient(to right, transparent, rgba(255,255,255,0.3))",
+                    }}
+                  />
+                </div>
 
-          {/* Text — fades and drifts down */}
-          <motion.div
-            style={{ opacity: textOpacity, y: textY }}
-            className="flex flex-col gap-6 text-center md:text-left min-w-0 overflow-hidden"
-          >
-            <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
-              Hi, I&apos;m{" "}
-              <span className="text-brand">{profile.name}</span>
-            </h1>
+                {/* RIGHT: About me */}
+                <motion.div
+                  variants={textContainer}
+                  initial="hidden"
+                  animate="show"
+                  style={{ opacity: textOpacity, y: textY }}
+                  className="flex flex-col justify-center gap-5 px-8 py-10 md:px-12 md:py-14"
+                >
+                  <motion.div variants={textItem}>
+                    <p className="text-sm font-medium tracking-widest uppercase text-brand/80 mb-2">
+                      About me
+                    </p>
+                    <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-foreground">
+                      Hi, I&apos;m{" "}
+                      <span className="text-brand">{profile.name}</span>
+                    </h1>
+                  </motion.div>
 
-            <p className="text-lg md:text-2xl text-muted-foreground relative">
-              <Highlighter action="highlight" color="#87CEFA" isView>
-                Full Stack Developer
-              </Highlighter>
-            </p>
+                  <motion.div variants={textItem}>
+                    <p className="text-lg md:text-xl font-semibold tracking-tight bg-gradient-to-r from-brand to-amber-700 bg-clip-text text-transparent">
+                      Full Stack Developer
+                    </p>
+                  </motion.div>
 
-            <p className="text-muted-foreground leading-relaxed text-base md:text-lg max-w-xl relative">
-              Passionate about building modern web applications with{" "}
-              <Highlighter action="underline" color="#FF9800" isView>
-                clean code
-              </Highlighter>{" "}
-              and{" "}
-              <Highlighter action="highlight" color="#90EE90" isView>
-                great user experiences
-              </Highlighter>
-              . I love working with React, Next.js, and exploring new technologies.
-            </p>
+                  <motion.div variants={textItem}>
+                    <p className="text-muted-foreground leading-relaxed text-base md:text-lg max-w-md">
+                      Passionate about building modern web applications with{" "}
+                      <span className="text-foreground font-medium">
+                        clean code
+                      </span>{" "}
+                      and{" "}
+                      <span className="text-foreground font-medium">
+                        great user experiences
+                      </span>
+                      . I love working with React, Next.js, and exploring new
+                      technologies.
+                    </p>
+                  </motion.div>
 
-            <div className="flex flex-wrap items-center gap-4 justify-center md:justify-start text-sm text-muted-foreground">
-              <span className="flex items-center gap-1.5">
-                <MapPin className="w-4 h-4 text-brand" />
-                {profile.location}
-              </span>
-              <span className="flex items-center gap-1.5">
-                <Briefcase className="w-4 h-4 text-brand" />
-                Open to opportunities
-              </span>
-            </div>
+                  <motion.div
+                    variants={textItem}
+                    className="flex flex-wrap items-center gap-5 text-sm text-muted-foreground pt-2"
+                  >
+                    <span className="flex items-center gap-1.5">
+                      <MapPin className="w-4 h-4 text-brand" />
+                      {profile.location}
+                    </span>
+                    <span className="flex items-center gap-1.5">
+                      <Briefcase className="w-4 h-4 text-brand" />
+                      Open to opportunities
+                    </span>
+                  </motion.div>
+                </motion.div>
+              </div>
+            </motion.div>
           </motion.div>
         </motion.div>
 
-        {/* Scroll progress indicator — thin brand bar, bottom edge */}
+        {/* Scroll progress bar */}
         <motion.div
           style={{ scaleX: barScaleX, opacity: barOpacity }}
           className="absolute bottom-0 left-0 right-0 h-[2px] bg-brand origin-left rounded-full"

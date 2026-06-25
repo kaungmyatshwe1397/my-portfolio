@@ -1,4 +1,4 @@
-// GitHub section — polished motion: staggered reveals, spring hovers, animated stats
+// GitHub section — clear glass cards with terminal chrome
 
 "use client";
 
@@ -22,6 +22,28 @@ import {
   calculateTotalStars,
   getRelativeTime,
 } from "@/lib/github";
+
+// ── Glass card style — consistent across all cards ──
+const glassStyle: React.CSSProperties = {
+  background: "rgba(255, 255, 255, 0.5)",
+  border: "1px solid rgba(0, 0, 0, 0.06)",
+  boxShadow: "0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.04)",
+  backdropFilter: "blur(8px)",
+};
+
+// ── Terminal dots header ──
+function TerminalDots({ label }: { label: string }) {
+  return (
+    <div className="flex items-center gap-3 px-5 py-3 border-b border-black/[0.04]">
+      <div className="flex gap-1.5">
+        <span className="w-2.5 h-2.5 rounded-full bg-red-400/80" />
+        <span className="w-2.5 h-2.5 rounded-full bg-amber-400/80" />
+        <span className="w-2.5 h-2.5 rounded-full bg-emerald-400/80" />
+      </div>
+      <p className="text-xs font-medium text-muted-foreground/60 tracking-wide">{label}</p>
+    </div>
+  );
+}
 
 // ── Staggered count-up stat ──
 function StatBadge({
@@ -121,47 +143,15 @@ function timeDisplay(dateString: string): string {
   return `${Math.floor(days / 365)}y ago`;
 }
 
-// ── Glow backdrop for graph card ──
-function GraphGlow() {
-  return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-2xl" aria-hidden="true">
-      <div className="absolute -top-12 -left-12 w-64 h-64 rounded-full bg-emerald-500/[0.04] blur-3xl" />
-      <div className="absolute -bottom-12 -right-12 w-64 h-64 rounded-full bg-brand/[0.04] blur-3xl" />
-    </div>
-  );
-}
-
 // ── Skeleton ──
 function Skeleton() {
   return (
     <div className="space-y-6">
-      <div className="rounded-2xl border border-border/20 bg-background/50 h-48 animate-pulse" />
+      <div className="rounded-2xl border border-black/[0.06] bg-white/50 h-48 animate-pulse" />
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <div className="rounded-2xl border border-border/20 bg-background/50 h-64 animate-pulse" />
-        <div className="rounded-2xl border border-border/20 bg-background/50 h-64 animate-pulse" />
+        <div className="rounded-2xl border border-black/[0.06] bg-white/50 h-64 animate-pulse" />
+        <div className="rounded-2xl border border-black/[0.06] bg-white/50 h-64 animate-pulse" />
       </div>
-    </div>
-  );
-}
-
-// ── Card wrapper — hover lift + border glow ──
-function CardFrame({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return (
-    <motion.div
-      className={`rounded-2xl border border-border/20 bg-background/40 backdrop-blur-sm overflow-hidden ${className}`}
-      whileHover={{ y: -2, borderColor: "oklch(1 0 0 / 0.15)" }}
-      transition={{ type: "spring", stiffness: 300, damping: 22 }}
-    >
-      {children}
-    </motion.div>
-  );
-}
-
-// ── Section header ──
-function SectionHeader({ text }: { text: string }) {
-  return (
-    <div className="px-6 py-4 border-b border-border/30">
-      <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">{text}</p>
     </div>
   );
 }
@@ -215,19 +205,17 @@ export function GitHubBento({
 
   return (
     <div ref={sectionRef} className="space-y-5">
-      {/* ── Contribution Graph — scale + opacity entrance ── */}
+      {/* ── Contribution Graph ── */}
       <motion.div
         initial={{ opacity: 0, scale: 0.97 }}
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="relative rounded-2xl border border-border/20 bg-background/40 backdrop-blur-sm overflow-hidden"
+        className="relative rounded-2xl overflow-hidden"
+        style={glassStyle}
       >
-        <GraphGlow />
+        <TerminalDots label="contribution-activity" />
         <div className="relative px-6 pt-5 pb-2">
-          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-4">
-            Contribution Activity
-          </p>
           <div className="overflow-x-auto flex justify-center">
             {contributionData.length > 0 ? (
               <ActivityCalendar
@@ -236,7 +224,7 @@ export function GitHubBento({
                   light: ["#ebedf0", "#9be9a8", "#40c463", "#30a14e", "#216e39"],
                   dark: ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"],
                 }}
-                colorScheme="dark"
+                colorScheme="light"
                 blockSize={11}
                 blockMargin={3}
                 fontSize={10}
@@ -251,7 +239,7 @@ export function GitHubBento({
         </div>
       </motion.div>
 
-      {/* ── Stat row — each badge staggers in with spring ── */}
+      {/* ── Stat row ── */}
       <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
         {stats.map((stat, i) => (
           <StatBadge
@@ -266,11 +254,16 @@ export function GitHubBento({
 
       {/* ── Projects + Activity ── */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        {/* Projects — animated row entries, spring hover, accent bar reveal */}
-        <CardFrame>
-          <SectionHeader text="Pinned Projects" />
+        {/* Projects */}
+        <motion.div
+          className="rounded-2xl overflow-hidden"
+          style={glassStyle}
+          whileHover={{ y: -2, boxShadow: "0 2px 8px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.06)" }}
+          transition={{ type: "spring", stiffness: 300, damping: 22 }}
+        >
+          <TerminalDots label="pinned-projects" />
           {pinnedRepos.length > 0 ? (
-            <div className="divide-y divide-border/10">
+            <div className="divide-y divide-black/[0.04]">
               {pinnedRepos.map((repo, i) => (
                 <motion.a
                   key={repo.id}
@@ -282,12 +275,12 @@ export function GitHubBento({
                   viewport={{ once: true }}
                   transition={{ delay: 0.35 + i * 0.06, duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
                   whileHover={{
-                    backgroundColor: "oklch(1 0 0 / 0.04)",
+                    backgroundColor: "rgba(0, 0, 0, 0.02)",
                     transition: { duration: 0.15, ease: "easeOut" },
                   }}
                   className="group flex items-center gap-4 px-6 py-4 relative"
                 >
-                  {/* Left accent — springs in on hover */}
+                  {/* Left accent bar */}
                   <motion.div
                     className="absolute left-0 top-0 bottom-0 w-[3px] rounded-r bg-transparent"
                     whileHover={{ backgroundColor: "var(--brand)" }}
@@ -320,8 +313,8 @@ export function GitHubBento({
                     )}
                     {repo.language && (
                       <motion.span
-                        className="px-1.5 py-0.5 rounded font-medium border border-border/40"
-                        whileHover={{ borderColor: "oklch(1 0 0 / 0.2)", color: "var(--foreground)" }}
+                        className="px-1.5 py-0.5 rounded font-medium border border-black/[0.08]"
+                        whileHover={{ borderColor: "rgba(0,0,0,0.15)", color: "var(--foreground)" }}
                       >
                         {repo.language}
                       </motion.span>
@@ -348,23 +341,35 @@ export function GitHubBento({
               <p className="text-sm text-muted-foreground">No pinned projects yet</p>
             </div>
           )}
-        </CardFrame>
+        </motion.div>
 
-        {/* Activity — terminal panel */}
-        <CardFrame>
-          <div className="px-6 py-4 border-b border-border/30 flex items-center gap-2">
-            <motion.div
-              animate={{ opacity: [1, 0.4, 1] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            >
-              <Clock className="w-3.5 h-3.5 text-muted-foreground" />
-            </motion.div>
-            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
-              Recent Activity
-            </p>
+        {/* Activity — terminal */}
+        <motion.div
+          className="rounded-2xl overflow-hidden"
+          style={glassStyle}
+          whileHover={{ y: -2, boxShadow: "0 2px 8px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.06)" }}
+          transition={{ type: "spring", stiffness: 300, damping: 22 }}
+        >
+          <div className="flex items-center gap-3 px-5 py-3 border-b border-black/[0.04]">
+            <div className="flex gap-1.5">
+              <span className="w-2.5 h-2.5 rounded-full bg-red-400/80" />
+              <span className="w-2.5 h-2.5 rounded-full bg-amber-400/80" />
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400/80" />
+            </div>
+            <div className="flex items-center gap-2">
+              <motion.div
+                animate={{ opacity: [1, 0.4, 1] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              >
+                <Clock className="w-3.5 h-3.5 text-muted-foreground" />
+              </motion.div>
+              <p className="text-xs font-medium text-muted-foreground/60 tracking-wide">
+                recent-activity
+              </p>
+            </div>
             {/* Live dot */}
             <motion.span
-              className="ml-auto w-2 h-2 rounded-full bg-emerald-500"
+              className="ml-auto w-2 h-2 rounded-full bg-emerald-400"
               animate={{ opacity: [0.5, 1, 0.5] }}
               transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
             />
@@ -380,7 +385,7 @@ export function GitHubBento({
                     return [
                       <TypingAnimation
                         key={`${event.id}-cmd`}
-                        className="text-emerald-400 font-mono text-sm"
+                        className="text-emerald-600 font-mono text-sm"
                       >
                         {`$ ${cmd} ${repo}`}
                       </TypingAnimation>,
@@ -400,7 +405,7 @@ export function GitHubBento({
               </p>
             )}
           </div>
-        </CardFrame>
+        </motion.div>
       </div>
     </div>
   );

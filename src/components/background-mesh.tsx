@@ -8,21 +8,21 @@ import { motion } from "framer-motion";
 // Each orb is a large soft gradient blob that drifts slowly
 const orbs = [
   {
-    color: "oklch(0.74 0.12 95 / 8%)", // brand — warm amber
+    color: "oklch(0.74 0.12 95 / 6%)", // brand — warm amber
     size: "40vw",
     x: ["15%", "25%", "10%", "15%"],
     y: ["10%", "30%", "20%", "10%"],
     duration: 25,
   },
   {
-    color: "oklch(0.6 0.08 250 / 6%)", // cool blue
+    color: "oklch(0.75 0.05 260 / 5%)", // cool blue-grey
     size: "35vw",
     x: ["70%", "60%", "75%", "70%"],
     y: ["60%", "40%", "55%", "60%"],
     duration: 30,
   },
   {
-    color: "oklch(0.74 0.12 95 / 5%)", // brand — fainter
+    color: "oklch(0.85 0.04 95 / 4%)", // brand — very faint
     size: "30vw",
     x: ["50%", "40%", "55%", "50%"],
     y: ["80%", "70%", "85%", "80%"],
