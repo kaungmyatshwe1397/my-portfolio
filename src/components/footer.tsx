@@ -1,6 +1,9 @@
 // Footer with social links and copyright
 
-import { GitFork, Link2, Globe, Mail } from "lucide-react";
+"use client";
+
+import { Mail } from "lucide-react";
+import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
 import { profile } from "@/lib/seed-data";
 
 // Footer component with social links
@@ -17,7 +20,7 @@ export function Footer() {
           </p>
 
           {/* Social Links */}
-          <div className="flex items-center gap-4">
+          <nav className="flex items-center gap-4" aria-label="Social links">
             <a
               href={profile.social.github}
               target="_blank"
@@ -25,7 +28,7 @@ export function Footer() {
               className="p-2 hover:bg-muted rounded-full transition-colors"
               aria-label="GitHub"
             >
-              <GitFork className="w-5 h-5" />
+              <FaGithub className="w-5 h-5" />
             </a>
             {profile.social.linkedin && (
               <a
@@ -35,7 +38,7 @@ export function Footer() {
                 className="p-2 hover:bg-muted rounded-full transition-colors"
                 aria-label="LinkedIn"
               >
-                <Link2 className="w-5 h-5" />
+                <FaLinkedin className="w-5 h-5" />
               </a>
             )}
             {profile.social.twitter && (
@@ -46,7 +49,7 @@ export function Footer() {
                 className="p-2 hover:bg-muted rounded-full transition-colors"
                 aria-label="Twitter"
               >
-                <Globe className="w-5 h-5" />
+                <FaTwitter className="w-5 h-5" />
               </a>
             )}
             <a
@@ -56,7 +59,7 @@ export function Footer() {
             >
               <Mail className="w-5 h-5" />
             </a>
-          </div>
+          </nav>
         </div>
       </div>
     </footer>

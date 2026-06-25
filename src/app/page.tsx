@@ -10,6 +10,7 @@ import { LoadingScreen } from "@/components/loading-screen";
 import { SectionReveal } from "@/components/section-reveal";
 import { BackgroundMesh } from "@/components/background-mesh";
 import { LightRays } from "@/components/ui/light-rays";
+import { MorphingText } from "@/components/ui/morphing-text";
 import { fetchGitHubContributions, fetchPinnedRepos } from "@/lib/github";
 
 // Main page component with all portfolio sections
@@ -48,9 +49,10 @@ export default async function Home() {
         <SectionReveal>
           <section id="skills" className="pt-16 pb-24 px-4 md:px-8">
             <div className="max-w-6xl mx-auto">
-              <h2 className="text-center mb-12">
-                Tech Stack
-              </h2>
+              <MorphingText
+                className="h-12 md:h-14 lg:h-16 text-3xl md:text-4xl lg:text-5xl text-white max-w-lg mb-12"
+                texts={["Tech Stack", "Tools I build with", "My daily drivers"]}
+              />
               <TechStack />
             </div>
           </section>
@@ -60,9 +62,10 @@ export default async function Home() {
         <SectionReveal character="confident">
           <section id="github" className="py-28 px-4 md:px-8">
             <div className="max-w-6xl mx-auto">
-              <h2 className="text-center mb-12">
-                GitHub Activity
-              </h2>
+              <MorphingText
+                className="h-12 md:h-14 lg:h-16 text-3xl md:text-4xl lg:text-5xl text-white max-w-lg mb-12"
+                texts={["GitHub Activity", "Code in motion", "Building in public"]}
+              />
               <GitHubBento
                 contributions={contributions}
                 pinnedRepos={pinnedRepos}
@@ -75,9 +78,10 @@ export default async function Home() {
         <SectionReveal character="intimate">
           <section id="contact" className="pt-24 pb-32 px-4 md:px-8 bg-brand/[0.03] border-t border-brand/10">
             <div className="max-w-5xl mx-auto">
-              <h2 className="text-center mb-12">
-                Get In Touch
-              </h2>
+              <MorphingText
+                className="h-12 md:h-14 lg:h-16 text-3xl md:text-4xl lg:text-5xl text-white max-w-lg mb-12"
+                texts={["Get In Touch", "Let's build together", "Say hello"]}
+              />
               <Contact />
             </div>
           </section>

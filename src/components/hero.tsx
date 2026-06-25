@@ -94,7 +94,7 @@ export function Hero() {
     <section
       ref={sectionRef}
       id="hero"
-      className="relative h-[130vh] min-h-[800px]"
+      className="relative h-[120vh] md:h-[130vh] min-h-[700px] md:min-h-[800px]"
     >
       <motion.div
         initial={{ opacity: 0 }}

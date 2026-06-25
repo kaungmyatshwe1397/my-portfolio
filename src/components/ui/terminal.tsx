@@ -289,8 +289,8 @@ export const Terminal = ({
           <div className="h-2 w-2 rounded-full bg-green-500"></div>
         </div>
       </div>
-      <pre className="p-4">
-        <code className="grid gap-y-1 overflow-auto">{wrappedChildren}</code>
+      <pre className="p-4 overflow-auto max-h-[calc(100%-3.5rem)]">
+        <code className="grid gap-y-1">{wrappedChildren}</code>
       </pre>
     </div>
   )
