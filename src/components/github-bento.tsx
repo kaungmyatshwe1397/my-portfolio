@@ -20,21 +20,26 @@ import {
   fetchGitHubRepos,
   fetchGitHubEvents,
   calculateTotalStars,
-  getRelativeTime,
 } from "@/lib/github";
 
-// ── Glass card style — consistent across all cards ──
+// ── Glass card style — text on clear glass slides ──
 const glassStyle: React.CSSProperties = {
-  background: "rgba(255, 255, 255, 0.5)",
-  border: "1px solid rgba(0, 0, 0, 0.06)",
-  boxShadow: "0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.04)",
-  backdropFilter: "blur(8px)",
+  background: "rgba(255, 255, 255, 0.18)",
+  border: "1px solid rgba(255, 255, 255, 0.35)",
+  boxShadow: `
+    0 8px 32px rgba(0, 0, 0, 0.08),
+    0 2px 8px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    inset 0 0 20px rgba(255, 255, 255, 0.08)
+  `,
+  backdropFilter: "blur(16px)",
 };
+
 
 // ── Terminal dots header ──
 function TerminalDots({ label }: { label: string }) {
   return (
-    <div className="flex items-center gap-3 px-5 py-3 border-b border-black/[0.04]">
+    <div className="flex items-center gap-3 px-5 py-3 border-b border-white/[0.15]">
       <div className="flex gap-1.5">
         <span className="w-2.5 h-2.5 rounded-full bg-red-400/80" />
         <span className="w-2.5 h-2.5 rounded-full bg-amber-400/80" />
@@ -147,10 +152,10 @@ function timeDisplay(dateString: string): string {
 function Skeleton() {
   return (
     <div className="space-y-6">
-      <div className="rounded-2xl border border-black/[0.06] bg-white/50 h-48 animate-pulse" />
+      <div className="rounded-2xl border border-white/[0.3] bg-white/18 h-48 animate-pulse" />
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <div className="rounded-2xl border border-black/[0.06] bg-white/50 h-64 animate-pulse" />
-        <div className="rounded-2xl border border-black/[0.06] bg-white/50 h-64 animate-pulse" />
+        <div className="rounded-2xl border border-white/[0.3] bg-white/18 h-64 animate-pulse" />
+        <div className="rounded-2xl border border-white/[0.3] bg-white/18 h-64 animate-pulse" />
       </div>
     </div>
   );
@@ -258,12 +263,12 @@ export function GitHubBento({
         <motion.div
           className="rounded-2xl overflow-hidden"
           style={glassStyle}
-          whileHover={{ y: -2, boxShadow: "0 2px 8px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.06)" }}
+          whileHover={{ y: -3, background: "rgba(255, 255, 255, 0.25)" }}
           transition={{ type: "spring", stiffness: 300, damping: 22 }}
         >
           <TerminalDots label="pinned-projects" />
           {pinnedRepos.length > 0 ? (
-            <div className="divide-y divide-black/[0.04]">
+            <div className="divide-y divide-white/[0.12]">
               {pinnedRepos.map((repo, i) => (
                 <motion.a
                   key={repo.id}
@@ -275,7 +280,7 @@ export function GitHubBento({
                   viewport={{ once: true }}
                   transition={{ delay: 0.35 + i * 0.06, duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
                   whileHover={{
-                    backgroundColor: "rgba(0, 0, 0, 0.02)",
+                    backgroundColor: "rgba(255, 255, 255, 0.12)",
                     transition: { duration: 0.15, ease: "easeOut" },
                   }}
                   className="group flex items-center gap-4 px-6 py-4 relative"
@@ -313,7 +318,7 @@ export function GitHubBento({
                     )}
                     {repo.language && (
                       <motion.span
-                        className="px-1.5 py-0.5 rounded font-medium border border-black/[0.08]"
+                        className="px-1.5 py-0.5 rounded font-medium border border-white/[0.25]"
                         whileHover={{ borderColor: "rgba(0,0,0,0.15)", color: "var(--foreground)" }}
                       >
                         {repo.language}
@@ -347,10 +352,10 @@ export function GitHubBento({
         <motion.div
           className="rounded-2xl overflow-hidden"
           style={glassStyle}
-          whileHover={{ y: -2, boxShadow: "0 2px 8px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.06)" }}
+          whileHover={{ y: -3, background: "rgba(255, 255, 255, 0.25)" }}
           transition={{ type: "spring", stiffness: 300, damping: 22 }}
         >
-          <div className="flex items-center gap-3 px-5 py-3 border-b border-black/[0.04]">
+          <div className="flex items-center gap-3 px-5 py-3 border-b border-white/[0.15]">
             <div className="flex gap-1.5">
               <span className="w-2.5 h-2.5 rounded-full bg-red-400/80" />
               <span className="w-2.5 h-2.5 rounded-full bg-amber-400/80" />

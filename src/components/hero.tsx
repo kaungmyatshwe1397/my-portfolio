@@ -137,15 +137,24 @@ export function Hero() {
             <motion.div
               className="relative rounded-3xl overflow-hidden cursor-default"
               style={{
-                background: "rgba(255, 255, 255, 0.55)",
-                border: "1px solid rgba(0, 0, 0, 0.06)",
-                boxShadow:
-                  "0 1px 3px rgba(0,0,0,0.04), 0 8px 32px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.8)",
-                backdropFilter: "blur(12px)",
+                background: "rgba(255, 255, 255, 0.18)",
+                border: "1px solid rgba(255, 255, 255, 0.35)",
+                boxShadow: `
+                  0 8px 32px rgba(0, 0, 0, 0.08),
+                  0 2px 8px rgba(0, 0, 0, 0.04),
+                  inset 0 1px 0 rgba(255, 255, 255, 0.6),
+                  inset 0 0 20px rgba(255, 255, 255, 0.08)
+                `,
+                backdropFilter: "blur(16px)",
               }}
               whileHover={{
-                boxShadow:
-                  "0 2px 8px rgba(0,0,0,0.06), 0 16px 48px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.9)",
+                background: "rgba(255, 255, 255, 0.25)",
+                boxShadow: `
+                  0 12px 40px rgba(0, 0, 0, 0.12),
+                  0 4px 12px rgba(0, 0, 0, 0.06),
+                  inset 0 1px 0 rgba(255, 255, 255, 0.8),
+                  inset 0 0 30px rgba(255, 255, 255, 0.1)
+                `,
               }}
               transition={{ duration: 0.3 }}
             >

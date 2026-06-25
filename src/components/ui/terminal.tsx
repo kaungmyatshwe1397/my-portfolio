@@ -273,11 +273,11 @@ export const Terminal = ({
     <div
       ref={containerRef}
       className={cn(
-        "border-black/[0.06] bg-white/50 backdrop-blur-sm z-0 h-full max-h-100 w-full max-w-lg rounded-xl border",
+        "border-white/[0.35] bg-white/18 backdrop-blur-md z-0 h-full max-h-100 w-full max-w-lg rounded-xl border",
         className
       )}
     >
-      <div className="border-border flex flex-col gap-y-2 border-b p-4">
+      <div className="border-white/[0.15] flex flex-col gap-y-2 border-b p-4">
         <div className="flex flex-row gap-x-2">
           <div className="h-2 w-2 rounded-full bg-red-500"></div>
           <div className="h-2 w-2 rounded-full bg-yellow-500"></div>

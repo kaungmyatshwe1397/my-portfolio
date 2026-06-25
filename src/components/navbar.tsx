@@ -39,7 +39,7 @@ export function Navbar() {
         direction="middle"
         iconSize={40}
         iconMagnification={56}
-        className="bg-white/60 backdrop-blur-xl border-black/[0.06] shadow-sm rounded-2xl"
+        className="bg-white/18 backdrop-blur-xl border-white/[0.35] shadow-lg shadow-black/[0.06] rounded-2xl ring-1 ring-inset ring-white/[0.15]"
       >
         {navLinks.map((link) => (
           <DockIcon

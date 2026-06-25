@@ -47,9 +47,6 @@
   --radius-4xl: calc(var(--radius) * 2.6);
   --animate-marquee: marquee var(--duration) infinite linear;
   --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
-  --animate-orbit: orbit calc(var(--duration)*1s) linear infinite;
-  --animate-shimmer-slide: shimmer-slide var(--speed) ease-in-out infinite alternate;
-  --animate-spin-around: spin-around calc(var(--speed) * 2) infinite linear;
   @keyframes marquee {
   from {
     transform: translateX(0);
@@ -66,50 +63,7 @@
     transform: translateY(calc(-100% - var(--gap)));
     }
   }
-  @keyframes orbit {
-  0% {
-    transform: rotate(calc(var(--angle) * 1deg)) translateY(calc(var(--radius) * 1px)) rotate(calc(var(--angle) * -1deg));
-    }
-  100% {
-    transform: rotate(calc(var(--angle) * 1deg + 360deg)) translateY(calc(var(--radius) * 1px)) rotate(calc((var(--angle) * -1deg) - 360deg));
-    }
-  }
-  @keyframes shimmer-slide {
-  to {
-    transform: translate(calc(100cqw - 100%), 0);
-    }
-  }
-  @keyframes spin-around {
-  0% {
-    transform: translateZ(0) rotate(0);
-    }
-  15%, 35% {
-    transform: translateZ(0) rotate(90deg);
-    }
-  65%, 85% {
-    transform: translateZ(0) rotate(270deg);
-    }
-  100% {
-    transform: translateZ(0) rotate(360deg);
-    }
-  }
-  --animate-meteor: meteor 5s linear infinite
-;
-  @keyframes meteor {
-  0% {
-    transform: rotate(var(--angle)) translateX(0);
-    opacity: 1;}
-  70% {
-    opacity: 1;}
-  100% {
-    transform: rotate(var(--angle)) translateX(-500px);
-    opacity: 0;}}
-  --animate-shiny-text: shiny-text 8s infinite;
-  @keyframes shiny-text {
-  0%, 90%, 100% {
-    background-position: calc(-100% - var(--shiny-width)) 0;}
-  30%, 60% {
-    background-position: calc(100% + var(--shiny-width)) 0;}}}
+}
 
 /* Light mode only — Apple-style cool off-white */
 :root {
@@ -125,7 +79,7 @@
   --secondary: oklch(0.955 0.003 260);
   --secondary-foreground: oklch(0.18 0 0);
   --muted: oklch(0.955 0.003 260);
-  --muted-foreground: oklch(0.5 0 0);
+  --muted-foreground: oklch(0.32 0 0);
   --accent: oklch(0.955 0.003 260);
   --accent-foreground: oklch(0.18 0 0);
   --destructive: oklch(0.577 0.245 27.325);
@@ -169,6 +123,10 @@
 /* Glass utilities — clear glass */
 @layer utilities {
   .glass-card {
-    @apply bg-white/60 backdrop-blur-sm border border-black/[0.06] rounded-2xl shadow-sm;
+    background: rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(16px);
+    border-radius: 1rem;
   }
 }

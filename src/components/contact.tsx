@@ -22,18 +22,23 @@ const socialLinks = [
   { href: profile.social.website, label: "Website", icon: FiGlobe },
 ].filter((link): link is { href: string; label: string; icon: typeof FaGithub } => !!link.href);
 
-// ── Glass card style ──
+// ── Glass card style — text on clear glass slides ──
 const glassStyle: React.CSSProperties = {
-  background: "rgba(255, 255, 255, 0.5)",
-  border: "1px solid rgba(0, 0, 0, 0.06)",
-  boxShadow: "0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.04)",
-  backdropFilter: "blur(8px)",
+  background: "rgba(255, 255, 255, 0.18)",
+  border: "1px solid rgba(255, 255, 255, 0.35)",
+  boxShadow: `
+    0 8px 32px rgba(0, 0, 0, 0.08),
+    0 2px 8px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    inset 0 0 20px rgba(255, 255, 255, 0.08)
+  `,
+  backdropFilter: "blur(16px)",
 };
 
 // ── Terminal dots header ──
 function TerminalDots({ label }: { label: string }) {
   return (
-    <div className="flex items-center gap-3 px-5 py-3 border-b border-black/[0.04]">
+    <div className="flex items-center gap-3 px-5 py-3 border-b border-white/[0.15]">
       <div className="flex gap-1.5">
         <span className="w-2.5 h-2.5 rounded-full bg-red-400/80" />
         <span className="w-2.5 h-2.5 rounded-full bg-amber-400/80" />
@@ -191,7 +196,7 @@ export function Contact() {
                         type="submit"
                         disabled={!isValid}
                         size="sm"
-                        className="rounded-lg px-4 h-8 text-xs font-mono bg-black/[0.05] hover:bg-black/[0.08] border border-black/[0.08] hover:border-black/[0.12] text-foreground disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300"
+                        className="rounded-lg px-4 h-8 text-xs font-mono bg-white/[0.08] hover:bg-white/[0.15] border border-white/[0.25] hover:border-white/[0.4] text-foreground disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300"
                       >
                         <Send className="w-3 h-3 mr-1.5" />
                         send
@@ -234,10 +239,10 @@ export function Contact() {
               iconSize={40}
               iconMagnification={56}
               iconDistance={100}
-              className="border-black/[0.06] bg-black/[0.02]"
+              className="border-white/[0.25] bg-white/[0.06]"
             >
               {socialLinks.map((link) => (
-                <DockIcon key={link.label} className="bg-black/[0.03] hover:bg-black/[0.06] transition-colors">
+                <DockIcon key={link.label} className="bg-white/[0.06] hover:bg-white/[0.15] transition-colors">
                   <a
                     href={link.href}
                     target="_blank"

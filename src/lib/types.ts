@@ -20,20 +20,6 @@ export interface SocialLinks {
   website?: string;
 }
 
-// Portfolio project entry (seed data)
-export interface Project {
-  id: string;
-  title: string;
-  description: string;
-  longDescription?: string;
-  thumbnail: string;
-  tags: string[];
-  liveUrl?: string;
-  sourceUrl?: string;
-  featured: boolean;
-  sortOrder: number;
-}
-
 // Technology stack item (seed data)
 export interface Technology {
   name: string;
