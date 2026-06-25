@@ -80,7 +80,7 @@ export default async function Home() {
 
         {/* Contact Section — intimate fade, brand-tinted break */}
         <SectionReveal character="intimate">
-          <section id="contact" className="pt-24 pb-32 px-4 md:px-8 bg-brand/[0.03] border-t border-brand/10">
+          <section id="contact" className="pt-24 pb-32 px-4 md:px-8">
             <div className="max-w-5xl mx-auto">
               <MorphingText
                 className="h-12 md:h-14 lg:h-16 text-3xl md:text-4xl lg:text-5xl text-white max-w-lg mb-12"
