@@ -1,4 +1,4 @@
-// GitHub section — clear glass cards with terminal chrome
+// GitHub section — Liquid Glass cards with terminal chrome
 
 "use client";
 
@@ -6,6 +6,7 @@ import { useEffect, useState, useRef } from "react";
 import { motion, useInView, animate } from "framer-motion";
 import { ActivityCalendar } from "react-activity-calendar";
 import { Terminal, AnimatedSpan, TypingAnimation } from "@/components/ui/terminal";
+import { LiquidGlass } from "@/components/ui/liquid-glass";
 import { Star, GitFork, Users, GitCommit, ExternalLink, Clock } from "lucide-react";
 import { githubFallback } from "@/lib/seed-data";
 import type {
@@ -22,18 +23,6 @@ import {
   calculateTotalStars,
 } from "@/lib/github";
 
-// ── Glass card style — text on clear glass slides ──
-const glassStyle: React.CSSProperties = {
-  background: "rgba(255, 255, 255, 0.18)",
-  border: "1px solid rgba(255, 255, 255, 0.35)",
-  boxShadow: `
-    0 8px 32px rgba(0, 0, 0, 0.08),
-    0 2px 8px rgba(0, 0, 0, 0.04),
-    inset 0 1px 0 rgba(255, 255, 255, 0.6),
-    inset 0 0 20px rgba(255, 255, 255, 0.08)
-  `,
-  backdropFilter: "blur(16px)",
-};
 
 
 // ── Terminal dots header ──
@@ -152,10 +141,10 @@ function timeDisplay(dateString: string): string {
 function Skeleton() {
   return (
     <div className="space-y-6">
-      <div className="rounded-2xl border border-white/[0.3] bg-white/18 h-48 animate-pulse" />
+      <div className="rounded-2xl border border-white/[0.25] bg-white/[0.08] backdrop-blur-[24px] h-48 animate-pulse" />
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <div className="rounded-2xl border border-white/[0.3] bg-white/18 h-64 animate-pulse" />
-        <div className="rounded-2xl border border-white/[0.3] bg-white/18 h-64 animate-pulse" />
+        <div className="rounded-2xl border border-white/[0.25] bg-white/[0.08] backdrop-blur-[24px] h-64 animate-pulse" />
+        <div className="rounded-2xl border border-white/[0.25] bg-white/[0.08] backdrop-blur-[24px] h-64 animate-pulse" />
       </div>
     </div>
   );
@@ -211,13 +200,11 @@ export function GitHubBento({
   return (
     <div ref={sectionRef} className="space-y-5">
       {/* ── Contribution Graph ── */}
-      <motion.div
+      <LiquidGlass
         initial={{ opacity: 0, scale: 0.97 }}
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="relative rounded-2xl overflow-hidden"
-        style={glassStyle}
       >
         <TerminalDots label="contribution-activity" />
         <div className="relative px-6 pt-5 pb-2">
@@ -229,7 +216,7 @@ export function GitHubBento({
                   light: ["#ebedf0", "#9be9a8", "#40c463", "#30a14e", "#216e39"],
                   dark: ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"],
                 }}
-                colorScheme="light"
+                colorScheme="dark"
                 blockSize={11}
                 blockMargin={3}
                 fontSize={10}
@@ -242,7 +229,7 @@ export function GitHubBento({
             )}
           </div>
         </div>
-      </motion.div>
+      </LiquidGlass>
 
       {/* ── Stat row ── */}
       <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
@@ -260,12 +247,7 @@ export function GitHubBento({
       {/* ── Projects + Activity ── */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {/* Projects */}
-        <motion.div
-          className="rounded-2xl overflow-hidden"
-          style={glassStyle}
-          whileHover={{ y: -3, background: "rgba(255, 255, 255, 0.25)" }}
-          transition={{ type: "spring", stiffness: 300, damping: 22 }}
-        >
+        <LiquidGlass>
           <TerminalDots label="pinned-projects" />
           {pinnedRepos.length > 0 ? (
             <div className="divide-y divide-white/[0.12]">
@@ -319,7 +301,7 @@ export function GitHubBento({
                     {repo.language && (
                       <motion.span
                         className="px-1.5 py-0.5 rounded font-medium border border-white/[0.25]"
-                        whileHover={{ borderColor: "rgba(0,0,0,0.15)", color: "var(--foreground)" }}
+                        whileHover={{ borderColor: "rgba(255,255,255,0.4)", color: "var(--foreground)" }}
                       >
                         {repo.language}
                       </motion.span>
@@ -346,15 +328,10 @@ export function GitHubBento({
               <p className="text-sm text-muted-foreground">No pinned projects yet</p>
             </div>
           )}
-        </motion.div>
+        </LiquidGlass>
 
         {/* Activity — terminal */}
-        <motion.div
-          className="rounded-2xl overflow-hidden"
-          style={glassStyle}
-          whileHover={{ y: -3, background: "rgba(255, 255, 255, 0.25)" }}
-          transition={{ type: "spring", stiffness: 300, damping: 22 }}
-        >
+        <LiquidGlass>
           <div className="flex items-center gap-3 px-5 py-3 border-b border-white/[0.15]">
             <div className="flex gap-1.5">
               <span className="w-2.5 h-2.5 rounded-full bg-red-400/80" />
@@ -390,7 +367,7 @@ export function GitHubBento({
                     return [
                       <TypingAnimation
                         key={`${event.id}-cmd`}
-                        className="text-emerald-600 font-mono text-sm"
+                        className="text-emerald-400 font-mono text-sm"
                       >
                         {`$ ${cmd} ${repo}`}
                       </TypingAnimation>,
@@ -410,7 +387,7 @@ export function GitHubBento({
               </p>
             )}
           </div>
-        </motion.div>
+        </LiquidGlass>
       </div>
     </div>
   );

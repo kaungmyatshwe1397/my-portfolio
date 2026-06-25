@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Dock, DockIcon } from "@/components/ui/dock";
 import { Terminal, AnimatedSpan, TypingAnimation } from "@/components/ui/terminal";
+import { LiquidGlass } from "@/components/ui/liquid-glass";
 import { Send, CheckCircle2 } from "lucide-react";
 import { profile } from "@/lib/seed-data";
 
@@ -21,19 +22,6 @@ const socialLinks = [
   { href: profile.social.twitter, label: "Twitter", icon: FaTwitter },
   { href: profile.social.website, label: "Website", icon: FiGlobe },
 ].filter((link): link is { href: string; label: string; icon: typeof FaGithub } => !!link.href);
-
-// ── Glass card style — text on clear glass slides ──
-const glassStyle: React.CSSProperties = {
-  background: "rgba(255, 255, 255, 0.18)",
-  border: "1px solid rgba(255, 255, 255, 0.35)",
-  boxShadow: `
-    0 8px 32px rgba(0, 0, 0, 0.08),
-    0 2px 8px rgba(0, 0, 0, 0.04),
-    inset 0 1px 0 rgba(255, 255, 255, 0.6),
-    inset 0 0 20px rgba(255, 255, 255, 0.08)
-  `,
-  backdropFilter: "blur(16px)",
-};
 
 // ── Terminal dots header ──
 function TerminalDots({ label }: { label: string }) {
@@ -180,7 +168,7 @@ export function Contact() {
                       initial={{ opacity: 0, scale: 0.8 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0 }}
-                      className="flex items-center gap-2 text-emerald-600 text-sm"
+                      className="flex items-center gap-2 text-emerald-400 text-sm"
                     >
                       <CheckCircle2 className="w-4 h-4" />
                       <span className="font-mono">message dispatched ✓</span>
@@ -212,10 +200,7 @@ export function Contact() {
 
       {/* Right top: Info card */}
       <motion.div variants={itemVariants} className="md:col-span-2">
-        <div
-          className="relative rounded-2xl overflow-hidden h-full"
-          style={glassStyle}
-        >
+        <LiquidGlass className="h-full">
           <TerminalDots label="open-to-work" />
           <div className="p-5">
             <p className="text-sm text-muted-foreground leading-relaxed">
@@ -224,15 +209,12 @@ export function Contact() {
               Based in {profile.location || "Myanmar"}.
             </p>
           </div>
-        </div>
+        </LiquidGlass>
       </motion.div>
 
       {/* Right bottom: Social dock */}
       <motion.div variants={itemVariants} className="md:col-span-2">
-        <div
-          className="relative rounded-2xl overflow-hidden h-full flex flex-col"
-          style={glassStyle}
-        >
+        <LiquidGlass className="h-full flex flex-col">
           <TerminalDots label="connect" />
           <div className="flex flex-col items-center justify-center p-6 flex-1">
             <Dock
@@ -264,7 +246,7 @@ export function Contact() {
               ))}
             </div>
           </div>
-        </div>
+        </LiquidGlass>
       </motion.div>
     </motion.div>
   );

@@ -13,6 +13,7 @@ import {
 import Image from "next/image";
 import { profile } from "@/lib/seed-data";
 import { Particles } from "@/components/ui/particles";
+import { LiquidGlass } from "@/components/ui/liquid-glass";
 import { MapPin, Briefcase } from "lucide-react";
 
 // Staggered text entrance
@@ -134,29 +135,8 @@ export function Hero() {
             className="origin-center"
           >
             {/* Glass container — one card for everything */}
-            <motion.div
-              className="relative rounded-3xl overflow-hidden cursor-default"
-              style={{
-                background: "rgba(255, 255, 255, 0.18)",
-                border: "1px solid rgba(255, 255, 255, 0.35)",
-                boxShadow: `
-                  0 8px 32px rgba(0, 0, 0, 0.08),
-                  0 2px 8px rgba(0, 0, 0, 0.04),
-                  inset 0 1px 0 rgba(255, 255, 255, 0.6),
-                  inset 0 0 20px rgba(255, 255, 255, 0.08)
-                `,
-                backdropFilter: "blur(16px)",
-              }}
-              whileHover={{
-                background: "rgba(255, 255, 255, 0.25)",
-                boxShadow: `
-                  0 12px 40px rgba(0, 0, 0, 0.12),
-                  0 4px 12px rgba(0, 0, 0, 0.06),
-                  inset 0 1px 0 rgba(255, 255, 255, 0.8),
-                  inset 0 0 30px rgba(255, 255, 255, 0.1)
-                `,
-              }}
-              transition={{ duration: 0.3 }}
+            <LiquidGlass
+              className="rounded-3xl cursor-default"
             >
               <div className="flex flex-col md:flex-row">
                 {/* LEFT: Photo */}
@@ -175,7 +155,7 @@ export function Hero() {
                     className="hidden md:block absolute top-0 right-0 w-16 h-full pointer-events-none"
                     style={{
                       background:
-                        "linear-gradient(to right, transparent, rgba(255,255,255,0.3))",
+                        "linear-gradient(to right, transparent, rgba(8,8,16,0.85))",
                     }}
                   />
                 </div>
@@ -199,7 +179,7 @@ export function Hero() {
                   </motion.div>
 
                   <motion.div variants={textItem}>
-                    <p className="text-lg md:text-xl font-semibold tracking-tight bg-gradient-to-r from-brand to-amber-700 bg-clip-text text-transparent">
+                    <p className="text-lg md:text-xl font-semibold tracking-tight bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">
                       Full Stack Developer
                     </p>
                   </motion.div>
@@ -234,7 +214,7 @@ export function Hero() {
                   </motion.div>
                 </motion.div>
               </div>
-            </motion.div>
+            </LiquidGlass>
           </motion.div>
         </motion.div>
 

@@ -9,6 +9,7 @@ import { Navbar } from "@/components/navbar";
 import { LoadingScreen } from "@/components/loading-screen";
 import { SectionReveal } from "@/components/section-reveal";
 import { BackgroundMesh } from "@/components/background-mesh";
+import { LightRays } from "@/components/ui/light-rays";
 import { fetchGitHubContributions, fetchPinnedRepos } from "@/lib/github";
 
 // Main page component with all portfolio sections
@@ -22,6 +23,15 @@ export default async function Home() {
     <main className="relative min-h-screen">
       {/* Animated background mesh — behind everything, glassmorphism blurs it */}
       <BackgroundMesh />
+
+      {/* Light rays — faint white beams from above */}
+      <LightRays
+        color="rgba(255, 255, 255, 0.12)"
+        count={4}
+        speed={20}
+        blur={60}
+        length="80vh"
+      />
 
       {/* All content above the background mesh */}
       <div className="relative" style={{ zIndex: 1 }}>

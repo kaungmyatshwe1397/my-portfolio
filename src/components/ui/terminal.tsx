@@ -273,9 +273,14 @@ export const Terminal = ({
     <div
       ref={containerRef}
       className={cn(
-        "border-white/[0.35] bg-white/18 backdrop-blur-md z-0 h-full max-h-100 w-full max-w-lg rounded-xl border",
+        "border-white/[0.25] bg-white/[0.08] z-0 h-full max-h-100 w-full max-w-lg rounded-xl border",
         className
       )}
+      style={{
+        backdropFilter: "blur(24px) saturate(180%)",
+        WebkitBackdropFilter: "blur(24px) saturate(180%)",
+        boxShadow: "0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.08)",
+      }}
     >
       <div className="border-white/[0.15] flex flex-col gap-y-2 border-b p-4">
         <div className="flex flex-row gap-x-2">

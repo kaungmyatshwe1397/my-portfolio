@@ -32,9 +32,11 @@ function TechPill({ tech, index }: { tech: (typeof technologies)[number]; index:
 
   return (
     <motion.div
-      className="group relative flex items-center gap-2.5 px-4 py-2.5 rounded-full border border-white/[0.35] bg-white/18 backdrop-blur-md cursor-default select-none overflow-hidden"
+      className="group relative flex items-center gap-2.5 px-4 py-2.5 rounded-full border border-white/[0.25] bg-white/[0.08] backdrop-blur-md cursor-default select-none overflow-hidden"
       style={{
-        boxShadow: "0 4px 16px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.5)",
+        boxShadow: "0 4px 16px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.4)",
+        backdropFilter: "blur(16px) saturate(180%)",
+        WebkitBackdropFilter: "blur(16px) saturate(180%)",
         "--brand": brandColor,
       } as React.CSSProperties}
       animate={{ y: [0, -6, 0] }}
