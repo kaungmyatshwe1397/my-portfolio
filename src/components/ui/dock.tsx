@@ -88,7 +88,7 @@ const Dock = React.forwardRef<HTMLDivElement, DockProps>(
 Dock.displayName = "Dock"
 
 export interface DockIconProps extends Omit<
-  MotionProps & React.HTMLAttributes<HTMLDivElement>,
+  MotionProps & React.HTMLAttributes<HTMLButtonElement>,
   "children"
 > {
   size?: number
@@ -111,7 +111,7 @@ const DockIcon = ({
   children,
   ...props
 }: DockIconProps) => {
-  const ref = useRef<HTMLDivElement>(null)
+  const ref = useRef<HTMLButtonElement>(null)
   const padding = Math.max(6, size * 0.2)
   const defaultMouseX = useMotionValue(Infinity)
 
@@ -135,18 +135,19 @@ const DockIcon = ({
   })
 
   return (
-    <motion.div
+    <motion.button
       ref={ref}
+      type="button"
       style={{ width: scaleSize, height: scaleSize, padding }}
       className={cn(
-        "flex aspect-square cursor-pointer items-center justify-center rounded-full",
+        "flex aspect-square cursor-pointer items-center justify-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/30",
         disableMagnification && "hover:bg-muted-foreground transition-colors",
         className
       )}
       {...props}
     >
       <div>{children}</div>
-    </motion.div>
+    </motion.button>
   )
 }
 

@@ -37,6 +37,14 @@ export default async function Home() {
 
       {/* All content above the background mesh */}
       <div className="relative" style={{ zIndex: 1 }}>
+        {/* Skip navigation for keyboard/screen reader users */}
+        <a
+          href="#about"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[200] focus:px-4 focus:py-2 focus:bg-background focus:text-foreground focus:rounded-lg focus:ring-2 focus:ring-foreground/30"
+        >
+          Skip to content
+        </a>
+
         {/* Splash loading screen */}
         <LoadingScreen />
 

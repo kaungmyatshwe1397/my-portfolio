@@ -8,16 +8,15 @@ import { MapPin, ArrowUpRight } from "lucide-react";
 import { profile } from "@/lib/seed-data";
 
 // Social link icons
-import { FaGithub, FaLinkedin, FaTwitter, FaDiscord } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
 import { FiMail } from "react-icons/fi";
 
-// Social links data
+// Social links data — only real URLs, no dead links
 const socialLinks = [
   { href: profile.social.github, label: "GitHub", icon: FaGithub },
   { href: profile.social.twitter, label: "X", icon: FaTwitter },
   { href: profile.social.linkedin, label: "LinkedIn", icon: FaLinkedin },
-  { href: "#", label: "Discord", icon: FaDiscord },
-].filter((link): link is { href: string; label: string; icon: typeof FaGithub } => !!link.href);
+].filter((link): link is { href: string; label: string; icon: typeof FaGithub } => !!link.href && link.href !== "#");
 
 // Stagger container
 const container = {
@@ -81,7 +80,7 @@ export function Contact() {
       <motion.div variants={item}>
         <motion.a
           href={`mailto:${profile.email}`}
-          className="group inline-flex items-center gap-3 text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-foreground hover:text-foreground/80 transition-colors duration-200"
+          className="group inline-flex items-center gap-2 md:gap-3 text-2xl md:text-4xl lg:text-5xl font-bold tracking-tight text-foreground hover:text-foreground/80 transition-colors duration-200 break-all md:break-normal"
           whileHover={{ x: 4 }}
           transition={{ type: "spring", stiffness: 300, damping: 25 }}
         >
@@ -111,7 +110,7 @@ export function Contact() {
             viewport={{ once: true }}
             transition={{ delay: 0.3 + i * 0.06, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
             whileHover={{ y: -2 }}
-            className="flex items-center justify-center w-10 h-10 rounded-lg text-foreground/40 hover:text-foreground hover:bg-foreground/[0.06] transition-all duration-200"
+            className="flex items-center justify-center w-10 h-10 rounded-lg text-foreground/40 hover:text-foreground hover:bg-foreground/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/30 transition-all duration-200"
           >
             <link.icon className="w-4 h-4" />
           </motion.a>
@@ -126,7 +125,7 @@ export function Contact() {
           viewport={{ once: true }}
           transition={{ delay: 0.54, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
           whileHover={{ y: -2 }}
-          className="flex items-center justify-center w-10 h-10 rounded-lg text-foreground/40 hover:text-foreground hover:bg-foreground/[0.06] transition-all duration-200"
+          className="flex items-center justify-center w-10 h-10 rounded-lg text-foreground/40 hover:text-foreground hover:bg-foreground/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/30 transition-all duration-200"
         >
           <FiMail className="w-4 h-4" />
         </motion.a>

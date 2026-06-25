@@ -71,8 +71,9 @@ export function Hero() {
           </motion.h1>
         </motion.div>
 
-        {/* Scroll indicator */}
+        {/* Scroll indicator — decorative */}
         <motion.div
+          aria-hidden="true"
           style={{ opacity: chevronOpacity }}
           className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
         >

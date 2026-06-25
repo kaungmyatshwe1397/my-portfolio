@@ -259,6 +259,9 @@ function ProfileCard({ profile }: { profile: GitHubProfile }) {
                 <img
                   src={profile.avatar_url}
                   alt={profile.name || profile.login}
+                  width={80}
+                  height={80}
+                  loading="lazy"
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -629,7 +632,7 @@ export function GitHubBento({
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, margin: "-80px" }}
-      className="grid grid-cols-1 lg:grid-cols-4 gap-3"
+      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3"
     >
       {/* Row 1: Contribution graph (3 cols) + Stats (1 col) */}
       <ContributionCard

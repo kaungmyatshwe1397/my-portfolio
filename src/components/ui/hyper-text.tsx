@@ -168,6 +168,8 @@ export function HyperText({
       ref={elementRef}
       className={cn("overflow-hidden py-2 text-4xl font-bold", className)}
       onMouseEnter={handleAnimationTrigger}
+      onFocus={handleAnimationTrigger}
+      tabIndex={animateOnHover ? 0 : undefined}
       {...props}
     >
       <AnimatePresence>

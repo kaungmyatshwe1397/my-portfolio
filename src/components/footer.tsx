@@ -53,7 +53,7 @@ export function Footer() {
             onClick={scrollToTop}
             whileHover={{ y: -2 }}
             whileTap={{ scale: 0.95 }}
-            className="group flex items-center gap-2 text-sm text-foreground/30 hover:text-foreground/60 transition-colors duration-200 cursor-pointer"
+            className="group flex items-center gap-2 text-sm text-foreground/30 hover:text-foreground/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/30 rounded-lg transition-colors duration-200 cursor-pointer"
             aria-label="Back to top"
           >
             <span className="font-mono">scrollTo(0)</span>
