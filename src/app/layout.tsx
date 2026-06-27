@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Kaung Myat Shwe | Full Stack Developer",
+  title: "Kaung Myat Shwe | Full Stack Developer | kaungmyatshwe1397 | kaungmyatshwe1397.vercel.app",
   description:
     "Full Stack Developer specializing in web development with AI augementation , spec-driven-development and cloud infrastructure",
   keywords: ["developer", "portfolio", "full stack", "react", "next.js", "JavaScript"],
