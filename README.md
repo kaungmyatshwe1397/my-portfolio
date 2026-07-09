@@ -6,13 +6,13 @@ My personal portfolio — a single-page app showcasing who I am, what I work wit
 
 ## What's Inside
 
-| Section | What it shows |
-|---------|---------------|
-| **Hero** | First impression — animated gradient mesh background with light rays |
-| **About** | Who I am, with scroll-triggered text reveal effects |
+| Section        | What it shows                                                            |
+| -------------- | ------------------------------------------------------------------------ |
+| **Hero**       | First impression — animated gradient mesh background with light rays     |
+| **About**      | Who I am, with scroll-triggered text reveal effects                      |
 | **Tech Stack** | Languages, frameworks, tools, databases, and cloud platforms I work with |
-| **GitHub** | Live contribution graph and pinned repos pulled from the GitHub API |
-| **Contact** | Ways to reach me, plus social links |
+| **GitHub**     | Live contribution graph and pinned repos pulled from the GitHub API      |
+| **Contact**    | Ways to reach me, plus social links                                      |
 
 ## Built With
 
@@ -39,11 +39,11 @@ The GitHub token needs `read:user` scope. See [`.env.example`](.env.example) for
 <details>
 <summary>Other scripts</summary>
 
-| Command | Description |
-|---------|-------------|
-| `npm run build` | Production build |
-| `npm run start` | Start production server |
-| `npm run lint` | Run ESLint |
+| Command               | Description                                              |
+| --------------------- | -------------------------------------------------------- |
+| `npm run build`       | Production build                                         |
+| `npm run start`       | Start production server                                  |
+| `npm run lint`        | Run ESLint                                               |
 | `npm run screenshots` | Capture section screenshots (dev server must be running) |
 
 </details>
@@ -54,7 +54,7 @@ A [Marp](https://marp.app/) presentation about this portfolio — auto-deployed 
 
 **[View Slides → kaungmyatshwe1397.github.io/my-portfolio](https://kaungmyatshwe1397.github.io/my-portfolio/)**
 
-Built as a PechaKucha-style deck (6 slides, 20s auto-advance) covering the design philosophy and goals behind the portfolio. Source lives at [`pitch/slides.md`](pitch/slides.md).
+Built as a PechaKucha-style deck (6 slides, 20s auto-advance) covering the design philosophy and goals behind the portfolio. Source lives at [`slides/presentationMarp.md`](slides/presentationMarp.md), with a companion tech stack deck at [`slides/techstack.md`](slides/techstack.md).
 
 ## Connect
 
