@@ -17,8 +17,11 @@ jobs:
       - name: Create build directory
         run: mkdir build
 
-      - name: Convert Markdown to HTML Slide
+      - name: Convert Presentation
         run: npx @marp-team/marp-cli@latest ./slides/presentationMarp.md -o build/index.html
+
+      - name: Convert Tech Stack
+        run: npx @marp-team/marp-cli@latest ./slides/tech-stack.md -o build/tech-stack.html
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4

@@ -54,7 +54,7 @@ A [Marp](https://marp.app/) presentation about this portfolio — auto-deployed 
 
 **[View Slides → kaungmyatshwe1397.github.io/my-portfolio](https://kaungmyatshwe1397.github.io/my-portfolio/)**
 
-Built as a PechaKucha-style deck (6 slides, 20s auto-advance) covering the design philosophy and goals behind the portfolio. Source lives at [`slides/presentationMarp.md`](slides/presentationMarp.md), with a companion tech stack deck at [`slides/techstack.md`](slides/techstack.md).
+Built as a PechaKucha-style deck (6 slides, 20s auto-advance) covering the design philosophy and goals behind the portfolio. Source lives at [`slides/presentationMarp.md`](slides/presentationMarp.md), with a companion tech stack deck at [`slides/tech-stack.md`](slides/tech-stack.md).
 
 ## Connect
 
