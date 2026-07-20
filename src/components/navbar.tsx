@@ -8,6 +8,7 @@ import {
   Home,
   Code2,
   GitFork,
+  Award,
   Mail,
 } from "lucide-react";
 
@@ -16,6 +17,7 @@ const navLinks = [
   { href: "#hero", label: "Home", icon: Home },
   { href: "#skills", label: "Skills", icon: Code2 },
   { href: "#github", label: "GitHub", icon: GitFork },
+  { href: "#certifications", label: "Certifications", icon: Award },
   { href: "#contact", label: "Contact", icon: Mail },
 ];
 

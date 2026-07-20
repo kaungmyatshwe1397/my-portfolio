@@ -168,3 +168,45 @@
     border-radius: 1rem;
   }
 }
+
+/* Badge card — floating effect with hover glow */
+.badge-card {
+  position: relative;
+  background: oklch(0.15 0 0 / 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid oklch(1 0 0 / 0.08);
+  border-radius: 16px;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow: 0 4px 24px oklch(0 0 0 / 0.2),
+              0 0 0 1px oklch(1 0 0 / 0.05);
+}
+
+.badge-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 12px 40px oklch(0 0 0 / 0.3),
+              0 0 30px oklch(var(--brand) / 0.15),
+              0 0 60px oklch(var(--brand) / 0.05);
+  border-color: oklch(var(--brand) / 0.3);
+}
+
+.badge-card::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 16px;
+  background: conic-gradient(
+    from 0deg,
+    transparent,
+    oklch(var(--brand) / 0.2),
+    transparent
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: -1;
+  filter: blur(8px);
+}
+
+.badge-card:hover::before {
+  opacity: 1;
+}
