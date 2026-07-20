@@ -9,10 +9,10 @@ export interface Badge {
 
 export const badges: Badge[] = [
   {
-    id: "anthropic-course",
-    title: "Anthropic Course Certificate",
-    issuer: "Anthropic",
-    link: "https://www.anthropic.com",
-    image: "/images/badges/anthropic.png",
+    id: "ai-fluency-framework-foundations",
+    title: "AI Fluency: Framework & Foundations",
+    issuer: "Anthropic Education",
+    link: "https://verify.skilljar.com/c/48455ktuhkuf",
+    image: "/images/badges/ai-fluency.png",
   },
 ];
