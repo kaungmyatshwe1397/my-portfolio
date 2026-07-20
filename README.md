@@ -1,20 +1,24 @@
 # Kaung Myat Shwe — Developer Portfolio
 
-**[Live → kaungmyatshwe1397.vercel.app](https://kaungmyatshwe1397.vercel.app)**
+[![Deployed on Vercel](https://img.shields.io/badge/vercel-live-000?logo=vercel&logoColor=white)](https://kaungmyatshwe1397.vercel.app)
+[![Next.js](https://img.shields.io/badge/next.js-16-000?logo=next.js&logoColor=white)](https://nextjs.org)
+[![TypeScript](https://img.shields.io/badge/typeScript-strict-3178c6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 
-My personal portfolio — a single-page app showcasing who I am, what I work with, and what I'm building. Built as a scroll-driven experience with animated glassmorphism UI, real-time GitHub integration, and motion effects throughout. Every section loads with its own character — from a splash loading screen to scroll-triggered reveals that guide visitors through my profile naturally.
+> A scroll-driven portfolio with animated glassmorphism UI, real-time GitHub integration, and motion effects. Every section loads with its own character — from a splash screen to scroll-triggered reveals.
 
-## What's Inside
+## Sections
 
-| Section        | What it shows                                                            |
-| -------------- | ------------------------------------------------------------------------ |
-| **Hero**       | First impression — animated gradient mesh background with light rays     |
-| **About**      | Who I am, with scroll-triggered text reveal effects                      |
-| **Tech Stack** | Languages, frameworks, tools, databases, and cloud platforms I work with |
-| **GitHub**     | Live contribution graph and pinned repos pulled from the GitHub API      |
-| **Contact**    | Ways to reach me, plus social links                                      |
+| | Section | Description |
+| --- | --- | --- |
+| 🌀 | **Hero** | Animated gradient mesh background with light rays |
+| ✍️ | **About** | Scroll-triggered text reveal effects |
+| 🧩 | **Tech Stack** | Languages, frameworks, tools, databases, and cloud platforms |
+| 📊 | **GitHub** | Live contribution graph and pinned repos via GitHub API |
+| 🏅 | **Certifications** | Badge cards with glow effects (Anthropic, Google Cloud) |
+| 📬 | **Contact** | Social links and ways to reach me |
 
-## Built With
+## Tech Stack
 
 - **Next.js 16** — App Router, Turbopack, server components
 - **TypeScript** + **Tailwind CSS v4**
@@ -22,9 +26,7 @@ My personal portfolio — a single-page app showcasing who I am, what I work wit
 - **shadcn/ui** + **Magic UI** — glassmorphism cards, marquees, particles, border beams
 - **GitHub API** — real-time contributions and pinned repository data
 
-## Running Locally
-
-> For developers who want to fork or contribute.
+## Getting Started
 
 ```bash
 git clone git@github.com:kaungmyatshwe1397/my-portfolio.git
@@ -34,10 +36,10 @@ cp .env.example .env.local   # add your GitHub username + token
 npm run dev                    # → http://localhost:3000
 ```
 
-The GitHub token needs `read:user` scope. See [`.env.example`](.env.example) for the full format.
+The GitHub token needs `read:user` scope — see [`.env.example`](.env.example).
 
 <details>
-<summary>Other scripts</summary>
+<summary>All scripts</summary>
 
 | Command               | Description                                              |
 | --------------------- | -------------------------------------------------------- |
@@ -50,19 +52,23 @@ The GitHub token needs `read:user` scope. See [`.env.example`](.env.example) for
 
 ## Presentation
 
-A [Marp](https://marp.app/) presentation about this portfolio — auto-deployed to GitHub Pages on every push to `main`.
+A [Marp](https://marp.app/) presentation auto-deployed to GitHub Pages on every push to `main`.
 
 **[View Slides → kaungmyatshwe1397.github.io/my-portfolio](https://kaungmyatshwe1397.github.io/my-portfolio/)**
 
-Built as a PechaKucha-style deck (6 slides, 20s auto-advance) covering the design philosophy and goals behind the portfolio. Source lives at [`slides/presentationMarp.md`](slides/presentationMarp.md), with a companion tech stack deck at [`slides/tech-stack.md`](slides/tech-stack.md).
+PechaKucha-style deck (6 slides, 20s auto-advance) covering the design philosophy. Source: [`slides/presentationMarp.md`](slides/presentationMarp.md) · Tech stack deck: [`slides/tech-stack.md`](slides/tech-stack.md).
+
+## Analytics
+
+Lightweight, privacy-friendly page analytics via [GoatCounter](https://www.goatcounter.com/) — tracks page views with zero cookies and no personal data collection.
 
 ## Connect
 
-- **GitHub**: [@kaungmyatshwe1397](https://github.com/kaungmyatshwe1397)
-- **LinkedIn**: [kaungmyatshwe](https://linkedin.com/in/kaungmyat-shwe-017a6a363)
-- **Twitter**: [@kaungmyatshwe](https://twitter.com/kaungmyatshwe)
-- **Email**: kaungmyatshwe1@gmail.com
+[![GitHub](https://img.shields.io/badge/-@kaungmyatshwe1397-181717?logo=github&logoColor=white)](https://github.com/kaungmyatshwe1397)
+[![LinkedIn](https://img.shields.io/badge/-kaungmyatshwe-0A66C2?logo=linkedin&logoColor=white)](https://linkedin.com/in/kaungmyat-shwe-017a6a363)
+[![Twitter](https://img.shields.io/badge/-@kaungmyatshwe-1DA1F2?logo=x&logoColor=white)](https://twitter.com/kaungmyatshwe)
+[![Email](https://img.shields.io/badge/kaungmyatshwe1-gmail.com-D14836?logo=gmail&logoColor=white)](mailto:kaungmyatshwe1@gmail.com)
 
 ## License
 
-MIT
+[MIT](./LICENSE)

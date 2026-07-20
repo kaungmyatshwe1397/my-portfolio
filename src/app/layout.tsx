@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -40,6 +41,13 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
         {children}
+
+        {/* GoatCounter Analytics Script */}
+        <Script
+          src="//gc.zgo.at/count.js"
+          data-goatcounter="https://kaungmyatshwe1397.goatcounter.com/count"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );
