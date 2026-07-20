@@ -29,4 +29,18 @@ export const badges: Badge[] = [
     link: "https://verify.skilljar.com/c/gxdussn42sso",
     image: "/images/badges/claude-code-101.jpg",
   },
+  {
+    id: "load-balancing-compute-engine",
+    title: "Implement Load Balancing on Compute Engine",
+    issuer: "Google Cloud",
+    link: "https://www.credly.com/badges/0d3f064b-b695-4d07-b8dd-b3f594e66bb1/public_url",
+    image: "/images/badges/load-balancing-compute-engine.png",
+  },
+  {
+    id: "app-dev-environment-gcp",
+    title: "Set Up an App Dev Environment on Google Cloud",
+    issuer: "Google Cloud",
+    link: "https://www.credly.com/badges/c14461f6-c8b4-4e4a-80b6-72655e20246c/public_url",
+    image: "/images/badges/app-dev-environment-gcp.png",
+  },
 ];
